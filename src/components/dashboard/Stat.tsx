@@ -1,5 +1,3 @@
-import { Component } from 'react';
-
 type Props = {
   title: string;
   icon: React.ReactNode;

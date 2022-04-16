@@ -26,7 +26,7 @@ const JourneySearchResult: React.FC<Props> = ({ connection }) => {
       ])
       .single();
 
-    if (!newJourney) return console.log('ERROR');
+    if (!newJourney) return console.log('Unable to create a new journey');
 
     // We only want rides, the rest should be ignored
     connection.sections

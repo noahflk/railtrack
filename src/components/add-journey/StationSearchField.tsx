@@ -4,20 +4,19 @@ import { Combobox } from '@headlessui/react';
 
 import { classNames } from '@/utils/styling';
 import useStationSearch from '@/hooks/useStationSearch';
+import { Station } from '@/types/opendata';
 
 // TODO: add typing for station
 
 type Props = {
   label: string;
-  selectedStation: any;
-  setSelectedStation: any;
+  selectedStation?: Station;
+  setSelectedStation: (station: Station) => void;
 };
 
 const StationSearchField: React.FC<Props> = ({ label, selectedStation, setSelectedStation }) => {
   const [query, setQuery] = useState('');
   const stations = useStationSearch(query);
-
-  console.log(selectedStation, 'dfkldfljkdf');
 
   return (
     <Combobox as="div" value={selectedStation} onChange={setSelectedStation}>
