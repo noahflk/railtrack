@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { parseDurationString } from '@/utils/duration';
 import { supabase } from '@/utils/supabaseClient';
 import type { Connection } from '@/types/opendata';
+import useJourneySearchStore from '@/hooks/useJourneySearchStore';
 
 type Props = {
   connection: Connection;
@@ -12,6 +13,7 @@ type Props = {
 
 const JourneySearchResult: React.FC<Props> = ({ connection }) => {
   const queryClient = useQueryClient();
+  const clearSearchInfo = useJourneySearchStore((state) => state.clearSearchInfo);
 
   const user = supabase.auth.user();
 
@@ -65,6 +67,7 @@ const JourneySearchResult: React.FC<Props> = ({ connection }) => {
 
         // Redirect away after creating new journey
         router.push('/dashboard');
+        clearSearchInfo();
         queryClient.invalidateQueries('journey-stats');
         queryClient.invalidateQueries('recent-journeys');
       });
