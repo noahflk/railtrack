@@ -1,6 +1,6 @@
-import { Fragment, useState } from 'react';
+import { Fragment, ReactNode, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ViewGridAddIcon, HomeIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import { ViewGridAddIcon, ViewGridIcon, HomeIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -11,6 +11,7 @@ import { classNames } from '@/utils/styling';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
+  { name: 'Journeys', href: '/journeys', icon: ViewGridIcon },
   { name: 'Add journey', href: '/add', icon: ViewGridAddIcon },
 ];
 
@@ -136,7 +137,10 @@ const Wrapper: React.FC<Props> = ({ children, title }) => {
                     )}
                   >
                     <item.icon
-                      className={classNames(item.href === pathname ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6')}
+                      className={classNames(
+                        item.href === pathname ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                        'mr-3 flex-shrink-0 h-6 w-6'
+                      )}
                       aria-hidden="true"
                     />
                     {item.name}
@@ -154,7 +158,7 @@ const Wrapper: React.FC<Props> = ({ children, title }) => {
         <div className="sticky top-0 z-10 pt-1 pl-1 bg-white md:hidden sm:pl-3 sm:pt-3">
           <button
             type="button"
-            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+            className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
