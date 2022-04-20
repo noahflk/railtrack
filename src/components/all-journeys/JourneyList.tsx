@@ -5,6 +5,7 @@ import DeleteConfirmModal from '@/components/all-journeys/DeleteConfirmModal';
 import useJourneys from '@/hooks/useJourneys';
 import { supabase } from '@/utils/supabaseClient';
 import JourneyRow from '@/components/all-journeys/JourneyRow';
+import EmptyJourneyNotice from '@/components/EmptyJourneyNotice';
 
 const JourneyList: React.FC = () => {
   const { data: journeys } = useJourneys();
@@ -33,6 +34,13 @@ const JourneyList: React.FC = () => {
     setModalOpen(true);
     setPendingJourneyDeleteId(journeyId);
   };
+
+  if (journeys.length === 0)
+    return (
+      <div className="h-96">
+        <EmptyJourneyNotice />
+      </div>
+    );
 
   return (
     <>

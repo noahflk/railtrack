@@ -1,8 +1,6 @@
-import { DocumentSearchIcon } from '@heroicons/react/outline';
-
 import useRecentJourneys from '@/hooks/useRecentJourneys';
 import Journey from '@/components/dashboard/Journey';
-import Link from '@/components/Link';
+import EmptyJourneyNotice from '@/components/EmptyJourneyNotice';
 
 const RecentJourneys: React.FC = () => {
   const { data: journeys } = useRecentJourneys();
@@ -19,11 +17,7 @@ const RecentJourneys: React.FC = () => {
           ))}
         </ul>
       ) : (
-        <div className="flex flex-col items-center justify-center h-full pb-8 space-y-2">
-          <DocumentSearchIcon className="w-20 " />
-          <p className="text-lg font-medium">No journeys yet!</p>
-          <Link href="/add">Add new journey</Link>
-        </div>
+        <EmptyJourneyNotice />
       )}
     </div>
   );

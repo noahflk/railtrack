@@ -97,20 +97,6 @@ const Wrapper: React.FC<Props> = ({ children, title }) => {
                 </nav>
               </div>
               <div className="flex flex-shrink-0 p-4 border-t border-gray-200">
-                {/* <Link passHref href="/signout">
-                  <a
-                    className={classNames(
-                      "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-                      "group flex items-center px-2 py-2 text-base font-medium rounded-md"
-                    )}
-                  >
-                    <LogoutIcon
-                      className={classNames("text-gray-400 group-hover:text-gray-500", "mr-4 flex-shrink-0 h-6 w-6")}
-                      aria-hidden="true"
-                    />
-                    Sign Out
-                  </a>
-                </Link> */}
                 <SignoutButton />
               </div>
             </div>
