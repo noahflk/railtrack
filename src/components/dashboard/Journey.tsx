@@ -14,13 +14,12 @@ const Journey: React.FC<Props> = ({ journey }) => {
 
   return (
     <li className="flex items-center justify-between py-1">
-      <p>
-        <span>
+      <div className="flex justify-between w-full">
+        <p>
           {info.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" /> {info.arrivalStation}
-        </span>
-        <span> - </span>
-        <span>{info.distance} km</span>
-      </p>
+        </p>
+        <p>{info.distance} km</p>
+      </div>
     </li>
   );
 };
