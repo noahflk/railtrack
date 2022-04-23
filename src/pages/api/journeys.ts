@@ -1,5 +1,3 @@
-// get journeys and fetch their info (from, to, distance and so on)
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isBefore } from 'date-fns';
 
@@ -7,7 +5,12 @@ import { supabase } from '@/utils/supabaseClient';
 import { calculateJourneyDistance } from '@/utils/calculateDistances';
 import { roundToOneDecimal } from '@/utils/rounding';
 
-const getDepartureStation = ({ sections }): string => {
+type StationInformation = {
+  name: string;
+  time: string;
+};
+
+const getDepartureStation = ({ sections }): StationInformation => {
   // sort sections array by departure_time property that's on each element
   // the departure of a journey is the departure_station_name of the earliest section
   sections.sort((sectionA, sectionB) => {
@@ -19,10 +22,13 @@ const getDepartureStation = ({ sections }): string => {
     return 0;
   });
 
-  return sections[0].departure_station_name;
+  return {
+    name: sections[0].departure_station_name,
+    time: sections[0].departure_time,
+  };
 };
 
-const getArrivalStation = ({ sections }): string => {
+const getArrivalStation = ({ sections }): StationInformation => {
   sections.sort((sectionA, sectionB) => {
     const dateA = new Date(sectionA.departure_time);
     const dateB = new Date(sectionB.departure_time);
@@ -32,7 +38,10 @@ const getArrivalStation = ({ sections }): string => {
     return 0;
   });
 
-  return sections[0].arrival_station_name;
+  return {
+    name: sections[0].arrival_station_name,
+    time: sections[0].arrival_time,
+  };
 };
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -58,14 +67,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   )
 `);
 
-  const enhancedJourneys = (journeys ?? []).map((journey) => ({
-    id: journey.id,
-    duration: journey.duration,
-    stops: journey.sections.length - 1,
-    departureStation: getDepartureStation(journey),
-    arrivalStation: getArrivalStation(journey),
-    distance: roundToOneDecimal(calculateJourneyDistance(journey)),
-  }));
+  const enhancedJourneys = (journeys ?? []).map((journey) => {
+    const departureStation = getDepartureStation(journey);
+    const arrivalStation = getArrivalStation(journey);
+
+    return {
+      id: journey.id,
+      duration: journey.duration,
+      stops: journey.sections.length - 1,
+      departureStation: departureStation.name,
+      arrivalStation: arrivalStation.name,
+      departureTime: departureStation.time,
+      arrivalTime: arrivalStation.time,
+      distance: roundToOneDecimal(calculateJourneyDistance(journey)),
+    };
+  });
 
   res.status(200).json({
     journeys: enhancedJourneys,

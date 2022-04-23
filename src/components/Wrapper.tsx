@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ViewGridAddIcon, ViewGridIcon, HomeIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
