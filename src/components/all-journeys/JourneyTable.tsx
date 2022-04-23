@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 import { Journey } from '@/types/journey';
 
 type RowProps = {
@@ -5,20 +7,30 @@ type RowProps = {
   handleDelete: (id: number) => void;
 };
 
-const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => (
-  <tr>
-    <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">{journey.departureStation}</td>
-    <td className="px-3 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">{journey.arrivalStation}</td>
-    <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.distance} km</td>
-    <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.duration} minutes</td>
-    <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.stops}</td>
-    <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
-      <button onClick={() => handleDelete(journey.id)} className="text-primary hover:text-primary-light">
-        Delete
-      </button>
-    </td>
-  </tr>
-);
+const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
+  const departureTime = new Date(journey.departureTime);
+  const arrivalTime = new Date(journey.arrivalTime);
+
+  return (
+    <tr>
+      <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">{format(departureTime, 'dd.MM.yyyy')}</td>
+      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+        {journey.departureStation} ({format(departureTime, 'HH:mm')})
+      </td>
+      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+        {journey.arrivalStation} ({format(arrivalTime, 'HH:mm')})
+      </td>
+      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.distance} km</td>
+      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.duration} minutes</td>
+      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.stops}</td>
+      <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+        <button onClick={() => handleDelete(journey.id)} className="text-primary hover:text-primary-light">
+          Delete
+        </button>
+      </td>
+    </tr>
+  );
+};
 
 type TableProps = {
   journeys: Journey[];
@@ -33,6 +45,9 @@ const JourneyTable: React.FC<TableProps> = ({ journeys, handleDelete }) => (
           <table className="min-w-full divide-y divide-gray-300">
             <thead className="bg-gray-50">
               <tr>
+                <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                  Date
+                </th>
                 <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                   Departure
                 </th>
