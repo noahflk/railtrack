@@ -3,11 +3,7 @@ import { supabase } from '@/utils/supabaseClient';
 import { useQuery } from 'react-query';
 
 const getRecentJourneys = async () => {
-  const { data } = await supabase
-    .from<definitions['journeys']>('journeys')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .range(0, 7);
+  const { data } = await supabase.from<definitions['journeys']>('journeys').select('*').order('created_at').range(0, 7);
 
   return data ?? [];
 };
