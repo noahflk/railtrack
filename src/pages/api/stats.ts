@@ -6,8 +6,6 @@ import { calculateJourneyDistance } from '@/utils/calculateDistances';
 import { roundToOneDecimal } from '@/utils/rounding';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  // const { journeyId } = req.query;
-
   // TODO find a way to fix this workaround
   // Without it the user session can somehow not be accessed by the subsequent queryt
   const { token } = await supabase.auth.api.getUserByCookie(req);

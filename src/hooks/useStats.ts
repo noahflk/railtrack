@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import { Journey } from '@/types/coordinates';
+import type { Journey } from '@/types/coordinates';
 
 type Result = {
   distance: number;

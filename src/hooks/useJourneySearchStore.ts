@@ -1,6 +1,7 @@
 import create from 'zustand';
 import { format } from 'date-fns';
-import { Connection, Station } from '@/types/opendata';
+
+import type { Connection, Station } from '@/types/opendata';
 
 type JourneySearchState = {
   departureStation?: Station;

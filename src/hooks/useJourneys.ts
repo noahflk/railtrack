@@ -1,5 +1,6 @@
-import { Journey } from '@/types/journey';
 import { useQuery } from 'react-query';
+
+import type { Journey } from '@/types/journey';
 
 const getJourneys = async (): Promise<Journey[]> => {
   const response = await fetch('/api/journeys');

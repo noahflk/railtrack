@@ -1,34 +1,47 @@
-import MapboxMap, { Layer, Source } from "react-map-gl";
+import MapboxMap, { Layer, Source } from 'react-map-gl';
+
+import type { Journey, Section } from '@/types/coordinates';
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
-const Map = ({ journeys }) => {
-  const getSectionCoordinates = (section) => {
-    return section.passes.map((pass) => [pass.station_coordinate_y, pass.station_coordinate_x]);
+type Props = {
+  journeys: Journey[];
+};
+
+type Feature = {
+  type: string;
+  geometry: {
+    type: string;
+    coordinates: number[][];
   };
+};
 
-  const getFeatures = () => {
-    const features = [];
+const getSectionCoordinates = (section: Section): number[][] => {
+  return section.passes.map((pass) => [pass.station_coordinate_y, pass.station_coordinate_x]);
+};
 
-    journeys.forEach((journey) => {
-      journey.sections.forEach((section) => {
-        features.push({
-          type: "Feature",
-          properties: {},
-          geometry: {
-            type: "LineString",
-            coordinates: getSectionCoordinates(section),
-          },
-        });
+const getFeatures = (journeys: Journey[]): Feature[] => {
+  const features: Feature[] = [];
+
+  journeys.forEach((journey) => {
+    journey.sections.forEach((section) => {
+      features.push({
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: getSectionCoordinates(section),
+        },
       });
     });
+  });
 
-    return features;
-  };
+  return features;
+};
 
+const Map: React.FC<Props> = ({ journeys }) => {
   const dataOne = {
-    type: "FeatureCollection",
-    features: getFeatures(),
+    type: 'FeatureCollection',
+    features: getFeatures(journeys),
   };
 
   return (
@@ -39,7 +52,7 @@ const Map = ({ journeys }) => {
         zoom: 6,
       }}
       cooperativeGestures
-      style={{ width: "100%", height: 400, overflow: "hidden" }}
+      style={{ width: '100%', height: 400, overflow: 'hidden' }}
       mapStyle="mapbox://styles/mapbox/light-v10"
       mapboxAccessToken={MAPBOX_TOKEN}
     >
@@ -49,12 +62,12 @@ const Map = ({ journeys }) => {
           type="line"
           source="my-data"
           layout={{
-            "line-join": "round",
-            "line-cap": "round",
+            'line-join': 'round',
+            'line-cap': 'round',
           }}
           paint={{
-            "line-color": "#902D41",
-            "line-width": 3,
+            'line-color': '#902D41',
+            'line-width': 3,
           }}
         />
       </Source>

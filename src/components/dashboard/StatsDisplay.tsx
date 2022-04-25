@@ -3,12 +3,10 @@ import { GlobeIcon, ChartBarIcon, ClockIcon } from '@heroicons/react/outline';
 import useStats from '@/hooks/useStats';
 import Stat from '@/components/dashboard/Stat';
 
-// TODO: could use some reafactoring along with Stat.tsx to minimize repetitions
-
 const StatsDisplay: React.FC = () => {
   const { data } = useStats();
 
-  if (!data) return <p>Loading</p>;
+  if (!data) return <p>Loading...</p>;
 
   const { distance, duration, count } = data;
 

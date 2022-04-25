@@ -50,22 +50,57 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { token } = await supabase.auth.api.getUserByCookie(req);
   supabase.auth.setAuth(token ?? '');
 
+  const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
+
+  let journeys;
+
+  // TODO: fix ordering of records (especially important for limit)
+
+  if (limit) {
+    const { data } = await supabase
+      .from('journeys')
+      .select(
+        `
+      id,
+      duration,
+      sections (
+        departure_time,
+        arrival_time,
+        departure_station_name,
+        arrival_station_name,
+        passes (
+          station_coordinate_x,
+          station_coordinate_y,
+          station_name
+        )
+      )   
+    `
+      )
+      .range(0, limit - 1);
+
+    journeys = data;
+  } else {
+    const { data } = await supabase.from('journeys').select(`
+      id,
+      duration,
+      sections (
+        departure_time,
+        arrival_time,
+        departure_station_name,
+        arrival_station_name,
+        passes (
+          station_coordinate_x,
+          station_coordinate_y,
+          station_name
+        )
+      )
+    `);
+    journeys = data;
+  }
+
+  console.log(journeys);
+
   // TODO this needs typing
-  const { data: journeys } = await supabase.from('journeys').select(`
-  id,
-  duration,
-  sections (
-    departure_time,
-    arrival_time,
-    departure_station_name,
-    arrival_station_name,
-    passes (
-      station_coordinate_x,
-      station_coordinate_y,
-      station_name
-    )
-  )
-`);
 
   const enhancedJourneys = (journeys ?? []).map((journey) => {
     const departureStation = getDepartureStation(journey);

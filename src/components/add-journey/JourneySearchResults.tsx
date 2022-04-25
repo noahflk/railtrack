@@ -2,6 +2,11 @@ import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 
 import JourneySearchResult from '@/components/add-journey/JourneySearchResult';
 import useJourneySearchStore from '@/hooks/useJourneySearchStore';
+import { Connection } from '@/types/opendata';
+
+const generateJourneyKey = (connection: Connection) => {
+  return `${connection.from.departureTimestamp}${connection.from.departure}${connection.to.arrivalTimestamp}${connection.to.arrival}`;
+};
 
 const JourneySearchResults: React.FC = () => {
   const departureStation = useJourneySearchStore((state) => state.departureStation);
@@ -20,10 +25,7 @@ const JourneySearchResults: React.FC = () => {
         {connections.length > 0 ? (
           <ul role="list">
             {connections.map((connection) => (
-              <JourneySearchResult
-                key={`${connection.from.departure}${connection.to.arrival}${connection.duration}`}
-                connection={connection}
-              />
+              <JourneySearchResult key={generateJourneyKey(connection)} connection={connection} />
             ))}
           </ul>
         ) : (

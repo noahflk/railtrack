@@ -7,6 +7,15 @@ export type Connection = {
   sections: Section[];
 };
 
+export type Station = {
+  id: number;
+  name: string;
+  coordinate: {
+    x: number;
+    y: number;
+  };
+};
+
 type Section = {
   departure: From;
   arrival: To;
@@ -20,14 +29,7 @@ type Section = {
   };
 };
 
-type Pass = {
-  arrival: string;
-  arrivalTimestamp: number;
-  departure: string;
-  departureTimestamp: number;
-  location: Station;
-  station: Station;
-};
+type Pass = From & To;
 
 type From = {
   departure: string;
@@ -43,13 +45,4 @@ type To = {
   location: Station;
   station: Station;
   platform: string;
-};
-
-export type Station = {
-  id: number;
-  name: string;
-  coordinate: {
-    x: number;
-    y: number;
-  };
 };

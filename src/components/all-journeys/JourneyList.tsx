@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
 import { useBreakpoint } from 'react-breakout';
 
 import useJourneys from '@/hooks/useJourneys';
@@ -7,33 +6,19 @@ import EmptyJourneyNotice from '@/components/EmptyJourneyNotice';
 import DeleteConfirmModal from '@/components/all-journeys/DeleteConfirmModal';
 import JourneyTable from '@/components/all-journeys/JourneyTable';
 import JourneyCards from '@/components/all-journeys/JourneyCards';
-import { supabase } from '@/utils/supabaseClient';
+import useDeleteJourney from '@/hooks/useDeleteJourney';
 
 const JourneyList: React.FC = () => {
   const { data: journeys } = useJourneys();
   const [modalOpen, setModalOpen] = useState(false);
-  const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<number | null>();
-  const queryClient = useQueryClient();
+  const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<number>();
   const isDesktop = useBreakpoint('md');
 
-  const mutation = useMutation(
-    async () => {
-      await supabase.from('journeys').delete().match({ id: pendingJourneyDeleteId });
-      queryClient.invalidateQueries();
-    },
-    {
-      onSettled: () => {
-        setModalOpen(false);
-        queryClient.invalidateQueries('all-journeys');
-        queryClient.invalidateQueries('journey-stats');
-        queryClient.invalidateQueries('recent-journeys');
-      },
-    }
-  );
+  const mutation = useDeleteJourney(pendingJourneyDeleteId, () => setModalOpen(false));
 
   if (!journeys) return <p>Loading...</p>;
 
-  const handleDelete = (journeyId: number) => {
+  const handleDeleteIntent = (journeyId: number) => {
     setModalOpen(true);
     setPendingJourneyDeleteId(journeyId);
   };
@@ -49,9 +34,9 @@ const JourneyList: React.FC = () => {
     <>
       <DeleteConfirmModal isOpen={modalOpen} onDismiss={() => setModalOpen(false)} onConfirm={() => mutation.mutate()} />
       {isDesktop ? (
-        <JourneyTable journeys={journeys} handleDelete={handleDelete} />
+        <JourneyTable journeys={journeys} handleDelete={handleDeleteIntent} />
       ) : (
-        <JourneyCards journeys={journeys} handleDelete={handleDelete} />
+        <JourneyCards journeys={journeys} handleDelete={handleDeleteIntent} />
       )}
     </>
   );

@@ -1,6 +1,6 @@
-import axios from "axios";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useDebounce, useDebounceState } from "react-relaxed";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'react-relaxed';
 
 type Station = {
   id: string;
@@ -13,7 +13,7 @@ const useStationSearch = (query: string): Station[] => {
 
   useEffect(() => {
     const getStations = async () => {
-      const { data } = await axios.get("https://transport.opendata.ch/v1/locations?query=" + debouncedQuery);
+      const { data } = await axios.get('https://transport.opendata.ch/v1/locations?query=' + debouncedQuery);
       setStations(data.stations.filter((station) => station.id));
     };
 

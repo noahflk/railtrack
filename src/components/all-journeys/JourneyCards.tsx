@@ -1,8 +1,8 @@
+import { format } from 'date-fns';
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 
 import TextButton from '@/components/TextButton';
 import { Journey } from '@/types/journey';
-import { format } from 'date-fns';
 
 type CardProps = {
   journey: Journey;

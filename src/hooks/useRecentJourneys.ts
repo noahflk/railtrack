@@ -1,11 +1,11 @@
-import { definitions } from '@/types/supabase';
-import { supabase } from '@/utils/supabaseClient';
 import { useQuery } from 'react-query';
 
-const getRecentJourneys = async () => {
-  const { data } = await supabase.from<definitions['journeys']>('journeys').select('*').order('created_at').range(0, 7);
+import type { Journey } from '@/types/journey';
 
-  return data ?? [];
+const getRecentJourneys = async (): Promise<Journey[]> => {
+  const response = await fetch('/api/journeys?limit=7');
+  const data = await response.json();
+  return data ? data.journeys : [];
 };
 
 const useRecentJourneys = () => {

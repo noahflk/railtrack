@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/noahflk/railtrack">
-    <img src="https://raw.githubusercontent.com/noahflk/railtrack/main/public/screenshot-marketing.png" alt="Railtrack Logo">
+    <img src="https://raw.githubusercontent.com/noahflk/railtrack/main/public/images/screenshot-marketing.png" alt="Railtrack Logo">
   </a>
 
   <h3 align="center">Railtrack</h3>
