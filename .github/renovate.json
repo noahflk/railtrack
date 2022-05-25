@@ -1,6 +1,5 @@
 {
   "extends": ["config:base"],
-  "stabilityDays": 7,
   "prCreation": "not-pending",
   "timezone": "Europe/Zurich",
   "schedule": ["before 5am on Monday"],
