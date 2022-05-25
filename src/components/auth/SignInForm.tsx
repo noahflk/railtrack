@@ -11,6 +11,9 @@ const SignInForm: React.FC = () => {
   const router = useRouter();
 
   const handleLogin = async () => {
+    // clear error message
+    setErrorMessage(undefined);
+
     const { user, error } = await supabase.auth.signIn({
       email,
       password,
