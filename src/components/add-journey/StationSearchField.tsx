@@ -23,7 +23,7 @@ const StationSearchField: React.FC<Props> = ({ label, selectedStation, setSelect
         <Combobox.Input
           className="w-full py-2 pl-3 pr-10 bg-white border border-gray-300 rounded-md shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
           onChange={(event) => setQuery(event.target.value)}
-          displayValue={(station: Station) => station.name}
+          displayValue={(station: Station | undefined) => (station ? station.name : '')}
         />
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center px-2 rounded-r-md focus:outline-none">
           <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
