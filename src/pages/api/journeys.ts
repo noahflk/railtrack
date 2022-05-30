@@ -98,8 +98,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     journeys = data;
   }
 
-  console.log(journeys);
-
   // TODO this needs typing
 
   const enhancedJourneys = (journeys ?? []).map((journey) => {
