@@ -7,6 +7,7 @@ import DeleteConfirmModal from '@/components/all-journeys/DeleteConfirmModal';
 import JourneyTable from '@/components/all-journeys/JourneyTable';
 import JourneyCards from '@/components/all-journeys/JourneyCards';
 import useDeleteJourney from '@/hooks/useDeleteJourney';
+import { sortJourneysLatestFirst } from '@/utils/sorters';
 
 const JourneyList: React.FC = () => {
   const { data: journeys } = useJourneys();
@@ -30,13 +31,15 @@ const JourneyList: React.FC = () => {
       </div>
     );
 
+  const sortedJourneys = sortJourneysLatestFirst(journeys);
+
   return (
     <>
       <DeleteConfirmModal isOpen={modalOpen} onDismiss={() => setModalOpen(false)} onConfirm={() => mutation.mutate()} />
       {isDesktop ? (
-        <JourneyTable journeys={journeys} handleDelete={handleDeleteIntent} />
+        <JourneyTable journeys={sortedJourneys} handleDelete={handleDeleteIntent} />
       ) : (
-        <JourneyCards journeys={journeys} handleDelete={handleDeleteIntent} />
+        <JourneyCards journeys={sortedJourneys} handleDelete={handleDeleteIntent} />
       )}
     </>
   );
