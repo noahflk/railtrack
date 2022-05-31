@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import axios from 'axios';
 
 import StationSearchField from '@/components/add-journey/StationSearchField';
 import DepartureTimeField from '@/components/add-journey/DepartureTimeField';
 import useJourneySearchStore from '@/hooks/useJourneySearchStore';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const JourneySearchForm: React.FC = () => {
   const departureTime = useJourneySearchStore((state) => state.departureTime);
@@ -12,7 +14,11 @@ const JourneySearchForm: React.FC = () => {
   const setArrivalStation = useJourneySearchStore((state) => state.setArrivalStation);
   const setConnections = useJourneySearchStore((state) => state.setConnections);
 
+  const [loading, setLoading] = useState(false);
+
   const getConnections = async () => {
+    setLoading(true);
+
     const { data } = await axios.get(
       `https://transport.opendata.ch/v1/connections?from=${departureStation?.name}&to=${arrivalStation?.name}&date=${
         departureTime.split('T')[0]
@@ -20,6 +26,7 @@ const JourneySearchForm: React.FC = () => {
     );
 
     setConnections(data.connections);
+    setLoading(false);
   };
 
   return (
@@ -32,7 +39,7 @@ const JourneySearchForm: React.FC = () => {
           onClick={getConnections}
           className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
         >
-          Search Connections
+          {loading ? <LoadingSpinner /> : 'Search Connections'}
         </button>
       </div>
     </li>
