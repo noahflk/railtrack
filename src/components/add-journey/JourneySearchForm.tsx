@@ -1,10 +1,12 @@
-import { useState } from 'react';
 import axios from 'axios';
+import { useThrottleState } from 'react-relaxed';
+import toast from 'react-hot-toast';
 
 import StationSearchField from '@/components/add-journey/StationSearchField';
 import DepartureTimeField from '@/components/add-journey/DepartureTimeField';
 import useJourneySearchStore from '@/hooks/useJourneySearchStore';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { TRANSPORT_API_URL } from '@/constants';
 
 const JourneySearchForm: React.FC = () => {
   const departureTime = useJourneySearchStore((state) => state.departureTime);
@@ -14,19 +16,24 @@ const JourneySearchForm: React.FC = () => {
   const setArrivalStation = useJourneySearchStore((state) => state.setArrivalStation);
   const setConnections = useJourneySearchStore((state) => state.setConnections);
 
-  const [loading, setLoading] = useState(false);
+  const [, setLoading, loading] = useThrottleState(false, 150);
 
   const getConnections = async () => {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const { data } = await axios.get(
-      `https://transport.opendata.ch/v1/connections?from=${departureStation?.name}&to=${arrivalStation?.name}&date=${
-        departureTime.split('T')[0]
-      }&time=${departureTime.split('T')[1]}`
-    );
+      const { data } = await axios.get(
+        `${TRANSPORT_API_URL}/connections?from=${departureStation?.name}&to=${arrivalStation?.name}&date=${
+          departureTime.split('T')[0]
+        }&time=${departureTime.split('T')[1]}`
+      );
 
-    setConnections(data.connections);
-    setLoading(false);
+      setConnections(data.connections);
+    } catch (error) {
+      toast.error('Unable to load connections');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
