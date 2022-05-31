@@ -25,7 +25,7 @@ const JourneyList: React.FC = () => {
   const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<number>();
   const isDesktop = useBreakpoint('md');
 
-  const mutation = useDeleteJourney(pendingJourneyDeleteId, () => setModalOpen(false));
+  const deleteJourneyMutation = useDeleteJourney(pendingJourneyDeleteId, () => setModalOpen(false));
 
   const handleDeleteIntent = (journeyId: number) => {
     setModalOpen(true);
@@ -45,7 +45,12 @@ const JourneyList: React.FC = () => {
 
   return (
     <>
-      <DeleteConfirmModal isOpen={modalOpen} onDismiss={() => setModalOpen(false)} onConfirm={() => mutation.mutate()} />
+      <DeleteConfirmModal
+        isOpen={modalOpen}
+        onDismiss={() => setModalOpen(false)}
+        onConfirm={() => deleteJourneyMutation.mutate()}
+        isLoading={deleteJourneyMutation.isLoading}
+      />
       {isDesktop ? (
         <JourneyTable journeys={sortedJourneys} handleDelete={handleDeleteIntent} />
       ) : (
