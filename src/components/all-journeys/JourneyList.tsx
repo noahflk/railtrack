@@ -9,6 +9,16 @@ import JourneyCards from '@/components/all-journeys/JourneyCards';
 import useDeleteJourney from '@/hooks/useDeleteJourney';
 import { sortJourneysLatestFirst } from '@/utils/sorters';
 
+const Placeholder: React.FC = () => (
+  <div className="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow">
+    <div className="w-full p-6 space-y-4 animate-pulse ">
+      <div className="h-8 bg-gray-300 rounded-md "></div>
+      <div className="h-8 bg-gray-300 rounded-md "></div>
+      <div className="h-8 bg-gray-300 rounded-md "></div>
+    </div>
+  </div>
+);
+
 const JourneyList: React.FC = () => {
   const { data: journeys } = useJourneys();
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,12 +27,12 @@ const JourneyList: React.FC = () => {
 
   const mutation = useDeleteJourney(pendingJourneyDeleteId, () => setModalOpen(false));
 
-  if (!journeys) return <p>Loading...</p>;
-
   const handleDeleteIntent = (journeyId: number) => {
     setModalOpen(true);
     setPendingJourneyDeleteId(journeyId);
   };
+
+  if (!journeys) return <Placeholder />;
 
   if (journeys.length === 0)
     return (
