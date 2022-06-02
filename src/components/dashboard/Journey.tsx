@@ -8,12 +8,9 @@ type Props = {
 
 const Journey: React.FC<Props> = ({ journey }) => (
   <li className="flex items-center justify-between py-1">
-    <div className="flex justify-between w-full">
-      <p>
-        {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" /> {journey.arrivalStation}
-      </p>
-      <p>{journey.distance} km</p>
-    </div>
+    <p>
+      {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" /> {journey.arrivalStation}
+    </p>
   </li>
 );
 
