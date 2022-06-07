@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 
-import { Journey } from '@/types/journey';
+import { Journey, PaginatedJourneys } from '@/types/journey';
+import TablePagination from './TablePagination';
 
 type RowProps = {
   journey: Journey;
@@ -33,7 +34,7 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
 };
 
 type TableProps = {
-  journeys: Journey[];
+  journeys: PaginatedJourneys;
   handleDelete: (id: number) => void;
 };
 
@@ -69,11 +70,12 @@ const JourneyTable: React.FC<TableProps> = ({ journeys, handleDelete }) => (
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {journeys.map((journey) => (
+              {journeys.journeys.map((journey) => (
                 <JourneyRow journey={journey} key={journey.id} handleDelete={handleDelete} />
               ))}
             </tbody>
           </table>
+          <TablePagination count={journeys.count} page={journeys.page} />
         </div>
       </div>
     </div>

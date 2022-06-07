@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import Logo from '@/components/Logo';
-import Link from '@/components/Link';
+import { Link } from '@/components/Link';
 import image from 'public/images/symbolic-1.jpg';
 import Head from '@/components/Head';
 

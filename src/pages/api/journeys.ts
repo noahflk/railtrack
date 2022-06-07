@@ -4,6 +4,8 @@ import { isBefore } from 'date-fns';
 import { supabase } from '@/utils/supabaseClient';
 import { calculateJourneyDistance } from '@/utils/calculateDistances';
 import { roundToOneDecimal } from '@/utils/rounding';
+import { getPagination } from '@/utils/pagination';
+import { RESULTS_PER_PAGE } from '@/constants';
 
 type StationInformation = {
   name: string;
@@ -51,13 +53,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   supabase.auth.setAuth(token ?? '');
 
   const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
+  const page = req.query.page ? parseInt(req.query.page as string, 10) : 0;
+
+  const { from, to } = getPagination(page, RESULTS_PER_PAGE);
 
   let journeys;
+  let count: number | null;
 
   // TODO: fix ordering of records (especially important for limit)
 
   if (limit) {
-    const { data } = await supabase
+    // ignore pagination if we have a limit
+    const { data, count: countResult } = await supabase
       .from('journeys')
       .select(
         `
@@ -74,13 +81,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           station_name
         )
       )   
-    `
+    `,
+        { count: 'exact' }
       )
       .range(0, limit - 1);
 
     journeys = data;
+    count = countResult;
   } else {
-    const { data } = await supabase.from('journeys').select(`
+    const { data, count: countResult } = await supabase
+      .from('journeys')
+      .select(
+        `
       id,
       duration,
       sections (
@@ -94,8 +106,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           station_name
         )
       )
-    `);
+    `,
+        { count: 'exact' }
+      )
+      .range(from, to);
     journeys = data;
+    count = countResult;
   }
 
   // TODO this needs typing
@@ -118,6 +134,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   res.status(200).json({
     journeys: enhancedJourneys,
+    count,
+    page,
   });
 };
 

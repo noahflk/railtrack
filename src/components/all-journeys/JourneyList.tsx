@@ -8,6 +8,7 @@ import JourneyTable from '@/components/all-journeys/JourneyTable';
 import JourneyCards from '@/components/all-journeys/JourneyCards';
 import useDeleteJourney from '@/hooks/useDeleteJourney';
 import { sortJourneysLatestFirst } from '@/utils/sorters';
+import { useRouter } from 'next/router';
 
 const Placeholder: React.FC = () => (
   <div className="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow">
@@ -20,7 +21,11 @@ const Placeholder: React.FC = () => (
 );
 
 const JourneyList: React.FC = () => {
-  const { data: journeys } = useJourneys();
+  const router = useRouter();
+
+  const page = parseInt(router.query.page as string) || 0;
+
+  const { data: paginatedJourneys } = useJourneys(page);
   const [modalOpen, setModalOpen] = useState(false);
   const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<number>();
   const isDesktop = useBreakpoint('md');
@@ -32,16 +37,16 @@ const JourneyList: React.FC = () => {
     setPendingJourneyDeleteId(journeyId);
   };
 
-  if (!journeys) return <Placeholder />;
+  if (!paginatedJourneys) return <Placeholder />;
 
-  if (journeys.length === 0)
+  if (paginatedJourneys.journeys.length === 0)
     return (
       <div className="pt-12">
         <EmptyJourneyNotice />
       </div>
     );
 
-  const sortedJourneys = sortJourneysLatestFirst(journeys);
+  const sortedJourneys = sortJourneysLatestFirst(paginatedJourneys.journeys);
 
   return (
     <>
@@ -52,7 +57,7 @@ const JourneyList: React.FC = () => {
         isLoading={deleteJourneyMutation.isLoading}
       />
       {isDesktop ? (
-        <JourneyTable journeys={sortedJourneys} handleDelete={handleDeleteIntent} />
+        <JourneyTable journeys={{ ...paginatedJourneys, journeys: sortedJourneys }} handleDelete={handleDeleteIntent} />
       ) : (
         <JourneyCards journeys={sortedJourneys} handleDelete={handleDeleteIntent} />
       )}

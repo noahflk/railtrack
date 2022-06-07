@@ -1,7 +1,7 @@
 import useRecentJourneys from '@/hooks/useRecentJourneys';
 import Journey from '@/components/dashboard/Journey';
 import EmptyJourneyNotice from '@/components/EmptyJourneyNotice';
-import Link from '@/components/Link';
+import { Link } from '@/components/Link';
 import { sortJourneysLatestFirst } from '@/utils/sorters';
 
 const RecentJourneysWrapper: React.FC = ({ children }) => (

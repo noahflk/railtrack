@@ -1,15 +1,14 @@
 import { useQuery } from 'react-query';
 
-import type { Journey } from '@/types/journey';
+import type { PaginatedJourneys } from '@/types/journey';
 
-const getJourneys = async (): Promise<Journey[]> => {
-  const response = await fetch('/api/journeys');
-  const data = await response.json();
-  return data ? data.journeys : [];
+const getJourneys = async (page: number): Promise<PaginatedJourneys> => {
+  const response = await fetch(`/api/journeys?page=${page}`);
+  return response.json();
 };
 
-const useJourneys = () => {
-  return useQuery('all-journeys', getJourneys);
+const useJourneys = (page?: number) => {
+  return useQuery(['all-journeys', page], () => getJourneys(page ?? 0));
 };
 
 export default useJourneys;

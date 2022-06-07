@@ -8,3 +8,9 @@ export type Journey = {
   departureTime: string;
   arrivalTime: string;
 };
+
+export type PaginatedJourneys = {
+  journeys: Journey[];
+  count: boolean;
+  page: number;
+};

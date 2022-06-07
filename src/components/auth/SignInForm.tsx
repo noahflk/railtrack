@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { supabase } from '@/utils/supabaseClient';
-import Link from '@/components/Link';
+import { Link } from '@/components/Link';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { supabase } from '@/utils/supabaseClient';
 
 const SignInForm: React.FC = () => {
   const [email, setEmail] = useState('');

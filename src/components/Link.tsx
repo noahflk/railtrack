@@ -1,13 +1,13 @@
-import NextLink from "next/link";
+import NextLink from 'next/link';
 
-type Props = {
-  href: string;
-};
-
-const Link: React.FC<Props> = ({ href, children }) => (
+export const Link: React.FC<{ href: string }> = ({ href, children }) => (
   <NextLink href={href} passHref>
     <a className="font-medium text-primary hover:text-primary-light">{children}</a>
   </NextLink>
 );
 
-export default Link;
+export const VanillaLink: React.FC<{ href: string; className: string }> = ({ href, children, className }) => (
+  <NextLink href={href} passHref>
+    <a className={className}>{children}</a>
+  </NextLink>
+);
