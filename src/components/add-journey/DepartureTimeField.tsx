@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 
 import useJourneySearchStore from '@/hooks/useJourneySearchStore';
+import { classNames } from '@/utils/styling';
 
 const DepartureTimeField: React.FC = () => {
   const departureTime = useJourneySearchStore((state) => state.departureTime);
@@ -14,14 +15,13 @@ const DepartureTimeField: React.FC = () => {
         <label htmlFor="time" className="block text-sm font-medium text-gray-700">
           Departure time
         </label>
-        {showNowButton && (
-          <button
-            onClick={() => setDepartureTime(format(new Date(), "yyyy-MM-dd'T'HH:mm"))}
-            className="text-sm font-medium text-primary hover:text-primary-light"
-          >
-            Use current time
-          </button>
-        )}
+        <button
+          disabled={!showNowButton}
+          onClick={() => setDepartureTime(format(new Date(), "yyyy-MM-dd'T'HH:mm"))}
+          className={classNames('text-sm font-medium', showNowButton ? 'text-primary hover:text-primary-light' : 'text-gray-500')}
+        >
+          Use current time
+        </button>
       </div>
       <div className="mt-1">
         <input
