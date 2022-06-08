@@ -9,7 +9,7 @@ type Props = {
 const TablePagination: React.FC<Props> = ({ count, page }) => {
   const upperLimit = page * RESULTS_PER_PAGE;
   const lowerLimit = upperLimit - RESULTS_PER_PAGE + 1;
-  const isLastPage = page * RESULTS_PER_PAGE === count;
+  const isLastPage = upperLimit === count || upperLimit > count;
 
   return (
     <nav className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6" aria-label="Pagination">
