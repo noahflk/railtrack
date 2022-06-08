@@ -23,7 +23,7 @@ const Placeholder: React.FC = () => (
 const JourneyList: React.FC = () => {
   const router = useRouter();
 
-  const page = parseInt(router.query.page as string) || 0;
+  const page = router.query.page ? parseInt(router.query.page as string) : undefined;
 
   const { data: paginatedJourneys } = useJourneys(page);
   const [modalOpen, setModalOpen] = useState(false);

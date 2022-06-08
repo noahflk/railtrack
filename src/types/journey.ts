@@ -11,6 +11,6 @@ export type Journey = {
 
 export type PaginatedJourneys = {
   journeys: Journey[];
-  count: boolean;
+  count: number;
   page: number;
 };

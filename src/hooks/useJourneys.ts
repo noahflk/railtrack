@@ -8,7 +8,7 @@ const getJourneys = async (page: number): Promise<PaginatedJourneys> => {
 };
 
 const useJourneys = (page?: number) => {
-  return useQuery(['all-journeys', page], () => getJourneys(page ?? 0));
+  return useQuery(['all-journeys', page], () => getJourneys(page ?? 1));
 };
 
 export default useJourneys;

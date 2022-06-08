@@ -1,6 +1,6 @@
 import { DocumentSearchIcon } from '@heroicons/react/outline';
 
-import Link from '@/components//Link';
+import { Link } from '@/components//Link';
 
 const EmptyJourneyNotice: React.FC = () => (
   <div className="flex flex-col items-center justify-center h-full pb-8 space-y-2">

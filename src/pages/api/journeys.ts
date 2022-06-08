@@ -53,7 +53,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   supabase.auth.setAuth(token ?? '');
 
   const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
-  const page = req.query.page ? parseInt(req.query.page as string, 10) : 0;
+  const page = req.query.page ? parseInt(req.query.page as string, 10) : 1;
 
   const { from, to } = getPagination(page, RESULTS_PER_PAGE);
 
