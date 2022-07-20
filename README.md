@@ -48,7 +48,7 @@ npm install
 Set up the local environment variables with your personal Supabase and Mapbox tokens. You must create the database schema in Supabase.
 
 ```bash
-cp .env .env.local
+cp .env-example .env.local
 # now edit the .env.local file
 ```
 
