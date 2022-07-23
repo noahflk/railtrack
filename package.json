@@ -18,13 +18,17 @@
     "@trpc/next": "^9.25.3",
     "@trpc/react": "^9.25.3",
     "@trpc/server": "^9.25.3",
+    "axios": "^0.27.2",
+    "date-fns": "^2.29.1",
     "next": "12.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.3.0",
     "react-query": "^3.39.1",
+    "react-relaxed": "^1.1.5",
     "superjson": "^1.9.1",
-    "zod": "^3.17.3"
+    "zod": "^3.17.3",
+    "zustand": "^4.0.0-rc.4"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.2",

@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import type { GetServerSideProps } from 'next';
 
 import { protectedRoute } from '@/utils/protected';
 
