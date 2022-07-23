@@ -1,16 +1,30 @@
-// src/pages/_app.tsx
 import { withTRPC } from '@trpc/next';
-import type { AppRouter } from '../server/router';
 import type { AppType } from 'next/dist/shared/lib/utils';
+import { useEffect } from 'react';
+import toast, { Toaster, useToasterStore } from 'react-hot-toast';
 import superjson from 'superjson';
+import type { AppRouter } from '../server/router';
 import '../styles/globals.css';
 
 import { UserContextProvider } from '@/context/UserContext';
 
 const MyApp: AppType = ({ Component, pageProps }) => {
+  const { toasts } = useToasterStore();
+
+  const TOAST_LIMIT = 3;
+
+  // limit number of react-hot-toast toasts to 3
+  useEffect(() => {
+    toasts
+      .filter((t) => t.visible)
+      .filter((_, i) => i >= TOAST_LIMIT)
+      .forEach((t) => toast.dismiss(t.id));
+  }, [toasts]);
+
   return (
     <UserContextProvider>
       <Component {...pageProps} />
+      <Toaster />
     </UserContextProvider>
   );
 };
