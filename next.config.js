@@ -13,11 +13,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/logout',
-        destination: '/signout',
-        permanent: true,
-      },
-      {
         source: '/',
         destination: '/dashboard',
         permanent: true,

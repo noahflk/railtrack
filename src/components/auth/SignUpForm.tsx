@@ -21,6 +21,8 @@ export const SignUpForm: React.FC = () => {
       password,
     });
 
+    console.log('success signup???', user, error);
+
     setLoading(false);
 
     if (error) {
