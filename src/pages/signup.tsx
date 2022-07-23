@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { SignUpForm } from '@/components/auth/SignUpForm';
@@ -10,8 +10,8 @@ const SignUp: NextPage = () => (
   </AuthWrapper>
 );
 
-export async function getServerSideProps({ req }) {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return protectedAuth(req);
-}
+};
 
 export default SignUp;

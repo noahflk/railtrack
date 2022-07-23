@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { supabase } from '@/utils/supabase';
 
-const SignUpForm: React.FC = () => {
+export const SignUpForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -90,5 +90,3 @@ const SignUpForm: React.FC = () => {
     </form>
   );
 };
-
-export default SignUpForm;
