@@ -4,12 +4,17 @@ type Props = {
   title?: string;
 };
 
+const getTitle = (title?: string) => {
+  if (title) {
+    return `${title} - ${process.env.NEXT_PUBLIC_APP_NAME}`;
+  }
+
+  return process.env.NEXT_PUBLIC_APP_NAME;
+};
+
 export const Head: React.FC<Props> = ({ title }) => (
   <NextHead>
-    <title>
-      {title ? `${title} - ` : ''}
-      {process.env.NEXT_PUBLIC_APP_NAME}
-    </title>
+    <title>{getTitle(title)}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content={process.env.NEXT_PUBLIC_APP_NAME} />
     <meta
