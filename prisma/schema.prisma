@@ -8,13 +8,13 @@ datasource db {
 }
 
 model Connection {
-    id        Int       @id @default(autoincrement())
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
-    userId    String    @unique
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    userId    String   @unique
     duration  Int
-    Section   Section[]
-    Pass      Pass[]
+
+    Section Section[]
 }
 
 // a connection has multiple sections
@@ -41,6 +41,7 @@ model Section {
     arrivalStation            String
     arrivalStationCoordinateX Float
     arrivalStationCoordinateY Float
+    Pass                      Pass[]
 }
 
 model Pass {
@@ -48,7 +49,7 @@ model Pass {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    section   Connection? @relation(fields: [sectionId], references: [id])
+    section   Section? @relation(fields: [sectionId], references: [id])
     sectionId Int?
 
     arrivalTime   DateTime

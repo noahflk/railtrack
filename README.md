@@ -52,6 +52,12 @@ cp .env-example .env.local
 # now edit the .env.local file
 ```
 
+Push the schema to the database
+
+```bash
+npx prisma db push
+```
+
 Run the app locally
 
 ```bash

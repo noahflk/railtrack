@@ -67,8 +67,8 @@ export const connectionRouter = createRouter().mutation('add', {
     sections.forEach(async (section) => {
       const storedSection = await ctx.prisma.section.create({
         data: {
-          departureTime: section.departure.departure,
-          arrivalTime: section.arrival.arrival,
+          departureTime: new Date(section.departure.departure),
+          arrivalTime: new Date(section.arrival.arrival),
           departureStation: section.departure.station.name,
           departureStationCoordinateX: section.departure.station.coordinate.x,
           departureStationCoordinateY: section.departure.station.coordinate.y,
@@ -86,8 +86,8 @@ export const connectionRouter = createRouter().mutation('add', {
       const passes = section.journey.passList.map((pass) => {
         return {
           sectionId: storedSection.id,
-          arrivalTime: pass.arrival,
-          departureTime: pass.departure,
+          arrivalTime: new Date(pass.arrival),
+          departureTime: new Date(pass.departure),
           stationName: pass.station.name,
           stationCoordinateX: pass.station.coordinate.x,
           stationCoordinateY: pass.station.coordinate.y,
