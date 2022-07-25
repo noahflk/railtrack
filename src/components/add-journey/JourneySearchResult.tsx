@@ -1,8 +1,11 @@
+import router from 'next/router';
 import { format } from 'date-fns';
 
 import type { Connection } from '@/types/opendata';
 import { parseDurationString } from '@/utils/duration';
+import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import { trpc } from '@/utils/trpc';
+import toast from 'react-hot-toast';
 
 type Props = {
   connection: Connection;
@@ -10,6 +13,8 @@ type Props = {
 
 export const JourneySearchResult: React.FC<Props> = ({ connection }) => {
   const mutation = trpc.useMutation('connection.add');
+
+  const clearSearchInfo = useJourneySearchStore((state) => state.clearSearchInfo);
 
   return (
     <li className="py-2">
@@ -37,7 +42,16 @@ export const JourneySearchResult: React.FC<Props> = ({ connection }) => {
               },
               {
                 onSuccess: () => {
-                  console.log('NICE ONE');
+                  // Redirect away after creating new journey
+                  router.push('/dashboard');
+                  clearSearchInfo();
+
+                  // TODO: invalidate these queries once they exist
+                  // queryClient.invalidateQueries('journey-stats');
+                  // queryClient.invalidateQueries('recent-journeys');
+                },
+                onError: () => {
+                  toast.error('Unable to add new connection');
                 },
               }
             )
