@@ -1,12 +1,8 @@
 import { createRouter } from './context';
 import superjson from 'superjson';
 
-import { exampleRouter } from '@/server/router/example';
-import { journeyRouter } from '@/server/router/journey';
+import { connectionRouter } from '@/server/router/connection';
 
-export const appRouter = createRouter()
-  .transformer(superjson)
-  .merge('example.', exampleRouter)
-  .merge('journey.', journeyRouter);
+export const appRouter = createRouter().transformer(superjson).merge('connection.', connectionRouter);
 
 export type AppRouter = typeof appRouter;

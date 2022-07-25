@@ -1,6 +1,6 @@
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 
-import JourneySearchResult from '@/components/add-journey/JourneySearchResult';
+import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Connection } from '@/types/opendata';
 

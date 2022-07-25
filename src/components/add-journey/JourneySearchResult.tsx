@@ -2,14 +2,14 @@ import { format } from 'date-fns';
 
 import type { Connection } from '@/types/opendata';
 import { parseDurationString } from '@/utils/duration';
+import { trpc } from '@/utils/trpc';
 
 type Props = {
   connection: Connection;
 };
 
 export const JourneySearchResult: React.FC<Props> = ({ connection }) => {
-  // const mutation = useStoreNewJourney();
-  // TODO: implement storing journey with tRPC
+  const mutation = trpc.useMutation('connection.add');
 
   return (
     <li className="py-2">
@@ -27,7 +27,21 @@ export const JourneySearchResult: React.FC<Props> = ({ connection }) => {
           {parseDurationString(connection.duration)} mins
         </span>
         <button
-          // onClick={() => mutation.mutate(connection)}
+          onClick={() =>
+            mutation.mutate(
+              {
+                departureStation: connection.from.station.name,
+                arrivalStation: connection.to.station.name,
+                departureTime: connection.from.departure,
+                platform: connection.from.platform,
+              },
+              {
+                onSuccess: () => {
+                  console.log('NICE ONE');
+                },
+              }
+            )
+          }
           className="font-medium text-small text-primary hover:text-primary-light"
         >
           Add
