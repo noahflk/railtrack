@@ -55,37 +55,12 @@ export const connectionRouter = createRouter().mutation('add', {
       throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
     }
 
-    const storedConnection = await ctx.prisma.connection.create({
-      data: {
-        duration: parseDurationString(connection.duration),
-        userId: user.id,
-      },
-    });
-
     const sections = connection.sections.filter((section) => section.journey);
 
-    sections.forEach(async (section) => {
-      const storedSection = await ctx.prisma.section.create({
-        data: {
-          departureTime: new Date(section.departure.departure),
-          arrivalTime: new Date(section.arrival.arrival),
-          departureStation: section.departure.station.name,
-          departureStationCoordinateX: section.departure.station.coordinate.x,
-          departureStationCoordinateY: section.departure.station.coordinate.y,
-          arrivalStation: section.arrival.station.name,
-          arrivalStationCoordinateX: section.arrival.station.coordinate.x,
-          arrivalStationCoordinateY: section.arrival.station.coordinate.y,
-          connectionId: storedConnection.id,
-          destination: section.journey.to,
-          trainOperator: section.journey.operator,
-          trainNumber: section.journey.number,
-          trainCategory: section.journey.category,
-        },
-      });
-
+    // create structured data for connection to save it
+    const sectionsData = sections.map((section) => {
       const passes = section.journey.passList.map((pass) => {
         return {
-          sectionId: storedSection.id,
           arrivalTime: new Date(pass.arrival),
           departureTime: new Date(pass.departure),
           stationName: pass.station.name,
@@ -94,7 +69,33 @@ export const connectionRouter = createRouter().mutation('add', {
         };
       });
 
-      await ctx.prisma.pass.createMany({ data: passes });
+      return {
+        departureTime: new Date(section.departure.departure),
+        arrivalTime: new Date(section.arrival.arrival),
+        departureStation: section.departure.station.name,
+        departureStationCoordinateX: section.departure.station.coordinate.x,
+        departureStationCoordinateY: section.departure.station.coordinate.y,
+        arrivalStation: section.arrival.station.name,
+        arrivalStationCoordinateX: section.arrival.station.coordinate.x,
+        arrivalStationCoordinateY: section.arrival.station.coordinate.y,
+        destination: section.journey.to,
+        trainOperator: section.journey.operator,
+        trainNumber: section.journey.number,
+        trainCategory: section.journey.category,
+        passes: {
+          create: passes,
+        },
+      };
+    });
+
+    await ctx.prisma.connection.create({
+      data: {
+        duration: parseDurationString(connection.duration),
+        userId: user.id,
+        sections: {
+          create: sectionsData,
+        },
+      },
     });
 
     return { success: true };

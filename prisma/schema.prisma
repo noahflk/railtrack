@@ -14,7 +14,7 @@ model Connection {
     userId    String
     duration  Int
 
-    Section Section[]
+    sections Section[]
 }
 
 // a connection has multiple sections
@@ -41,7 +41,7 @@ model Section {
     arrivalStation            String
     arrivalStationCoordinateX Float
     arrivalStationCoordinateY Float
-    Pass                      Pass[]
+    passes                    Pass[]
 }
 
 model Pass {
