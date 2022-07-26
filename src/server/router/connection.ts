@@ -1,18 +1,27 @@
 import { TRPCError } from '@trpc/server';
+import { isBefore } from 'date-fns';
 import axios from 'axios';
 import { z } from 'zod';
 
 import { createRouter } from '@/server/router/context';
 import { parseDurationString } from '@/utils/duration';
 import { supabase } from '@/utils/supabase';
+import { roundToOneDecimal } from '@/utils/rounding';
 import { TRANSPORT_API_URL } from '@/constants';
+import type { Section } from '@prisma/client';
 import type { Connection } from '@/types/opendata';
+import { calculateJourneyDistance } from '@/utils/calculateDistance';
 
 type ConnectionParams = {
   departureStation: string;
   arrivalStation: string;
   departureTime: string;
   platform: string;
+};
+
+type StationInformation = {
+  name?: string;
+  time?: Date;
 };
 
 const findConnection = async ({
@@ -31,6 +40,42 @@ const findConnection = async ({
   return data.connections.find(
     (connection) => connection.from.platform === platform && connection.from.departure === departureTime
   );
+};
+
+const getDepartureStation = (sections: Section[]): StationInformation => {
+  // sort sections array by departureTime property that's on each element
+  // the departure of a journey is the departure_station_name of the earliest section
+  sections.sort((sectionA, sectionB) => {
+    const dateA = sectionA.departureTime;
+    const dateB = sectionB.departureTime;
+
+    if (isBefore(dateA, dateB)) return -1;
+    if (isBefore(dateB, dateA)) return 1;
+
+    return 0;
+  });
+
+  return {
+    name: sections[0]?.departureStation,
+    time: sections[0]?.departureTime,
+  };
+};
+
+const getArrivalStation = (sections: Section[]): StationInformation => {
+  sections.sort((sectionA, sectionB) => {
+    const dateA = new Date(sectionA.departureTime);
+    const dateB = new Date(sectionB.departureTime);
+
+    if (isBefore(dateA, dateB)) return 1;
+    if (isBefore(dateB, dateA)) return -1;
+
+    return 0;
+  });
+
+  return {
+    name: sections[0]?.arrivalStation,
+    time: sections[0]?.arrivalTime,
+  };
 };
 
 export const connectionRouter = createRouter()
@@ -118,8 +163,28 @@ export const connectionRouter = createRouter()
         where: {
           userId: user.id,
         },
+        include: {
+          sections: {
+            include: {
+              passes: true,
+            },
+          },
+        },
       });
 
-      return connections;
+      // // enhance connection with more info
+      return connections.map((connection) => {
+        const departureStation = getDepartureStation(connection.sections);
+        const arrivalStation = getArrivalStation(connection.sections);
+
+        return {
+          ...connection,
+          departureStation: departureStation.name,
+          arrivalStation: arrivalStation.name,
+          departureTime: departureStation.time,
+          arrivalTime: arrivalStation.time,
+          distance: roundToOneDecimal(calculateJourneyDistance(connection.sections)),
+        };
+      });
     },
   });
