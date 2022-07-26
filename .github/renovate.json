@@ -1,0 +1,25 @@
+{
+  "extends": ["config:base"],
+  "stabilityDays": 7,
+  "prCreation": "not-pending",
+  "internalChecksFilter": "strict",
+  "updateNotScheduled": true,
+  "timezone": "Europe/Zurich",
+  "schedule": ["before 5am on Monday"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "labels": ["dependencies"],
+      "automerge": true
+    },
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "breaking"],
+      "automerge": false
+    }
+  ]
+}
