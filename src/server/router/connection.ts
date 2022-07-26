@@ -227,10 +227,10 @@ export const connectionRouter = createRouter()
       });
 
       const durationResult = await ctx.prisma.$queryRaw<
-        { sum: number }[]
+        { sum: bigint }[]
       >`SELECT sum(duration) FROM "Connection" WHERE "userId" = ${user.id}`;
 
-      const durationInMinutes = durationResult[0]?.sum ?? 1;
+      const durationInMinutes = Number(durationResult[0]?.sum);
 
       return {
         distance: roundToOneDecimal(distance),

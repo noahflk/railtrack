@@ -24,6 +24,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.3.0",
+    "react-map-gl": "^7.0.18",
     "react-query": "^3.39.1",
     "react-relaxed": "^1.1.5",
     "superjson": "^1.9.1",

@@ -6,8 +6,6 @@ import { trpc } from '@/utils/trpc';
 export const StatsDisplay: React.FC = () => {
   const { data: stats } = trpc.useQuery(['connection.stats']);
 
-  console.log('blabla', stats);
-
   return (
     <ul role="list" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
       <Stat title="Distance travelled" icon={<GlobeIcon className="flex-shrink-0 w-14 h-14 sm:hidden xl:inline" />}>
