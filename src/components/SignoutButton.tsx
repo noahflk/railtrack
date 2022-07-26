@@ -12,7 +12,7 @@ export const SignoutButton: React.FC = () => {
 
         if (error) return toast.error('Unable to log out');
 
-        router.push('/login');
+        router.push('/signin');
       }}
       className="flex items-center w-full px-2 py-2 text-base font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-gray-900 group focus:outline-none focus:ring-primary focus:border-primary"
     >
