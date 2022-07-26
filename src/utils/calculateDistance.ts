@@ -1,7 +1,9 @@
-import { Pass, Section } from '@prisma/client';
-
-type SectionWithPasses = Section & {
-  passes: Pass[];
+type Section = {
+  passes: {
+    stationCoordinateX: number;
+    stationCoordinateY: number;
+    stationName: string;
+  }[];
 };
 
 const distance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -47,7 +49,7 @@ export const calculateSectionDistance = (passes: Pass[]) => {
   return totalDistance;
 };
 
-export const calculateJourneyDistance = (sections: SectionWithPasses[]) => {
+export const calculateJourneyDistance = (sections: Section[]) => {
   if (sections.length === 0) return 0;
 
   return sections.reduce((partial, section) => {

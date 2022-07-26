@@ -187,4 +187,56 @@ export const connectionRouter = createRouter()
         };
       });
     },
+  })
+  .query('stats', {
+    async resolve({ ctx }) {
+      const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+
+      if (!user) {
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
+      }
+
+      const connections = await ctx.prisma.connection.findMany({
+        where: {
+          userId: user.id,
+        },
+        select: {
+          sections: {
+            select: {
+              passes: {
+                select: {
+                  stationCoordinateX: true,
+                  stationCoordinateY: true,
+                  stationName: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      const distance = connections.reduce(
+        (partial, connection) => partial + calculateJourneyDistance(connection.sections),
+        0
+      );
+
+      const numberOfConnections = await ctx.prisma.connection.count({
+        where: {
+          userId: user.id,
+        },
+      });
+
+      const durationResult = await ctx.prisma.$queryRaw<
+        { sum: number }[]
+      >`SELECT sum(duration) FROM "Connection" WHERE "userId" = ${user.id}`;
+
+      const durationInMinutes = durationResult[0]?.sum ?? 1;
+
+      return {
+        distance: roundToOneDecimal(distance),
+        count: numberOfConnections,
+        coordinates: connections,
+        duration: roundToOneDecimal(durationInMinutes / 60),
+      };
+    },
   });
