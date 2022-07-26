@@ -20,8 +20,8 @@ type ConnectionParams = {
 };
 
 type StationInformation = {
-  name?: string;
-  time?: Date;
+  name: string;
+  time: Date;
 };
 
 const findConnection = async ({
@@ -56,8 +56,8 @@ const getDepartureStation = (sections: Section[]): StationInformation => {
   });
 
   return {
-    name: sections[0]?.departureStation,
-    time: sections[0]?.departureTime,
+    name: sections[0]?.departureStation || '',
+    time: sections[0]?.departureTime || new Date(),
   };
 };
 
@@ -73,8 +73,8 @@ const getArrivalStation = (sections: Section[]): StationInformation => {
   });
 
   return {
-    name: sections[0]?.arrivalStation,
-    time: sections[0]?.arrivalTime,
+    name: sections[0]?.arrivalStation || '',
+    time: sections[0]?.arrivalTime || new Date(),
   };
 };
 

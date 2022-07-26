@@ -22,8 +22,6 @@ export const SignInForm: React.FC = () => {
       password,
     });
 
-    console.log('success???', user);
-
     setLoading(false);
 
     if (error) {
