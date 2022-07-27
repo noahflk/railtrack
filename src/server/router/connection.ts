@@ -183,6 +183,7 @@ export const connectionRouter = createRouter()
           arrivalStation: arrivalStation.name,
           departureTime: departureStation.time,
           arrivalTime: arrivalStation.time,
+          stops: connection.sections.length - 1,
           distance: roundToOneDecimal(calculateJourneyDistance(connection.sections)),
         };
       });
