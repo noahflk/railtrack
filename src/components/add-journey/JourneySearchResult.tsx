@@ -15,6 +15,8 @@ type Props = {
 const AddButton: React.FC<Props> = ({ connection }) => {
   const mutation = trpc.useMutation('connection.add');
 
+  const utils = trpc.useContext();
+
   const clearSearchInfo = useJourneySearchStore((state) => state.clearSearchInfo);
 
   if (mutation.isLoading) return <LoadingSpinner color="primary" />;
@@ -35,9 +37,8 @@ const AddButton: React.FC<Props> = ({ connection }) => {
               router.push('/dashboard');
               clearSearchInfo();
 
-              // TODO: invalidate these queries once they exist
-              // queryClient.invalidateQueries('journey-stats');
-              // queryClient.invalidateQueries('recent-journeys');
+              utils.invalidateQueries(['connection.get']);
+              utils.invalidateQueries(['connection.stats']);
             },
             onError: () => {
               toast.error('Unable to add new connection');

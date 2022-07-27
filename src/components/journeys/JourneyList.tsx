@@ -21,6 +21,8 @@ const Placeholder: React.FC = () => (
 export const JourneyList: React.FC = () => {
   // const router = useRouter();
 
+  const utils = trpc.useContext();
+
   // const page = router.query.page ? parseInt(router.query.page as string) : undefined;
 
   const { data: connections } = trpc.useQuery(['connection.get']);
@@ -34,10 +36,8 @@ export const JourneyList: React.FC = () => {
     onSettled: () => {
       setModalOpen(false);
 
-      // TODO: invalidate stuff
-      // queryClient.invalidateQueries('all-journeys');
-      // queryClient.invalidateQueries('journey-stats');
-      // queryClient.invalidateQueries('recent-journeys');
+      utils.invalidateQueries(['connection.get']);
+      utils.invalidateQueries(['connection.stats']);
     },
     onError: () => {
       toast.error('Unable to delete journey');
