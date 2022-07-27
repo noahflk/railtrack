@@ -23,7 +23,7 @@ model Section {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    connection   Connection? @relation(fields: [connectionId], references: [id])
+    connection   Connection? @relation(fields: [connectionId], references: [id], onDelete: Cascade)
     connectionId Int?
 
     departureTime DateTime
@@ -49,7 +49,7 @@ model Pass {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    section   Section? @relation(fields: [sectionId], references: [id])
+    section   Section? @relation(fields: [sectionId], references: [id], onDelete: Cascade)
     sectionId Int?
 
     arrivalTime   DateTime

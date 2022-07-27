@@ -239,4 +239,35 @@ export const connectionRouter = createRouter()
         duration: roundToOneDecimal(durationInMinutes / 60),
       };
     },
+  })
+  .mutation('delete', {
+    input: z.number(),
+    async resolve({ input, ctx }) {
+      const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+
+      if (!user) {
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
+      }
+
+      // check if connection exists and belongs to user
+      const connection = await ctx.prisma.connection.findFirst({
+        where: {
+          id: input,
+          userId: user.id,
+        },
+      });
+
+      if (!connection) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Connection not found' });
+      }
+
+      // actually delete the connection
+      await ctx.prisma.connection.delete({
+        where: {
+          id: input,
+        },
+      });
+
+      return { success: true };
+    },
   });
