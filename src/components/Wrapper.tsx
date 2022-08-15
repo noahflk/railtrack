@@ -3,17 +3,12 @@ import { Dialog, Transition } from '@headlessui/react';
 import { ViewGridAddIcon, ViewGridIcon, HomeIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 import { LogoText } from '@/components/LogoText';
 import { SignoutButton } from '@/components/SignoutButton';
 import { Head } from '@/components/Head';
 import { classNames } from '@/utils/styling';
-
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
-  { name: 'Journeys', href: '/journeys', icon: ViewGridIcon },
-  { name: 'Add journey', href: '/add', icon: ViewGridAddIcon },
-];
 
 type Props = {
   title?: string;
@@ -23,6 +18,15 @@ type Props = {
 export const Wrapper: React.FC<Props> = ({ children, title }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { pathname } = useRouter();
+
+  const { t } = useTranslation('common');
+
+  const navigation = [
+    { name: t('dashboard'), href: '/dashboard', icon: HomeIcon },
+    { name: t('journeys'), href: '/journeys', icon: ViewGridIcon },
+    { name: t('addJourney'), href: '/add', icon: ViewGridAddIcon },
+  ];
+
   const currentItem = navigation.find((item) => item.href === pathname);
 
   return (

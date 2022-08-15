@@ -1,13 +1,16 @@
 import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { supabase } from '@/utils/supabase';
 
-const ForgotPasswordForm: React.FC = () => {
+export const ForgotPasswordForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [successMessage, setSuccessMessage] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState(false);
+
+  const { t } = useTranslation('auth');
 
   const handleForgot = async () => {
     // clear messages
@@ -38,7 +41,7 @@ const ForgotPasswordForm: React.FC = () => {
     >
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Email address
+          {t('email')}
         </label>
         <div className="mt-1">
           <input
@@ -63,11 +66,9 @@ const ForgotPasswordForm: React.FC = () => {
           disabled={loading}
           className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
         >
-          {loading ? <LoadingSpinner /> : 'Reset password'}
+          {loading ? <LoadingSpinner /> : t('reset')}
         </button>
       </div>
     </form>
   );
 };
-
-export default ForgotPasswordForm;

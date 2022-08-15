@@ -3,6 +3,7 @@ import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Connection } from '@/types/opendata';
+import { useTranslation } from 'next-i18next';
 
 const generateJourneyKey = (connection: Connection) => {
   return `${connection.from.departureTimestamp}${connection.from.departure}${connection.to.arrivalTimestamp}${connection.to.arrival}`;
@@ -13,10 +14,12 @@ export const JourneySearchResults: React.FC = () => {
   const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
   const connections = useJourneySearchStore((state) => state.connections);
 
+  const { t } = useTranslation('add-journey');
+
   return (
     <li className="col-span-1 bg-white divide-y rounded-lg shadow divide-gray-200npm ">
       <div className="w-full h-full p-6">
-        <h3 className="text-xl font-semibold text-gray-900">Connections</h3>
+        <h3 className="text-xl font-semibold text-gray-900">{t('connections')}</h3>
         {departureStation && arrivalStation && (
           <p className="font-medium text-gray-900 ">
             {departureStation.name} <ArrowNarrowRightIcon className="inline w-6 mx-2 text-primary" />{' '}
@@ -31,7 +34,7 @@ export const JourneySearchResults: React.FC = () => {
           </ul>
         ) : (
           <div className="flex items-center justify-center h-full pb-6">
-            <p>Search for a connection</p>
+            <p>{t('searchFor')}</p>
           </div>
         )}
       </div>

@@ -1,19 +1,27 @@
+import { useTranslation } from 'next-i18next';
+
 import { Journey } from '@/components/dashboard/Journey';
 import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { Link } from '@/components/Link';
 import { trpc } from '@/utils/trpc';
 
-const RecentJourneysWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="col-span-1 p-4 bg-white rounded-lg shadow">
-    <h3 className="text-xl font-medium text-gray-900">Recent journeys</h3>
-    {children}
-  </div>
-);
+const RecentJourneysWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { t } = useTranslation('dashboard');
+
+  return (
+    <div className="col-span-1 p-4 bg-white rounded-lg shadow">
+      <h3 className="text-xl font-medium text-gray-900">{t('recent')}</h3>
+      {children}
+    </div>
+  );
+};
+
+const FETCH_CONNECTION_LIMIT = 7;
 
 export const RecentJourneys: React.FC = () => {
-  const FETCH_CONNECTION_LIMIT = 7;
-
   const { data: connections } = trpc.useQuery(['connection.get', FETCH_CONNECTION_LIMIT]);
+
+  const { t } = useTranslation('dashboard');
 
   if (!connections)
     return (
@@ -44,7 +52,7 @@ export const RecentJourneys: React.FC = () => {
           ))}
         </ul>
         <div className="p-1">
-          <Link href="/journeys">See all journeys</Link>
+          <Link href="/journeys">{t('seeAll')}</Link>
         </div>
       </div>
     </RecentJourneysWrapper>

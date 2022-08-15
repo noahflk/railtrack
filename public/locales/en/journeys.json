@@ -1,0 +1,11 @@
+{
+  "date": "Date",
+  "departure": "Departure",
+  "destination": "Destination",
+  "distance": "Distance",
+  "duration": "Duration",
+  "stops": "Stops",
+  "delete": "Delete",
+  "minutes_one": "minute",
+  "minutes_other": "minutes"
+}

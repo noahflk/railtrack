@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { useTranslation } from 'next-i18next';
 
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import { classNames } from '@/utils/styling';
@@ -7,13 +8,15 @@ export const DepartureTimeField: React.FC = () => {
   const departureTime = useJourneySearchStore((state) => state.departureTime);
   const setDepartureTime = useJourneySearchStore((state) => state.setDepartureTime);
 
+  const { t } = useTranslation('add-journey');
+
   const showNowButton = departureTime !== format(new Date(), "yyyy-MM-dd'T'HH:mm");
 
   return (
     <div className="w-full ">
       <div className="flex justify-between">
         <label htmlFor="time" className="block text-sm font-medium text-gray-700">
-          Departure time
+          {t('time')}
         </label>
         <button
           disabled={!showNowButton}
@@ -23,7 +26,7 @@ export const DepartureTimeField: React.FC = () => {
             showNowButton ? 'text-primary hover:text-primary-light' : 'text-gray-500'
           )}
         >
-          Use current time
+          {t('currentTime')}
         </button>
       </div>
       <div className="mt-1">
