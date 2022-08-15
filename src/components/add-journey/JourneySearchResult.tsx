@@ -1,6 +1,7 @@
 import router from 'next/router';
 import toast from 'react-hot-toast';
 import { format } from 'date-fns';
+import { useTranslation } from 'next-i18next';
 
 import type { Connection } from '@/types/opendata';
 import { parseDurationString } from '@/utils/duration';
@@ -14,10 +15,11 @@ type Props = {
 
 const AddButton: React.FC<Props> = ({ connection }) => {
   const mutation = trpc.useMutation('connection.add');
-
   const utils = trpc.useContext();
 
   const clearSearchInfo = useJourneySearchStore((state) => state.clearSearchInfo);
+
+  const { t } = useTranslation('add-journey');
 
   if (mutation.isLoading) return <LoadingSpinner color="primary" />;
 
@@ -48,7 +50,7 @@ const AddButton: React.FC<Props> = ({ connection }) => {
       }
       className="font-medium text-small text-primary hover:text-primary-light"
     >
-      Add
+      {t('add')}
     </button>
   );
 };
