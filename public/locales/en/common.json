@@ -2,7 +2,6 @@
   "dashboard": "Dashbaord",
   "journeys": "Journeys",
   "addJourney": "Add journey",
-  "signIn": "Sign In",
   "signOut": "Sign Out",
   "signOutError": "Unable to sign out"
 }

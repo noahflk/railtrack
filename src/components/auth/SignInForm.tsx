@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 import { Link } from '@/components/Link';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
@@ -10,7 +11,10 @@ export const SignInForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState(false);
+
   const router = useRouter();
+
+  const { t } = useTranslation('auth');
 
   const handleLogin = async () => {
     // clear error message
@@ -43,7 +47,7 @@ export const SignInForm: React.FC = () => {
     >
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Email address
+          {t('email')}
         </label>
         <div className="mt-1">
           <input
@@ -62,10 +66,10 @@ export const SignInForm: React.FC = () => {
       <div className="space-y-1">
         <div className="flex justify-between">
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
+            {t('password')}
           </label>
           <div className="text-sm">
-            <Link href="/auth/forgot">Forgot your password?</Link>
+            <Link href="/auth/forgot">{t('forgot')}</Link>
           </div>
         </div>
         <div className="mt-1">
@@ -90,7 +94,7 @@ export const SignInForm: React.FC = () => {
           disabled={loading}
           className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
         >
-          {loading ? <LoadingSpinner /> : 'Sign In'}
+          {loading ? <LoadingSpinner /> : t('signIn')}
         </button>
       </div>
     </form>
