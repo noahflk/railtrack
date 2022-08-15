@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, locale }) =>
   return {
     ...(await protectedRoute(req)),
     props: {
-      ...(await serverSideTranslations(locale ?? '', ['common'])),
+      ...(await serverSideTranslations(locale ?? '', ['common', 'journeys'])),
     },
   };
 };

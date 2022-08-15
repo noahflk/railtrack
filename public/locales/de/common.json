@@ -1,7 +1,7 @@
 {
   "dashboard": "Dashbaord",
-  "journeys": "Journeys",
-  "addJourney": "Add journey",
+  "journeys": "Alle Reisen",
+  "addJourney": "Reise hinzufügen",
   "signIn": "Anmelden",
   "signOut": "Abmelden",
   "signOutError": "Ambelden fehlgeschlagen"

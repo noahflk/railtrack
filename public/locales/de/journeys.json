@@ -1,0 +1,11 @@
+{
+  "date": "Datum",
+  "departure": "Von",
+  "destination": "Nach",
+  "distance": "Distanz",
+  "duration": "Dauer",
+  "stops": "Stops",
+  "delete": "Löschen",
+  "minutes_one": "Minute",
+  "minutes_other": "Minuten"
+}
