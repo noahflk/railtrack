@@ -1,0 +1,9 @@
+{
+  "distance": "Distance travelled",
+  "time": "Time spent travelling",
+  "total": "Total trips",
+  "recent": "Recent trips",
+  "seeAll": "See all trips",
+  "hour_one": "hour",
+  "hour_other": "hours"
+}
