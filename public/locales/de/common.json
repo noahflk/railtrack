@@ -1,3 +1,8 @@
 {
-  "test": "hallo"
+  "dashboard": "Dashbaord",
+  "journeys": "Journeys",
+  "addJourney": "Add journey",
+  "signIn": "Anmelden",
+  "signOut": "Abmelden",
+  "signOutError": "Ambelden fehlgeschlagen"
 }
