@@ -1,8 +1,6 @@
-import { GetServerSidePropsContext } from 'next';
-// src/server/router/context.ts
+import { getUser } from '@supabase/auth-helpers-nextjs';
 import * as trpc from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
-import { getUser } from '@supabase/auth-helpers-nextjs';
 
 import { prisma } from '@/server/db/client';
 

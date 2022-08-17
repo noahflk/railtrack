@@ -1,4 +1,4 @@
-import { GetServerSidePropsContext, NextApiRequest } from 'next';
+import { GetServerSidePropsContext } from 'next';
 
 import { getUser } from '@supabase/auth-helpers-nextjs';
 
