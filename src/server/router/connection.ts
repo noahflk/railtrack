@@ -4,7 +4,7 @@ import { isBefore } from 'date-fns';
 import { z } from 'zod';
 
 import { TRANSPORT_API_URL } from '@/constants';
-import { createRouter } from '@/server/router/context';
+import { createProtectedRouter } from '@/server/router/protected';
 import type { Connection } from '@/types/opendata';
 import { calculateJourneyDistance } from '@/utils/calculateDistance';
 import { parseDurationString } from '@/utils/duration';
@@ -30,15 +30,13 @@ const findConnection = async ({
   platform,
 }: ConnectionParams): Promise<Connection | undefined> => {
   const { data } = await axios.get<{ connections: Connection[] }>(
-    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${
-      departureTime.split('T')[0]
-    }&time=${departureTime.split('T')[1]}`
+    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${departureTime.split('T')[0]}&time=${
+      departureTime.split('T')[1]
+    }`
   );
 
   // ensure we have the desired connection by comparing departure time and platform
-  return data.connections.find(
-    (connection) => connection.from.platform === platform && connection.from.departure === departureTime
-  );
+  return data.connections.find((connection) => connection.from.platform === platform && connection.from.departure === departureTime);
 };
 
 const getDepartureStation = (sections: Section[]): StationInformation => {
@@ -77,7 +75,7 @@ const getArrivalStation = (sections: Section[]): StationInformation => {
   };
 };
 
-export const connectionRouter = createRouter()
+export const connectionRouter = createProtectedRouter()
   .mutation('add', {
     // this information is enough to precicely find the precise connection again
     // that way we avoid passing the whole connection object from the client to the server
@@ -92,10 +90,6 @@ export const connectionRouter = createRouter()
 
       if (!connection) {
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Connection not found' });
-      }
-
-      if (!ctx.user) {
-        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
       }
 
       const sections = connection.sections.filter((section) => section.journey);
@@ -147,10 +141,6 @@ export const connectionRouter = createRouter()
   .query('get', {
     input: z.optional(z.number()),
     async resolve({ input, ctx }) {
-      if (!ctx.user) {
-        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
-      }
-
       const connections = await ctx.prisma.connection.findMany({
         // this limits the number of returned connections if provided
         // otherwise all will be returned
@@ -186,10 +176,6 @@ export const connectionRouter = createRouter()
   })
   .query('stats', {
     async resolve({ ctx }) {
-      if (!ctx.user) {
-        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
-      }
-
       const connections = await ctx.prisma.connection.findMany({
         where: {
           userId: ctx.user.id,
@@ -209,10 +195,7 @@ export const connectionRouter = createRouter()
         },
       });
 
-      const distance = connections.reduce(
-        (partial, connection) => partial + calculateJourneyDistance(connection.sections),
-        0
-      );
+      const distance = connections.reduce((partial, connection) => partial + calculateJourneyDistance(connection.sections), 0);
 
       const numberOfConnections = await ctx.prisma.connection.count({
         where: {
@@ -237,10 +220,6 @@ export const connectionRouter = createRouter()
   .mutation('delete', {
     input: z.number(),
     async resolve({ input, ctx }) {
-      if (!ctx.user) {
-        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
-      }
-
       // check if connection exists and belongs to user
       const connection = await ctx.prisma.connection.findFirst({
         where: {
