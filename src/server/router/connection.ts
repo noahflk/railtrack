@@ -1,16 +1,15 @@
 import { TRPCError } from '@trpc/server';
-import { isBefore } from 'date-fns';
 import axios from 'axios';
+import { isBefore } from 'date-fns';
 import { z } from 'zod';
 
-import { createRouter } from '@/server/router/context';
-import { parseDurationString } from '@/utils/duration';
-import { supabase } from '@/utils/supabase';
-import { roundToOneDecimal } from '@/utils/rounding';
 import { TRANSPORT_API_URL } from '@/constants';
-import type { Section } from '@prisma/client';
+import { createRouter } from '@/server/router/context';
 import type { Connection } from '@/types/opendata';
 import { calculateJourneyDistance } from '@/utils/calculateDistance';
+import { parseDurationString } from '@/utils/duration';
+import { roundToOneDecimal } from '@/utils/rounding';
+import type { Section } from '@prisma/client';
 
 type ConnectionParams = {
   departureStation: string;
@@ -91,13 +90,11 @@ export const connectionRouter = createRouter()
     async resolve({ input, ctx }) {
       const connection = await findConnection(input);
 
-      const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
-
       if (!connection) {
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Connection not found' });
       }
 
-      if (!user) {
+      if (!ctx.user) {
         throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
       }
 
@@ -137,7 +134,7 @@ export const connectionRouter = createRouter()
       await ctx.prisma.connection.create({
         data: {
           duration: parseDurationString(connection.duration),
-          userId: user.id,
+          userId: ctx.user.id,
           sections: {
             create: sectionsData,
           },
@@ -150,9 +147,7 @@ export const connectionRouter = createRouter()
   .query('get', {
     input: z.optional(z.number()),
     async resolve({ input, ctx }) {
-      const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
-
-      if (!user) {
+      if (!ctx.user) {
         throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
       }
 
@@ -161,7 +156,7 @@ export const connectionRouter = createRouter()
         // otherwise all will be returned
         take: input,
         where: {
-          userId: user.id,
+          userId: ctx.user.id,
         },
         include: {
           sections: {
@@ -191,15 +186,13 @@ export const connectionRouter = createRouter()
   })
   .query('stats', {
     async resolve({ ctx }) {
-      const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
-
-      if (!user) {
+      if (!ctx.user) {
         throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
       }
 
       const connections = await ctx.prisma.connection.findMany({
         where: {
-          userId: user.id,
+          userId: ctx.user.id,
         },
         select: {
           sections: {
@@ -223,13 +216,13 @@ export const connectionRouter = createRouter()
 
       const numberOfConnections = await ctx.prisma.connection.count({
         where: {
-          userId: user.id,
+          userId: ctx.user.id,
         },
       });
 
       const durationResult = await ctx.prisma.$queryRaw<
         { sum: bigint }[]
-      >`SELECT sum(duration) FROM "Connection" WHERE "userId" = ${user.id}`;
+      >`SELECT sum(duration) FROM "Connection" WHERE "userId" = ${ctx.user.id}`;
 
       const durationInMinutes = Number(durationResult[0]?.sum);
 
@@ -244,9 +237,7 @@ export const connectionRouter = createRouter()
   .mutation('delete', {
     input: z.number(),
     async resolve({ input, ctx }) {
-      const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
-
-      if (!user) {
+      if (!ctx.user) {
         throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Could not find authenticated user' });
       }
 
@@ -254,7 +245,7 @@ export const connectionRouter = createRouter()
       const connection = await ctx.prisma.connection.findFirst({
         where: {
           id: input,
-          userId: user.id,
+          userId: ctx.user.id,
         },
       });
 

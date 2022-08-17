@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-import { supabase } from '@/utils/supabase';
 
 export const ForgotPasswordForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ export const ForgotPasswordForm: React.FC = () => {
     setErrorMessage(undefined);
     setLoading(true);
 
-    const { data, error } = await supabase.auth.api.resetPasswordForEmail(email);
+    const { data, error } = await supabaseClient.auth.api.resetPasswordForEmail(email);
 
     setLoading(false);
 
