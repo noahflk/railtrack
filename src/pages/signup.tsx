@@ -11,11 +11,11 @@ const SignUp: NextPage = () => (
   </AuthWrapper>
 );
 
-export const getServerSideProps: GetServerSideProps = async ({ req, locale }) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
-    ...(await protectedAuth(req)),
+    ...(await protectedAuth(ctx)),
     props: {
-      ...(await serverSideTranslations(locale ?? '', ['common', 'auth'])),
+      ...(await serverSideTranslations(ctx.locale ?? '', ['common', 'auth'])),
     },
   };
 };

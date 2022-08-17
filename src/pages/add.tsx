@@ -20,11 +20,11 @@ const Add: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, locale }) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
-    ...(await protectedRoute(req)),
+    ...(await protectedRoute(ctx)),
     props: {
-      ...(await serverSideTranslations(locale ?? '', ['common', 'add-journey'])),
+      ...(await serverSideTranslations(ctx.locale ?? '', ['common', 'add-journey'])),
     },
   };
 };

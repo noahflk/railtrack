@@ -3,7 +3,7 @@ import { LogoutIcon } from '@heroicons/react/outline';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'next-i18next';
 
-import { supabase } from '@/utils/supabase';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 export const SignoutButton: React.FC = () => {
   const { t } = useTranslation('common');
@@ -11,7 +11,7 @@ export const SignoutButton: React.FC = () => {
   return (
     <button
       onClick={async () => {
-        const { error } = await supabase.auth.signOut();
+        const { error } = await supabaseClient.auth.signOut();
 
         if (error) return toast.error(t('signOutError'));
 

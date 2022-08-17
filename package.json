@@ -13,6 +13,8 @@
     "@headlessui/react": "1.6.6",
     "@heroicons/react": "1.0.6",
     "@prisma/client": "4.1.1",
+    "@supabase/auth-helpers-nextjs": "^0.2.7",
+    "@supabase/auth-helpers-react": "^0.2.3",
     "@supabase/supabase-js": "1.35.6",
     "@trpc/client": "9.26.2",
     "@trpc/next": "9.26.2",

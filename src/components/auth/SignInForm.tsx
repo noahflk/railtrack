@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import { Link } from '@/components/Link';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-import { supabase } from '@/utils/supabase';
 
 export const SignInForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ export const SignInForm: React.FC = () => {
     setErrorMessage(undefined);
     setLoading(true);
 
-    const { user, error } = await supabase.auth.signIn({
+    const { user, error } = await supabaseClient.auth.signIn({
       email,
       password,
     });
