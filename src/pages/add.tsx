@@ -1,10 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import { Wrapper } from '@/components/Wrapper';
 import { JourneySearchForm } from '@/components/add-journey/JourneySearchForm';
 import { JourneySearchResults } from '@/components/add-journey/JourneySearchResults';
+import { Wrapper } from '@/components/Wrapper';
 import { protectedRoute } from '@/utils/protected';
 
 const Add: NextPage = () => {
