@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ViewGridAddIcon, ViewGridIcon, HomeIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import { ViewGridAddIcon, ViewGridIcon, HomeIcon, MenuIcon, XIcon, CogIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -25,6 +25,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
     { name: t('dashboard'), href: '/dashboard', icon: HomeIcon },
     { name: t('journeys'), href: '/journeys', icon: ViewGridIcon },
     { name: t('addJourney'), href: '/add', icon: ViewGridAddIcon },
+    { name: t('settings'), href: '/settings', icon: CogIcon },
   ];
 
   const currentItem = navigation.find((item) => item.href === pathname);
@@ -84,9 +85,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
                     <Link key={item.name} href={item.href} passHref>
                       <a
                         className={classNames(
-                          item.href === pathname
-                            ? 'bg-gray-100 text-gray-900'
-                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                          item.href === pathname ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                           'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                         )}
                       >
@@ -125,9 +124,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
                 <Link key={item.name} href={item.href} passHref>
                   <a
                     className={classNames(
-                      item.href === pathname
-                        ? 'bg-gray-100 text-gray-900'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                      item.href === pathname ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                       'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                     )}
                   >

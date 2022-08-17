@@ -3,5 +3,6 @@
   "journeys": "Journeys",
   "addJourney": "Add journey",
   "signOut": "Sign Out",
-  "signOutError": "Unable to sign out"
+  "signOutError": "Unable to sign out",
+  "settings": "Settings"
 }

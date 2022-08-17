@@ -3,5 +3,6 @@
   "journeys": "Alle Reisen",
   "addJourney": "Reise hinzufügen",
   "signOut": "Abmelden",
-  "signOutError": "Ambelden fehlgeschlagen"
+  "signOutError": "Ambelden fehlgeschlagen",
+  "settings": "Einstellungen"
 }
