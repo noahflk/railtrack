@@ -1,7 +1,11 @@
 import { useTranslation } from 'next-i18next';
 
+import { trpc } from '@/utils/trpc';
+
 export const Account: React.FC = () => {
   const { t } = useTranslation('settings');
+
+  const { data: settings } = trpc.useQuery(['settings.get']);
 
   return (
     <section aria-labelledby="payment-details-heading">
