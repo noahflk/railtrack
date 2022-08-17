@@ -6,5 +6,6 @@
   "search": "Search connections",
   "connections": "Connections",
   "searchFor": "Search for a connection",
+  "notFound": "No connections found",
   "add": "Add"
 }

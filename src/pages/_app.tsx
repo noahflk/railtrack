@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
 import superjson from 'superjson';
 import { appWithTranslation } from 'next-i18next';
+import { UserProvider } from '@supabase/auth-helpers-react';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import type { AppRouter } from '@/server/router';
 import '@/styles/globals.css';
-
-import { UserContextProvider } from '@/context/UserContext';
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const { toasts } = useToasterStore();
@@ -24,10 +24,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   }, [toasts]);
 
   return (
-    <UserContextProvider>
+    <UserProvider supabaseClient={supabaseClient}>
       <Component {...pageProps} />
       <Toaster />
-    </UserContextProvider>
+    </UserProvider>
   );
 };
 
@@ -42,7 +42,7 @@ const getBaseUrl = () => {
 };
 
 export default withTRPC<AppRouter>({
-  config({ ctx }) {
+  config() {
     /**
      * If you want to use SSR, you need to use the server's full URL
      * @link https://trpc.io/docs/ssr

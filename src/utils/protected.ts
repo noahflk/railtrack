@@ -1,27 +1,25 @@
-import { IncomingMessage } from 'http';
+import { GetServerSidePropsContext } from 'next';
 
-import { supabase } from '@/utils/supabase';
+import { getUser } from '@supabase/auth-helpers-nextjs';
 
-const getCurrentUser = async (req: IncomingMessage) => {
-  const { user } = await supabase.auth.api.getUserByCookie(req);
+export const protectedRoute = async (ctx: GetServerSidePropsContext) => {
+  const { user } = await getUser(ctx);
 
-  return user;
-};
+  const isAuthenticated = user && user.role === 'authenticated';
 
-export const protectedRoute = async (req: IncomingMessage) => {
-  const isSignedIn = await getCurrentUser(req);
-
-  if (!isSignedIn) {
+  if (!isAuthenticated) {
     return { props: {}, redirect: { destination: '/signin' } };
   }
 
   return { props: {} };
 };
 
-export const protectedAuth = async (req: IncomingMessage) => {
-  const isSignedIn = await getCurrentUser(req);
+export const protectedAuth = async (ctx: GetServerSidePropsContext) => {
+  const { user } = await getUser(ctx);
 
-  if (isSignedIn) {
+  const isAuthenticated = user && user.role === 'authenticated';
+
+  if (isAuthenticated) {
     return { props: {}, redirect: { destination: '/dashboard' } };
   }
 

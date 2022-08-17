@@ -64,8 +64,7 @@ export const Map: React.FC<{ journeys: Coordinates[] }> = ({ journeys }) => {
       mapStyle="mapbox://styles/mapbox/light-v10"
       mapboxAccessToken={MAPBOX_TOKEN}
     >
-      {/* TODO: fix the type error with the data  property */}
-      {/* @ts-ignore */}
+      {/* @ts-expect-error TODO: fix the type error with the data  property */}
       <Source id="polylineLayer" type="geojson" data={geoData}>
         <Layer
           id="lineLayer"

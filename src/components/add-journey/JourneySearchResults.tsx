@@ -9,10 +9,39 @@ const generateJourneyKey = (connection: Connection) => {
   return `${connection.from.departureTimestamp}${connection.from.departure}${connection.to.arrivalTimestamp}${connection.to.arrival}`;
 };
 
+const ResultDisplay: React.FC = () => {
+  const connections = useJourneySearchStore((state) => state.connections);
+
+  const { t } = useTranslation('add-journey');
+
+  if (!connections) {
+    return (
+      <div className="flex items-center justify-center h-full pb-6">
+        <p>{t('searchFor')}</p>
+      </div>
+    );
+  }
+
+  if (connections.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-full pb-6">
+        <p>{t('notFound')}</p>
+      </div>
+    );
+  }
+
+  return (
+    <ul role="list">
+      {connections.map((connection) => (
+        <JourneySearchResult key={generateJourneyKey(connection)} connection={connection} />
+      ))}
+    </ul>
+  );
+};
+
 export const JourneySearchResults: React.FC = () => {
   const departureStation = useJourneySearchStore((state) => state.departureStation);
   const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
-  const connections = useJourneySearchStore((state) => state.connections);
 
   const { t } = useTranslation('add-journey');
 
@@ -22,21 +51,10 @@ export const JourneySearchResults: React.FC = () => {
         <h3 className="text-xl font-semibold text-gray-900">{t('connections')}</h3>
         {departureStation && arrivalStation && (
           <p className="font-medium text-gray-900 ">
-            {departureStation.name} <ArrowNarrowRightIcon className="inline w-6 mx-2 text-primary" />{' '}
-            {arrivalStation.name}
+            {departureStation.name} <ArrowNarrowRightIcon className="inline w-6 mx-2 text-primary" /> {arrivalStation.name}
           </p>
         )}
-        {connections.length > 0 ? (
-          <ul role="list">
-            {connections.map((connection) => (
-              <JourneySearchResult key={generateJourneyKey(connection)} connection={connection} />
-            ))}
-          </ul>
-        ) : (
-          <div className="flex items-center justify-center h-full pb-6">
-            <p>{t('searchFor')}</p>
-          </div>
-        )}
+        <ResultDisplay />
       </div>
     </li>
   );

@@ -1,10 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import { Wrapper } from '@/components/Wrapper';
 import { JourneySearchForm } from '@/components/add-journey/JourneySearchForm';
 import { JourneySearchResults } from '@/components/add-journey/JourneySearchResults';
+import { Wrapper } from '@/components/Wrapper';
 import { protectedRoute } from '@/utils/protected';
 
 const Add: NextPage = () => {
@@ -20,11 +20,11 @@ const Add: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, locale }) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
-    ...(await protectedRoute(req)),
+    ...(await protectedRoute(ctx)),
     props: {
-      ...(await serverSideTranslations(locale ?? '', ['common', 'add-journey'])),
+      ...(await serverSideTranslations(ctx.locale ?? '', ['common', 'add-journey'])),
     },
   };
 };
