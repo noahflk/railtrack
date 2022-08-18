@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { Logo } from '@/components/Logo';
 import { Link } from '@/components/Link';
 import { Head } from '@/components/Head';
+import { useI18n } from '@/locales';
 import image from 'public/images/symbolic-1.jpg';
-import { useTranslation } from 'next-i18next';
 
 type AuthType = 'signin' | 'signup' | 'forgot';
 
@@ -14,7 +14,8 @@ type Props = {
 };
 
 const AlternativeLink: React.FC<{ type: AuthType }> = ({ type }) => {
-  const { t } = useTranslation('auth');
+  const { scopedT } = useI18n();
+  const t = scopedT('auth');
 
   const signInTitle = t('signInTitle')[0]?.toLowerCase() + t('signInTitle').substring(1);
   const signUpTitle = t('signUpTitle')[0]?.toLowerCase() + t('signUpTitle').substring(1);
@@ -32,7 +33,8 @@ const authTypeToText = (type: AuthType): string => {
 };
 
 export const AuthWrapper: React.FC<Props> = ({ children, type }) => {
-  const { t } = useTranslation('auth');
+  const { scopedT } = useI18n();
+  const t = scopedT('auth');
 
   return (
     <>
@@ -60,13 +62,7 @@ export const AuthWrapper: React.FC<Props> = ({ children, type }) => {
           </div>
         </div>
         <div className="relative flex-1 hidden w-0 lg:block">
-          <Image
-            className="absolute inset-0 w-full h-full"
-            layout="fill"
-            objectFit="cover"
-            src={image}
-            alt="Symbolic train image"
-          />
+          <Image className="absolute inset-0 w-full h-full" layout="fill" objectFit="cover" src={image} alt="Symbolic train image" />
         </div>
       </div>
     </>

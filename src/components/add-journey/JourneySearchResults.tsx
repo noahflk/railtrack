@@ -2,8 +2,8 @@ import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
+import { useI18n } from '@/locales';
 import type { Connection } from '@/types/opendata';
-import { useTranslation } from 'next-i18next';
 
 const generateJourneyKey = (connection: Connection) => {
   return `${connection.from.departureTimestamp}${connection.from.departure}${connection.to.arrivalTimestamp}${connection.to.arrival}`;
@@ -12,7 +12,8 @@ const generateJourneyKey = (connection: Connection) => {
 const ResultDisplay: React.FC = () => {
   const connections = useJourneySearchStore((state) => state.connections);
 
-  const { t } = useTranslation('add-journey');
+  const { scopedT } = useI18n();
+  const t = scopedT('add');
 
   if (!connections) {
     return (
@@ -43,7 +44,8 @@ export const JourneySearchResults: React.FC = () => {
   const departureStation = useJourneySearchStore((state) => state.departureStation);
   const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
 
-  const { t } = useTranslation('add-journey');
+  const { scopedT } = useI18n();
+  const t = scopedT('add');
 
   return (
     <li className="col-span-1 bg-white divide-y rounded-lg shadow divide-gray-200npm ">

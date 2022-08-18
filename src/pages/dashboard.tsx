@@ -1,18 +1,17 @@
-import type { GetServerSideProps, NextPage } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 
 import { JourneyMap } from '@/components/dashboard/JourneyMap';
 import { RecentJourneys } from '@/components/dashboard/RecentJourneys';
 import { StatsDisplay } from '@/components/dashboard/StatsDisplay';
 import { Wrapper } from '@/components/Wrapper';
+import { getLocaleProps, useI18n } from '@/locales';
 import { protectedRoute } from '@/utils/protected';
 
 const Dashboard: NextPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useI18n();
 
   return (
-    <Wrapper title={t('dashboard')}>
+    <Wrapper title={t('navigation.dashboard')}>
       <StatsDisplay />
       <div className="grid grid-cols-1 gap-6 mt-4 xl:grid-cols-3">
         <RecentJourneys />
@@ -22,13 +21,8 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return {
-    ...(await protectedRoute(ctx)),
-    props: {
-      ...(await serverSideTranslations(ctx.locale ?? '', ['common', 'dashboard'])),
-    },
-  };
-};
+export const getServerSideProps: GetServerSideProps = getLocaleProps((ctx: GetServerSidePropsContext) => {
+  return protectedRoute(ctx);
+});
 
 export default Dashboard;
