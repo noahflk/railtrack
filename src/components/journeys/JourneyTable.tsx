@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
-import { useTranslation } from 'next-i18next';
 
+import { useI18n } from '@/locales';
 import { InferQueryOutput } from '@/server/trpc-helper';
 
 // import TablePagination from '@/components/journeys/TablePagination';
@@ -14,13 +14,12 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
   const departureTime = new Date(journey.departureTime);
   const arrivalTime = new Date(journey.arrivalTime);
 
-  const { t } = useTranslation('journeys');
+  const { scopedT } = useI18n();
+  const t = scopedT('journeys');
 
   return (
     <tr>
-      <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
-        {format(departureTime, 'dd.MM.yyyy')}
-      </td>
+      <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">{format(departureTime, 'dd.MM.yyyy')}</td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {journey.departureStation} ({format(departureTime, 'HH:mm')})
       </td>
@@ -29,7 +28,7 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.distance} km</td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-        {journey.duration} {t('minutes', { count: journey.duration })}
+        {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
       </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.stops}</td>
       <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
@@ -47,7 +46,7 @@ type TableProps = {
 };
 
 export const JourneyTable: React.FC<TableProps> = ({ journeys, handleDelete }) => {
-  const { t } = useTranslation('journeys');
+  const { t } = useI18n();
 
   return (
     <div className="flex flex-col">
@@ -58,22 +57,22 @@ export const JourneyTable: React.FC<TableProps> = ({ journeys, handleDelete }) =
               <thead className="bg-gray-50">
                 <tr>
                   <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                    {t('date')}
+                    {t('journeys.date')}
                   </th>
-                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     {t('departure')}
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    {t('destination')}
+                    {t('arrival')}
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    {t('distance')}
+                    {t('journeys.distance')}
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    {t('duration')}
+                    {t('journeys.duration')}
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    {t('stops')}
+                    {t('journeys.stops')}
                   </th>
                 </tr>
               </thead>

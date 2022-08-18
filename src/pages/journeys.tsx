@@ -1,28 +1,22 @@
-import { GetServerSideProps, NextPage } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 
-import { Wrapper } from '@/components/Wrapper';
 import { JourneyList } from '@/components/journeys/JourneyList';
+import { Wrapper } from '@/components/Wrapper';
+import { getLocaleProps, useI18n } from '@/locales';
 import { protectedRoute } from '@/utils/protected';
 
 const Journeys: NextPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useI18n();
 
   return (
-    <Wrapper title={t('journeys')}>
+    <Wrapper title={t('navigation.journeys')}>
       <JourneyList />
     </Wrapper>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return {
-    ...(await protectedRoute(ctx)),
-    props: {
-      ...(await serverSideTranslations(ctx.locale ?? '', ['common', 'journeys'])),
-    },
-  };
-};
+export const getServerSideProps: GetServerSideProps = getLocaleProps((ctx: GetServerSidePropsContext) => {
+  return protectedRoute(ctx);
+});
 
 export default Journeys;

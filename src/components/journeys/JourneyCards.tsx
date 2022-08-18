@@ -1,8 +1,8 @@
-import { format } from 'date-fns';
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
-import { useTranslation } from 'next-i18next';
+import { format } from 'date-fns';
 
 import { TextButton } from '@/components/TextButton';
+import { useI18n } from '@/locales';
 import { InferQueryOutput } from '@/server/trpc-helper';
 
 type CardProps = {
@@ -15,7 +15,8 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
   const departureTime = new Date(journey.departureTime);
   const arrivalTime = new Date(journey.arrivalTime);
 
-  const { t } = useTranslation('journeys');
+  const { scopedT } = useI18n();
+  const t = scopedT('journeys');
 
   return (
     <li className="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow">
@@ -35,7 +36,7 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
             {format(departureTime, 'HH:mm')} - {format(arrivalTime, 'HH:mm')}
           </p>
           <p>
-            Duration: {journey.duration} {t('minutes', { count: journey.duration })}
+            Duration: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
           </p>
           <p>Distance: {journey.distance} km </p>
         </div>

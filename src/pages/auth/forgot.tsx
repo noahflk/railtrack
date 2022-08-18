@@ -1,8 +1,8 @@
-import type { GetServerSideProps, NextPage } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { ForgotPasswordForm } from '@/components/auth/ForgotPasswordForm';
+import { getLocaleProps } from '@/locales';
 import { protectedAuth } from '@/utils/protected';
 
 const ForgotPassword: NextPage = () => {
@@ -13,13 +13,8 @@ const ForgotPassword: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return {
-    ...(await protectedAuth(ctx)),
-    props: {
-      ...(await serverSideTranslations(ctx.locale ?? '', ['common', 'auth'])),
-    },
-  };
-};
+export const getServerSideProps: GetServerSideProps = getLocaleProps((ctx: GetServerSidePropsContext) => {
+  return protectedAuth(ctx);
+});
 
 export default ForgotPassword;

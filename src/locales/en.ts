@@ -27,8 +27,6 @@ export default {
   'dashboard.hour_one': 'hour',
   'dashboard.hour_other': 'hours',
   'journeys.date': 'Date',
-  'journeys.departure': 'Departure',
-  'journeys.destination': 'Destination',
   'journeys.distance': 'Distance',
   'journeys.duration': 'Duration',
   'journeys.stops': 'Stops',
