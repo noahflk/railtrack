@@ -9,6 +9,7 @@ import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 import type { AppRouter } from '@/server/router';
 import { I18nProvider } from '@/locales';
 import '@/styles/globals.css';
+import { NextIntlProvider } from 'next-intl';
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const { toasts } = useToasterStore();
@@ -25,10 +26,12 @@ const MyApp: AppType = ({ Component, pageProps }) => {
 
   return (
     <I18nProvider locale={pageProps.locale}>
-      <UserProvider supabaseClient={supabaseClient}>
-        <Component {...pageProps} />
-        <Toaster />
-      </UserProvider>
+      <NextIntlProvider messages={pageProps.messages}>
+        <UserProvider supabaseClient={supabaseClient}>
+          <Component {...pageProps} />
+          <Toaster />
+        </UserProvider>
+      </NextIntlProvider>
     </I18nProvider>
   );
 };
