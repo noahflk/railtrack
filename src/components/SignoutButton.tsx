@@ -1,13 +1,12 @@
 import router from 'next/router';
+import { useTranslations } from 'next-intl';
 import { LogoutIcon } from '@heroicons/react/outline';
 import toast from 'react-hot-toast';
 
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
-import { useI18n } from '@/locales';
 
 export const SignoutButton: React.FC = () => {
-  const { scopedT } = useI18n();
-  const t = scopedT('navigation');
+  const t = useTranslations('navigation');
 
   return (
     <button

@@ -1,16 +1,16 @@
-import { GetServerSideProps, NextPage } from 'next';
-import { useTranslations } from 'next-intl';
+import type { GetServerSideProps, NextPage } from 'next';
 
-import { JourneyList } from '@/components/journeys/JourneyList';
+import { Account } from '@/components/settings/Account';
 import { Wrapper } from '@/components/Wrapper';
 import { protectedRouteWithLocales } from '@/utils/protectedLocales';
+import { useTranslations } from 'next-intl';
 
-const Journeys: NextPage = () => {
+const Settings: NextPage = () => {
   const t = useTranslations();
 
   return (
-    <Wrapper title={t('navigation.journeys')}>
-      <JourneyList />
+    <Wrapper title={t('navigation.addJourney')}>
+      <Account />
     </Wrapper>
   );
 };
@@ -19,4 +19,4 @@ export const getServerSideProps: GetServerSideProps = (ctx) => {
   return protectedRouteWithLocales(ctx);
 };
 
-export default Journeys;
+export default Settings;

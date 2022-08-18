@@ -1,8 +1,8 @@
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 import { format } from 'date-fns';
+import { useTranslations } from 'next-intl';
 
 import { TextButton } from '@/components/TextButton';
-import { useI18n } from '@/locales';
 import { InferQueryOutput } from '@/server/trpc-helper';
 
 type CardProps = {
@@ -15,8 +15,7 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
   const departureTime = new Date(journey.departureTime);
   const arrivalTime = new Date(journey.arrivalTime);
 
-  const { scopedT } = useI18n();
-  const t = scopedT('journeys');
+  const t = useTranslations('journeys');
 
   return (
     <li className="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow">
@@ -24,7 +23,8 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
         <div className="grid flex-1 grid-cols-1 gap-2 mb-2 font-semibold text-gray-900 truncate xs:grid-cols-2">
           <div>
             <p>
-              {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" /> {journey.arrivalStation}
+              {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" />{' '}
+              {journey.arrivalStation}
             </p>
           </div>
           <div>

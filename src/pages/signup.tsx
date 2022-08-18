@@ -1,9 +1,8 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { SignUpForm } from '@/components/auth/SignUpForm';
-import { protectedAuth } from '@/utils/protected';
+import { protectedAuthWithLocales } from '@/utils/protectedLocales';
 
 const SignUp: NextPage = () => (
   <AuthWrapper type="signup">
@@ -11,13 +10,8 @@ const SignUp: NextPage = () => (
   </AuthWrapper>
 );
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return {
-    ...(await protectedAuth(ctx)),
-    props: {
-      ...(await serverSideTranslations(ctx.locale ?? '', ['common', 'auth'])),
-    },
-  };
+export const getServerSideProps: GetServerSideProps = (ctx) => {
+  return protectedAuthWithLocales(ctx);
 };
 
 export default SignUp;

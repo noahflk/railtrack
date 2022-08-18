@@ -1,8 +1,8 @@
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
+import { useTranslations } from 'next-intl';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
-import { useI18n } from '@/locales';
 import type { Connection } from '@/types/opendata';
 
 const generateJourneyKey = (connection: Connection) => {
@@ -12,8 +12,7 @@ const generateJourneyKey = (connection: Connection) => {
 const ResultDisplay: React.FC = () => {
   const connections = useJourneySearchStore((state) => state.connections);
 
-  const { scopedT } = useI18n();
-  const t = scopedT('add');
+  const t = useTranslations('add');
 
   if (!connections) {
     return (
@@ -44,8 +43,7 @@ export const JourneySearchResults: React.FC = () => {
   const departureStation = useJourneySearchStore((state) => state.departureStation);
   const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
 
-  const { scopedT } = useI18n();
-  const t = scopedT('add');
+  const t = useTranslations('add');
 
   return (
     <li className="col-span-1 bg-white divide-y rounded-lg shadow divide-gray-200npm ">
@@ -53,7 +51,8 @@ export const JourneySearchResults: React.FC = () => {
         <h3 className="text-xl font-semibold text-gray-900">{t('connections')}</h3>
         {departureStation && arrivalStation && (
           <p className="font-medium text-gray-900 ">
-            {departureStation.name} <ArrowNarrowRightIcon className="inline w-6 mx-2 text-primary" /> {arrivalStation.name}
+            {departureStation.name} <ArrowNarrowRightIcon className="inline w-6 mx-2 text-primary" />{' '}
+            {arrivalStation.name}
           </p>
         )}
         <ResultDisplay />

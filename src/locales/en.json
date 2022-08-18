@@ -1,0 +1,64 @@
+{
+  "departure": "From",
+  "arrival": "To",
+  "add": {
+    "time": "eparture time",
+    "currentTime": "Now",
+    "search": "Find connections",
+    "connections": "Connections",
+    "searchFor": "Search for a connection",
+    "notFound": "No conections found",
+    "save": "Save"
+  },
+  "auth": {
+    "save": "Save",
+    "signUpTitle": "Create a new account",
+    "signInTitle": "Sign in with your account",
+    "forgotTitle": "Forgot your password",
+    "reset": "Reset password",
+    "email": "Email address",
+    "password": "Password",
+    "forgot": "Forgot your password?",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "or": "Or"
+  },
+  "dashboard": {
+    "distance": "Distance travelled",
+    "time": "Time spent travelling",
+    "total": "Total trips",
+    "recent": "Recent trips",
+    "seeAll": "See all trips",
+    "hour_one": "hour",
+    "hour_other": "hours"
+  },
+  "journeys": {
+    "date": "Date",
+    "distance": "Distance",
+    "duration": "Duration",
+    "stops": "Stops",
+    "delete": "Delete",
+    "deleteJourney": "Delete journey",
+    "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
+    "cancel": "Cancel",
+    "minutes_one": "minute",
+    "minutes_other": "minutes"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "journeys": "Journeys",
+    "addJourney": "Add journey",
+    "signOut": "Sign Out",
+    "signOutError": "Unable to sign out"
+  },
+  "settings": {
+    "save": "Save",
+    "language": "Language",
+    "email": "Email",
+    "account": "Account",
+    "updateSuccess": "Successfully updated settings",
+    "updateFail": "Failed to update settings"
+  }
+}

@@ -1,6 +1,6 @@
+import { useTranslations } from 'next-intl';
 import { format } from 'date-fns';
 
-import { useI18n } from '@/locales';
 import { InferQueryOutput } from '@/server/trpc-helper';
 
 // import TablePagination from '@/components/journeys/TablePagination';
@@ -14,12 +14,13 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
   const departureTime = new Date(journey.departureTime);
   const arrivalTime = new Date(journey.arrivalTime);
 
-  const { scopedT } = useI18n();
-  const t = scopedT('journeys');
+  const t = useTranslations('journeys');
 
   return (
     <tr>
-      <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">{format(departureTime, 'dd.MM.yyyy')}</td>
+      <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
+        {format(departureTime, 'dd.MM.yyyy')}
+      </td>
       <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
         {journey.departureStation} ({format(departureTime, 'HH:mm')})
       </td>
@@ -46,7 +47,7 @@ type TableProps = {
 };
 
 export const JourneyTable: React.FC<TableProps> = ({ journeys, handleDelete }) => {
-  const { t } = useI18n();
+  const t = useTranslations();
 
   return (
     <div className="flex flex-col">

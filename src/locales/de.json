@@ -1,0 +1,64 @@
+{
+  "departure": "Von",
+  "arrival": "Nach",
+  "add": {
+    "time": "Abfahrtszeit",
+    "currentTime": "Jetzt",
+    "search": "Verbindungen finden",
+    "connections": "Verbindungen",
+    "searchFor": "Suche nach einer Verbindung",
+    "notFound": "Keine Verbindungen gefunden",
+    "save": "Speichern"
+  },
+  "auth": {
+    "save": "Speichern",
+    "signUpTitle": "Neuen Account erstellen",
+    "signInTitle": "Mit Account anmelden",
+    "forgotTitle": "Setze dein Passwort zurück",
+    "reset": "Passwort zurücksetzen",
+    "email": "Email-Adresse",
+    "password": "Passwort",
+    "forgot": "Passwort vergessen?",
+    "signIn": "Anmelden",
+    "signUp": "Registrieren",
+    "signOut": "Abmelden",
+    "or": "Oder"
+  },
+  "dashboard": {
+    "distance": "Gereiste Distanz",
+    "time": "Totale Reisezeit",
+    "total": "Anzahl Reisen",
+    "recent": "Kürzliche Reisen",
+    "seeAll": "Alle Reisen anzeigen",
+    "hour_one": "Stunde",
+    "hour_other": "Stunden"
+  },
+  "journeys": {
+    "date": "Datum",
+    "distance": "Distanz",
+    "duration": "Dauer",
+    "stops": "Stops",
+    "delete": "Löschen",
+    "deleteJourney": "Delete journey",
+    "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
+    "cancel": "Cancel",
+    "minutes_one": "Minute",
+    "minutes_other": "Minuten"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "settings": "Einstellungen",
+    "journeys": "Reisen",
+    "addJourney": "Reise hinzufügen",
+    "signOut": "Abmelden",
+    "signOutError": "Abmelden fehlgeschlagen"
+  },
+  "settings": {
+    "save": "Speichern",
+    "language": "Sprache",
+    "email": "E-Mail",
+    "account": "Konto",
+    "updateSuccess": "Einstellungen erfolgreich gespeichert",
+    "updateFail": "Einstellungen konnten nicht gespeichert werden"
+  }
+}

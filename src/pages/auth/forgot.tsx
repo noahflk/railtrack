@@ -1,9 +1,8 @@
-import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { ForgotPasswordForm } from '@/components/auth/ForgotPasswordForm';
-import { getLocaleProps } from '@/locales';
-import { protectedAuth } from '@/utils/protected';
+import { protectedAuthWithLocales } from '@/utils/protectedLocales';
 
 const ForgotPassword: NextPage = () => {
   return (
@@ -13,8 +12,8 @@ const ForgotPassword: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = getLocaleProps((ctx: GetServerSidePropsContext) => {
-  return protectedAuth(ctx);
-});
+export const getServerSideProps: GetServerSideProps = (ctx) => {
+  return protectedAuthWithLocales(ctx);
+};
 
 export default ForgotPassword;

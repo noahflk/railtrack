@@ -1,14 +1,13 @@
-import { GlobeIcon, ChartBarIcon, ClockIcon } from '@heroicons/react/outline';
+import { ChartBarIcon, ClockIcon, GlobeIcon } from '@heroicons/react/outline';
+import { useTranslations } from 'next-intl';
 
 import { Stat } from '@/components/dashboard/Stat';
 import { trpc } from '@/utils/trpc';
-import { useI18n } from '@/locales';
 
 export const StatsDisplay: React.FC = () => {
   const { data: stats } = trpc.useQuery(['connection.stats']);
 
-  const { scopedT } = useI18n();
-  const t = scopedT('dashboard');
+  const t = useTranslations('dashboard');
 
   return (
     <ul role="list" className="grid grid-cols-1 gap-6 lg:grid-cols-3">

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useTranslations } from 'next-intl';
 import toast from 'react-hot-toast';
 import { useThrottleState } from 'react-relaxed';
 
@@ -7,7 +8,6 @@ import { StationSearchField } from '@/components/add-journey/StationSearchField'
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { TRANSPORT_API_URL } from '@/constants';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
-import { useI18n } from '@/locales';
 
 export const JourneySearchForm: React.FC = () => {
   const departureTime = useJourneySearchStore((state) => state.departureTime);
@@ -17,7 +17,7 @@ export const JourneySearchForm: React.FC = () => {
   const setArrivalStation = useJourneySearchStore((state) => state.setArrivalStation);
   const setConnections = useJourneySearchStore((state) => state.setConnections);
 
-  const { t } = useI18n();
+  const t = useTranslations();
 
   const [, setLoading, loading] = useThrottleState(false, 150);
 
@@ -42,8 +42,16 @@ export const JourneySearchForm: React.FC = () => {
   return (
     <li className="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow">
       <div className="w-full p-6 space-y-6 ">
-        <StationSearchField label={t('departure')} selectedStation={departureStation} setSelectedStation={setDepartureStation} />
-        <StationSearchField label={t('arrival')} selectedStation={arrivalStation} setSelectedStation={setArrivalStation} />
+        <StationSearchField
+          label={t('departure')}
+          selectedStation={departureStation}
+          setSelectedStation={setDepartureStation}
+        />
+        <StationSearchField
+          label={t('arrival')}
+          selectedStation={arrivalStation}
+          setSelectedStation={setArrivalStation}
+        />
         <DepartureTimeField />
         <button
           onClick={getConnections}

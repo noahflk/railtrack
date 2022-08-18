@@ -1,4 +1,5 @@
 import { Fragment, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { Dialog, Transition } from '@headlessui/react';
 import { ExclamationIcon } from '@heroicons/react/outline';
 
@@ -13,6 +14,8 @@ type Props = {
 
 export const DeleteConfirmModal: React.FC<Props> = ({ isOpen, onDismiss, onConfirm, isLoading }) => {
   const cancelButtonRef = useRef(null);
+
+  const t = useTranslations('journeys');
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -55,12 +58,10 @@ export const DeleteConfirmModal: React.FC<Props> = ({ isOpen, onDismiss, onConfi
                 </div>
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                   <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                    Delete journey
+                    {t('deleteJourney')}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Are you sure you want to delete this journey? This action cannot be undone.
-                    </p>
+                    <p className="text-sm text-gray-500">{t('deleteConfirm')}</p>
                   </div>
                 </div>
               </div>
@@ -70,7 +71,7 @@ export const DeleteConfirmModal: React.FC<Props> = ({ isOpen, onDismiss, onConfi
                   className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                   onClick={onConfirm}
                 >
-                  {isLoading ? <LoadingSpinner /> : 'Delete'}
+                  {isLoading ? <LoadingSpinner /> : t('delete')}
                 </button>
                 <button
                   type="button"
@@ -78,7 +79,7 @@ export const DeleteConfirmModal: React.FC<Props> = ({ isOpen, onDismiss, onConfi
                   onClick={onDismiss}
                   ref={cancelButtonRef}
                 >
-                  Cancel
+                  {t('cancel')}
                 </button>
               </div>
             </div>
