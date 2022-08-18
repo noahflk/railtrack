@@ -3,7 +3,8 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Combobox } from '@headlessui/react';
 
 import { classNames } from '@/utils/styling';
-import { useStationSearch, Station } from '@/hooks/useStationSearch';
+import { useStationSearch } from '@/hooks/useStationSearch';
+import type { Station } from '@/types/opendata';
 
 type Props = {
   label: string;

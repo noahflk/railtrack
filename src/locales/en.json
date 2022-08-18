@@ -7,7 +7,8 @@
     "search": "Find connections",
     "connections": "Connections",
     "searchFor": "Search for a connection",
-    "notFound": "No conections found"
+    "notFound": "No conections found",
+    "save": "Save"
   },
   "auth": {
     "save": "Save",
