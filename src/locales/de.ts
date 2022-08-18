@@ -34,8 +34,13 @@ export default {
   'journeys.minutes_one': 'Minute',
   'journeys.minutes_other': 'Minuten',
   'navigation.dashboard': 'Dashboard',
+  'navigation.settings': 'Einstellungen',
   'navigation.journeys': 'Alle Reisen',
   'navigation.addJourney': 'Reise hinzufügen',
   'navigation.signOut': 'Abmelden',
   'navigation.signOutError': 'Abmelden fehlgeschlagen',
+  'settings.save': 'Speichern',
+  'settings.language': 'Sprache',
+  'settings.email': 'E-Mail',
+  'settings.account': 'Konto',
 } as const;
