@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 
-const { i18n } = require('./next-i18next.config');
-
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
@@ -21,8 +19,10 @@ const nextConfig = {
       },
     ];
   },
-  // importing the internationalization config separately so that it can be read by the in8 lib
-  i18n,
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'de'],
+  },
 };
 
 module.exports = nextConfig;

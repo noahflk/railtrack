@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { useI18n } from '@/locales';
 
 export const SignUpForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +11,8 @@ export const SignUpForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState(false);
 
-  const { t } = useTranslation('auth');
+  const { scopedT } = useI18n();
+  const t = scopedT('auth');
 
   const router = useRouter();
 

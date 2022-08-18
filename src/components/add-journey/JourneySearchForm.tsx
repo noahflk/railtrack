@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { useThrottleState } from 'react-relaxed';
 import toast from 'react-hot-toast';
-import { useTranslation } from 'next-i18next';
+import { useThrottleState } from 'react-relaxed';
 
-import { StationSearchField } from '@/components/add-journey/StationSearchField';
 import { DepartureTimeField } from '@/components/add-journey/DepartureTimeField';
-import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
+import { StationSearchField } from '@/components/add-journey/StationSearchField';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { TRANSPORT_API_URL } from '@/constants';
+import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
+import { useI18n } from '@/locales';
 
 export const JourneySearchForm: React.FC = () => {
   const departureTime = useJourneySearchStore((state) => state.departureTime);
@@ -17,7 +17,7 @@ export const JourneySearchForm: React.FC = () => {
   const setArrivalStation = useJourneySearchStore((state) => state.setArrivalStation);
   const setConnections = useJourneySearchStore((state) => state.setConnections);
 
-  const { t } = useTranslation('add-journey');
+  const { t } = useI18n();
 
   const [, setLoading, loading] = useThrottleState(false, 150);
 
@@ -42,22 +42,14 @@ export const JourneySearchForm: React.FC = () => {
   return (
     <li className="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow">
       <div className="w-full p-6 space-y-6 ">
-        <StationSearchField
-          label={t('departure')}
-          selectedStation={departureStation}
-          setSelectedStation={setDepartureStation}
-        />
-        <StationSearchField
-          label={t('arrival')}
-          selectedStation={arrivalStation}
-          setSelectedStation={setArrivalStation}
-        />
+        <StationSearchField label={t('departure')} selectedStation={departureStation} setSelectedStation={setDepartureStation} />
+        <StationSearchField label={t('arrival')} selectedStation={arrivalStation} setSelectedStation={setArrivalStation} />
         <DepartureTimeField />
         <button
           onClick={getConnections}
           className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
         >
-          {loading ? <LoadingSpinner /> : t('search')}
+          {loading ? <LoadingSpinner /> : t('add.search')}
         </button>
       </div>
     </li>

@@ -1,12 +1,12 @@
-import { useTranslation } from 'next-i18next';
-
 import { Journey } from '@/components/dashboard/Journey';
 import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { Link } from '@/components/Link';
+import { useI18n } from '@/locales';
 import { trpc } from '@/utils/trpc';
 
 const RecentJourneysWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { t } = useTranslation('dashboard');
+  const { scopedT } = useI18n();
+  const t = scopedT('dashboard');
 
   return (
     <div className="col-span-1 p-4 bg-white rounded-lg shadow">
@@ -21,7 +21,8 @@ const FETCH_CONNECTION_LIMIT = 7;
 export const RecentJourneys: React.FC = () => {
   const { data: connections } = trpc.useQuery(['connection.get', FETCH_CONNECTION_LIMIT]);
 
-  const { t } = useTranslation('dashboard');
+  const { scopedT } = useI18n();
+  const t = scopedT('dashboard');
 
   if (!connections)
     return (

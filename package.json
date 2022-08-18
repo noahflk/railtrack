@@ -23,7 +23,7 @@
     "axios": "0.27.2",
     "date-fns": "2.29.1",
     "next": "12.2.4",
-    "next-i18next": "^11.3.0",
+    "next-international": "^0.2.0",
     "react": "18.2.0",
     "react-breakout": "1.0.1",
     "react-dom": "18.2.0",

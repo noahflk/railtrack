@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useTranslation } from 'next-i18next';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useState } from 'react';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { useI18n } from '@/locales';
 
 export const ForgotPasswordForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +10,8 @@ export const ForgotPasswordForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState(false);
 
-  const { t } = useTranslation('auth');
+  const { scopedT } = useI18n();
+  const t = scopedT('auth');
 
   const handleForgot = async () => {
     // clear messages

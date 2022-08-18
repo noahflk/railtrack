@@ -1,13 +1,13 @@
-import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ViewGridAddIcon, ViewGridIcon, HomeIcon, MenuIcon, XIcon, CogIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
+import { Fragment, useState } from 'react';
 
+import { Head } from '@/components/Head';
 import { LogoText } from '@/components/LogoText';
 import { SignoutButton } from '@/components/SignoutButton';
-import { Head } from '@/components/Head';
+import { useI18n } from '@/locales';
 import { classNames } from '@/utils/styling';
 
 type Props = {
@@ -17,9 +17,11 @@ type Props = {
 
 export const Wrapper: React.FC<Props> = ({ children, title }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const { pathname } = useRouter();
 
-  const { t } = useTranslation('common');
+  const { scopedT } = useI18n();
+  const t = scopedT('navigation');
 
   const navigation = [
     { name: t('dashboard'), href: '/dashboard', icon: HomeIcon },
@@ -85,7 +87,9 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
                     <Link key={item.name} href={item.href} passHref>
                       <a
                         className={classNames(
-                          item.href === pathname ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                          item.href === pathname
+                            ? 'bg-gray-100 text-gray-900'
+                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                           'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                         )}
                       >
@@ -124,7 +128,9 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
                 <Link key={item.name} href={item.href} passHref>
                   <a
                     className={classNames(
-                      item.href === pathname ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                      item.href === pathname
+                        ? 'bg-gray-100 text-gray-900'
+                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                       'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                     )}
                   >

@@ -1,14 +1,15 @@
 import { format } from 'date-fns';
-import { useTranslation } from 'next-i18next';
 
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
+import { useI18n } from '@/locales';
 import { classNames } from '@/utils/styling';
 
 export const DepartureTimeField: React.FC = () => {
   const departureTime = useJourneySearchStore((state) => state.departureTime);
   const setDepartureTime = useJourneySearchStore((state) => state.setDepartureTime);
 
-  const { t } = useTranslation('add-journey');
+  const { scopedT } = useI18n();
+  const t = scopedT('add');
 
   const showNowButton = departureTime !== format(new Date(), "yyyy-MM-dd'T'HH:mm");
 
@@ -21,10 +22,7 @@ export const DepartureTimeField: React.FC = () => {
         <button
           disabled={!showNowButton}
           onClick={() => setDepartureTime(format(new Date(), "yyyy-MM-dd'T'HH:mm"))}
-          className={classNames(
-            'text-sm font-medium',
-            showNowButton ? 'text-primary hover:text-primary-light' : 'text-gray-500'
-          )}
+          className={classNames('text-sm font-medium', showNowButton ? 'text-primary hover:text-primary-light' : 'text-gray-500')}
         >
           {t('currentTime')}
         </button>

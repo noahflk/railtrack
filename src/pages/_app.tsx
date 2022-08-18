@@ -3,11 +3,11 @@ import type { AppType } from 'next/dist/shared/lib/utils';
 import { useEffect } from 'react';
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
 import superjson from 'superjson';
-import { appWithTranslation } from 'next-i18next';
 import { UserProvider } from '@supabase/auth-helpers-react';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import type { AppRouter } from '@/server/router';
+import { I18nProvider } from '@/locales';
 import '@/styles/globals.css';
 
 const MyApp: AppType = ({ Component, pageProps }) => {
@@ -24,10 +24,12 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   }, [toasts]);
 
   return (
-    <UserProvider supabaseClient={supabaseClient}>
-      <Component {...pageProps} />
-      <Toaster />
-    </UserProvider>
+    <I18nProvider locale={pageProps.locale}>
+      <UserProvider supabaseClient={supabaseClient}>
+        <Component {...pageProps} />
+        <Toaster />
+      </UserProvider>
+    </I18nProvider>
   );
 };
 
@@ -62,5 +64,4 @@ export default withTRPC<AppRouter>({
    * @link https://trpc.io/docs/ssr
    */
   ssr: false,
-  // @ts-expect-error TODO: fix this typing error
-})(appWithTranslation(MyApp));
+})(MyApp);

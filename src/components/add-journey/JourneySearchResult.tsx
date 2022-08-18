@@ -1,12 +1,12 @@
+import { format } from 'date-fns';
 import router from 'next/router';
 import toast from 'react-hot-toast';
-import { format } from 'date-fns';
-import { useTranslation } from 'next-i18next';
 
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
+import { useI18n } from '@/locales';
 import type { Connection } from '@/types/opendata';
 import { parseDurationString } from '@/utils/duration';
-import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
-import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { trpc } from '@/utils/trpc';
 
 type Props = {
@@ -19,7 +19,8 @@ const AddButton: React.FC<Props> = ({ connection }) => {
 
   const clearSearchInfo = useJourneySearchStore((state) => state.clearSearchInfo);
 
-  const { t } = useTranslation('add-journey');
+  const { scopedT } = useI18n();
+  const t = scopedT('add');
 
   if (mutation.isLoading) return <LoadingSpinner color="primary" />;
 
@@ -50,7 +51,7 @@ const AddButton: React.FC<Props> = ({ connection }) => {
       }
       className="font-medium text-small text-primary hover:text-primary-light"
     >
-      {t('add')}
+      {t('save')}
     </button>
   );
 };
@@ -68,8 +69,7 @@ export const JourneySearchResult: React.FC<Props> = ({ connection }) => {
           <span>{format(new Date(connection.to.arrivalTimestamp * 1000), 'HH:mm')}</span>
         </div>
         <span>
-          {connection.transfers} {connection.transfers === 1 ? 'change' : 'changes'},{' '}
-          {parseDurationString(connection.duration)} mins
+          {connection.transfers} {connection.transfers === 1 ? 'change' : 'changes'}, {parseDurationString(connection.duration)} mins
         </span>
         <AddButton connection={connection} />
       </p>
