@@ -33,21 +33,25 @@
     "hour_one": "Stunde",
     "hour_other": "Stunden"
   },
-  "navigation": {
-    "dashboard": "Dashboard",
-    "settings": "Einstellungen",
-    "addJourney": "Reise hinzufügen",
-    "signOut": "Abmelden",
-    "signOutError": "Abmelden fehlgeschlagen"
-  },
   "journeys": {
     "date": "Datum",
     "distance": "Distanz",
     "duration": "Dauer",
     "stops": "Stops",
     "delete": "Löschen",
+    "deleteJourney": "Delete journey",
+    "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
+    "cancel": "Cancel",
     "minutes_one": "Minute",
     "minutes_other": "Minuten"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "settings": "Einstellungen",
+    "journeys": "Reisen",
+    "addJourney": "Reise hinzufügen",
+    "signOut": "Abmelden",
+    "signOutError": "Abmelden fehlgeschlagen"
   },
   "settings": {
     "save": "Speichern",

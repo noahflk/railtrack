@@ -38,14 +38,18 @@
     "distance": "Distance",
     "duration": "Duration",
     "stops": "Stops",
-    "delete": "Delte",
+    "delete": "Delete",
+    "deleteJourney": "Delete journey",
+    "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
+    "cancel": "Cancel",
     "minutes_one": "minute",
     "minutes_other": "minutes"
   },
   "navigation": {
     "dashboard": "Dashboard",
-    "settings": "Einstellungen",
-    "addJourney": "Reise hinzufügen",
+    "settings": "Settings",
+    "journeys": "Journeys",
+    "addJourney": "Add journey",
     "signOut": "Sign Out",
     "signOutError": "Unable to sign out"
   },
