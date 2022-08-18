@@ -1,12 +1,12 @@
-import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 
-import { Wrapper } from '@/components/Wrapper';
-import { protectedRoute } from '@/utils/protected';
 import { Account } from '@/components/settings/Account';
-import { getLocaleProps, useI18n } from '@/locales';
+import { Wrapper } from '@/components/Wrapper';
+import { protectedRouteWithLocales } from '@/utils/protectedLocales';
+import { useTranslations } from 'next-intl';
 
 const Settings: NextPage = () => {
-  const { t } = useI18n();
+  const t = useTranslations();
 
   return (
     <Wrapper title={t('navigation.addJourney')}>
@@ -15,8 +15,8 @@ const Settings: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = getLocaleProps((ctx: GetServerSidePropsContext) => {
-  return protectedRoute(ctx);
-});
+export const getServerSideProps: GetServerSideProps = (ctx) => {
+  return protectedRouteWithLocales(ctx);
+};
 
 export default Settings;

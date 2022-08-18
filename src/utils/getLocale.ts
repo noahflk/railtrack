@@ -8,6 +8,19 @@ import parser from 'accept-language-parser';
 const SUPPORTED_LANGS = ['en', 'de'];
 const DEFAULT_LANG = 'en';
 
+export const getCookieLocale = (ctx: GetServerSidePropsContext): string => {
+  // first check for actual cookie
+  const cookieLanguage = getCookie('i18n-lang', ctx);
+
+  // if we have the actual cookie with a valid language
+  if (cookieLanguage && typeof cookieLanguage === 'string' && SUPPORTED_LANGS.includes(cookieLanguage)) {
+    return cookieLanguage;
+  }
+
+  // otherwise return default language
+  return DEFAULT_LANG;
+};
+
 export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string> => {
   // first check for actual cookie
   const cookieLanguage = getCookie('i18n-lang', ctx);

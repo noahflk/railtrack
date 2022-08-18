@@ -1,9 +1,8 @@
-import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { SignUpForm } from '@/components/auth/SignUpForm';
-import { protectedAuth } from '@/utils/protected';
-import { getLocaleProps } from '@/locales';
+import { protectedAuthWithLocales } from '@/utils/protectedLocales';
 
 const SignUp: NextPage = () => (
   <AuthWrapper type="signup">
@@ -11,8 +10,8 @@ const SignUp: NextPage = () => (
   </AuthWrapper>
 );
 
-export const getServerSideProps: GetServerSideProps = getLocaleProps((ctx: GetServerSidePropsContext) => {
-  return protectedAuth(ctx);
-});
+export const getServerSideProps: GetServerSideProps = (ctx) => {
+  return protectedAuthWithLocales(ctx);
+};
 
 export default SignUp;

@@ -1,9 +1,8 @@
-import { useTranslations } from 'next-intl';
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
+import { useTranslations } from 'next-intl';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
-import { useI18n } from '@/locales';
 import type { Connection } from '@/types/opendata';
 
 const generateJourneyKey = (connection: Connection) => {
@@ -44,8 +43,7 @@ export const JourneySearchResults: React.FC = () => {
   const departureStation = useJourneySearchStore((state) => state.departureStation);
   const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
 
-  const { scopedT } = useI18n();
-  const t = scopedT('add');
+  const t = useTranslations('add');
 
   return (
     <li className="col-span-1 bg-white divide-y rounded-lg shadow divide-gray-200npm ">

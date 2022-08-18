@@ -1,13 +1,13 @@
+import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ViewGridAddIcon, ViewGridIcon, HomeIcon, MenuIcon, XIcon, CogIcon } from '@heroicons/react/outline';
+import { CogIcon, HomeIcon, MenuIcon, ViewGridAddIcon, ViewGridIcon, XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Fragment, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { Head } from '@/components/Head';
 import { LogoText } from '@/components/LogoText';
 import { SignoutButton } from '@/components/SignoutButton';
-import { useI18n } from '@/locales';
 import { classNames } from '@/utils/styling';
 
 type Props = {
@@ -20,8 +20,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
 
   const { pathname } = useRouter();
 
-  const { scopedT } = useI18n();
-  const t = scopedT('navigation');
+  const t = useTranslations('navigation');
 
   const navigation = [
     { name: t('dashboard'), href: '/dashboard', icon: HomeIcon },

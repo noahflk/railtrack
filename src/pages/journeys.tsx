@@ -1,9 +1,8 @@
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 
 import { JourneyList } from '@/components/journeys/JourneyList';
 import { Wrapper } from '@/components/Wrapper';
-import { getLocaleProps } from '@/locales';
 import { protectedRouteWithLocales } from '@/utils/protectedLocales';
 
 const Journeys: NextPage = () => {
@@ -16,8 +15,8 @@ const Journeys: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = getLocaleProps((ctx: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = (ctx) => {
   return protectedRouteWithLocales(ctx);
-});
+};
 
 export default Journeys;

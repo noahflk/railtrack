@@ -1,8 +1,7 @@
-import { useI18n } from '@/locales';
+import { useTranslations } from 'next-intl';
 
 export const Account: React.FC = () => {
-  const { scopedT } = useI18n();
-  const t = scopedT('settings');
+  const t = useTranslations('settings');
 
   return (
     <section aria-labelledby="payment-details-heading">
