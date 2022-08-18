@@ -57,6 +57,8 @@
     "save": "Save",
     "language": "Language",
     "email": "Email",
-    "account": "Account"
+    "account": "Account",
+    "updateSuccess": "Successfully updated settings",
+    "updateFail": "Failed to update settings"
   }
 }

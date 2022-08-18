@@ -14,7 +14,7 @@ export const protectedRouteWithLocales = async (ctx: GetServerSidePropsContext) 
   const locale = await getLocale(ctx);
 
   return {
-    props: { messages: (await import(`../locales/${locale}.json`)).default },
+    props: { messages: (await import(`../locales/${locale}.json`)).default, locale },
   };
 };
 
@@ -29,6 +29,6 @@ export const protectedAuthWithLocales = async (ctx: GetServerSidePropsContext) =
   const locale = await getCookieLocale(ctx);
 
   return {
-    props: { messages: (await import(`../locales/${locale}.json`)).default },
+    props: { messages: (await import(`../locales/${locale}.json`)).default, locale },
   };
 };

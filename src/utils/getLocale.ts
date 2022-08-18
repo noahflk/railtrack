@@ -1,16 +1,14 @@
 import { GetServerSidePropsContext } from 'next';
 import { getUser } from '@supabase/auth-helpers-nextjs';
 import { getCookie, setCookie } from 'cookies-next';
-
-import { prisma } from '@/server/db/client';
 import parser from 'accept-language-parser';
 
-const SUPPORTED_LANGS = ['en', 'de'];
-const DEFAULT_LANG = 'en';
+import { prisma } from '@/server/db/client';
+import { DEFAULT_LANG, LANG_COOKIE_KEY, SUPPORTED_LANGS } from '@/constants';
 
 export const getCookieLocale = (ctx: GetServerSidePropsContext): string => {
   // first check for actual cookie
-  const cookieLanguage = getCookie('i18n-lang', ctx);
+  const cookieLanguage = getCookie(LANG_COOKIE_KEY, ctx);
 
   // if we have the actual cookie with a valid language
   if (cookieLanguage && typeof cookieLanguage === 'string' && SUPPORTED_LANGS.includes(cookieLanguage)) {
@@ -23,7 +21,7 @@ export const getCookieLocale = (ctx: GetServerSidePropsContext): string => {
 
 export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string> => {
   // first check for actual cookie
-  const cookieLanguage = getCookie('i18n-lang', ctx);
+  const cookieLanguage = getCookie(LANG_COOKIE_KEY, ctx);
 
   // if we have the actual cookie with a valid language
   if (cookieLanguage && typeof cookieLanguage === 'string' && SUPPORTED_LANGS.includes(cookieLanguage)) {
@@ -45,7 +43,7 @@ export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string>
 
   // and if it's there store in cookie and use it
   if (settings?.language) {
-    setCookie('i18n-lang', settings?.language, ctx);
+    setCookie(LANG_COOKIE_KEY, settings?.language, { ...ctx, sameSite: 'lax' });
 
     return settings?.language;
   }
@@ -59,7 +57,7 @@ export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string>
   // use english as the default
   const language = parser.pick(SUPPORTED_LANGS, languages ?? '', { loose: true }) ?? DEFAULT_LANG;
 
-  setCookie('i18n-lang', language, ctx);
+  setCookie(LANG_COOKIE_KEY, language, { ...ctx, sameSite: 'lax' });
 
   return language;
 };

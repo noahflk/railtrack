@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next';
 
 import { Account } from '@/components/settings/Account';
 import { Wrapper } from '@/components/Wrapper';

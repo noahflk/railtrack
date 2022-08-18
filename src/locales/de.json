@@ -57,6 +57,8 @@
     "save": "Speichern",
     "language": "Sprache",
     "email": "E-Mail",
-    "account": "Konto"
+    "account": "Konto",
+    "updateSuccess": "Einstellungen erfolgreich gespeichert",
+    "updateFail": "Einstellungen konnten nicht gespeichert werden"
   }
 }

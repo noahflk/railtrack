@@ -24,7 +24,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   }, [toasts]);
 
   return (
-    <NextIntlProvider messages={pageProps.messages}>
+    <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale}>
       <UserProvider supabaseClient={supabaseClient}>
         <Component {...pageProps} />
         <Toaster />
