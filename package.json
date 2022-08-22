@@ -25,7 +25,6 @@
     "cookies-next": "^2.1.1",
     "date-fns": "2.29.1",
     "next": "12.2.5",
-    "next-international": "^0.2.0",
     "next-intl": "^2.7.4",
     "react": "18.2.0",
     "react-breakout": "1.0.1",
