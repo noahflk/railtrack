@@ -1,6 +1,7 @@
+import Head from 'next/head';
+import { useEffect } from 'react';
 import { withTRPC } from '@trpc/next';
 import type { AppType } from 'next/dist/shared/lib/utils';
-import { useEffect } from 'react';
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
 import { NextIntlProvider } from 'next-intl';
 import superjson from 'superjson';
@@ -25,12 +26,17 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   }, [toasts]);
 
   return (
-    <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
-      <UserProvider supabaseClient={supabaseClient}>
-        <Component {...pageProps} />
-        <Toaster />
-      </UserProvider>
-    </NextIntlProvider>
+    <>
+      <Head>
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
+      <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
+        <UserProvider supabaseClient={supabaseClient}>
+          <Component {...pageProps} />
+          <Toaster />
+        </UserProvider>
+      </NextIntlProvider>
+    </>
   );
 };
 
