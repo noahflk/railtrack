@@ -1,9 +1,10 @@
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { GoogleButton } from '@/components/auth/GoogleButton';
 
 export const SignUpForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -82,7 +83,7 @@ export const SignUpForm: React.FC = () => {
 
       {errorMessage && <p className="text-sm text-red-600 ">{errorMessage}</p>}
 
-      <div>
+      <div className="space-y-4">
         <button
           type="submit"
           disabled={loading}
@@ -90,6 +91,8 @@ export const SignUpForm: React.FC = () => {
         >
           {loading ? <LoadingSpinner /> : t('signUp')}
         </button>
+
+        <GoogleButton type="signup" />
       </div>
     </form>
   );

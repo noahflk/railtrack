@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import { Link } from '@/components/Link';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { GoogleIcon } from '@/components/Icons';
 
 export const SignInForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ export const SignInForm: React.FC = () => {
 
   const t = useTranslations('auth');
 
-  const handleLogin = async () => {
+  const handleSignIn = async () => {
     // clear error message
     setErrorMessage(undefined);
     setLoading(true);
@@ -36,11 +37,17 @@ export const SignInForm: React.FC = () => {
     if (user) router.push('/dashboard');
   };
 
+  const handleGoogleSignIn = async () => {
+    await supabaseClient.auth.signIn({
+      provider: 'google',
+    });
+  };
+
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        handleLogin();
+        handleSignIn();
       }}
       method="POST"
       className="space-y-6"
@@ -88,13 +95,24 @@ export const SignInForm: React.FC = () => {
 
       {errorMessage && <p className="text-sm text-red-600 ">{errorMessage}</p>}
 
-      <div>
+      <div className="space-y-4">
         <button
           type="submit"
           disabled={loading}
           className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
         >
           {loading ? <LoadingSpinner /> : t('signIn')}
+        </button>
+
+        <button
+          className="flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 border border-transparent border-gray-300 rounded-md shadow-sm border-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+          type="button"
+          onClick={handleGoogleSignIn}
+        >
+          <div className="flex gap-2">
+            <GoogleIcon className="w-4" />
+            {t('signInGoogle')}
+          </div>
         </button>
       </div>
     </form>

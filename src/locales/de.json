@@ -22,6 +22,8 @@
     "signIn": "Anmelden",
     "signUp": "Registrieren",
     "signOut": "Abmelden",
+    "signUpGoogle": "Registrieren mit Google",
+    "signInGoogle": "Anmelden mit Google ",
     "or": "Oder"
   },
   "dashboard": {

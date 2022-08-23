@@ -22,6 +22,8 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signOut": "Sign Out",
+    "signUpGoogle": "Sign Up with Google",
+    "signInGoogle": "Sign In with Google ",
     "or": "Or"
   },
   "dashboard": {
