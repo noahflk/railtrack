@@ -98,7 +98,7 @@ export const SignInForm: React.FC = () => {
           {loading ? <LoadingSpinner /> : t('signIn')}
         </button>
 
-        <GoogleButton type="signup" />
+        <GoogleButton type="signin" />
       </div>
     </form>
   );
