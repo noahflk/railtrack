@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { Link } from '@/components/Link';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-import { GoogleIcon } from '@/components/Icons';
+import { GoogleButton } from '@/components/auth/GoogleButton';
 
 export const SignInForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -35,12 +35,6 @@ export const SignInForm: React.FC = () => {
     }
 
     if (user) router.push('/dashboard');
-  };
-
-  const handleGoogleSignIn = async () => {
-    await supabaseClient.auth.signIn({
-      provider: 'google',
-    });
   };
 
   return (
@@ -104,16 +98,7 @@ export const SignInForm: React.FC = () => {
           {loading ? <LoadingSpinner /> : t('signIn')}
         </button>
 
-        <button
-          className="flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 border border-transparent border-gray-300 rounded-md shadow-sm border-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-          type="button"
-          onClick={handleGoogleSignIn}
-        >
-          <div className="flex gap-2">
-            <GoogleIcon className="w-4" />
-            {t('signInGoogle')}
-          </div>
-        </button>
+        <GoogleButton type="signup" />
       </div>
     </form>
   );
