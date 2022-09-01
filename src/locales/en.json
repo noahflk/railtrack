@@ -2,7 +2,7 @@
   "departure": "From",
   "arrival": "To",
   "add": {
-    "time": "eparture time",
+    "time": "Departure time",
     "currentTime": "Now",
     "search": "Find connections",
     "connections": "Connections",
