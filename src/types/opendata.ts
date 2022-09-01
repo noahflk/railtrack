@@ -17,7 +17,7 @@ export type Station = {
   };
 };
 
-type Section = {
+export type Section = {
   departure: From;
   arrival: To;
   journey: {
