@@ -8,7 +8,9 @@
     "connections": "Connections",
     "searchFor": "Search for a connection",
     "notFound": "No conections found",
-    "save": "Save"
+    "save": "Save",
+    "stop_one": "change",
+    "stop_other": "changes"
   },
   "auth": {
     "save": "Save",

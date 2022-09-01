@@ -8,7 +8,9 @@
     "connections": "Verbindungen",
     "searchFor": "Suche nach einer Verbindung",
     "notFound": "Keine Verbindungen gefunden",
-    "save": "Speichern"
+    "save": "Speichern",
+    "stop_one": "Stop",
+    "stop_other": "Stops"
   },
   "auth": {
     "save": "Speichern",

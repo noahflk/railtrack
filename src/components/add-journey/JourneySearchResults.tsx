@@ -1,4 +1,3 @@
-import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
@@ -40,21 +39,12 @@ const ResultDisplay: React.FC = () => {
 };
 
 export const JourneySearchResults: React.FC = () => {
-  const departureStation = useJourneySearchStore((state) => state.departureStation);
-  const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
-
   const t = useTranslations('add');
 
   return (
     <li className="col-span-1 bg-white divide-y rounded-lg shadow divide-gray-200npm ">
       <div className="w-full h-full p-6">
         <h3 className="text-xl font-semibold text-gray-900">{t('connections')}</h3>
-        {departureStation && arrivalStation && (
-          <p className="font-medium text-gray-900 ">
-            {departureStation.name} <ArrowNarrowRightIcon className="inline w-6 mx-2 text-primary" />{' '}
-            {arrivalStation.name}
-          </p>
-        )}
         <ResultDisplay />
       </div>
     </li>
