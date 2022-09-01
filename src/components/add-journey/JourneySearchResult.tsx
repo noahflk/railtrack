@@ -79,12 +79,8 @@ const DesktopSearchResult: React.FC<Props> = ({ connection }) => {
   );
 };
 
-export const JourneySearchResult: React.FC<Props> = ({ connection }) => {
-  const isDesktop = useBreakpoint('md');
-
-  // const t = useTranslations('add');
-
-  if (isDesktop) return <DesktopSearchResult connection={connection} />;
+const MobileSearchResult: React.FC<Props> = ({ connection }) => {
+  const t = useTranslations('add');
 
   return (
     <li className="py-2 pt-4 space-y-2">
@@ -95,6 +91,21 @@ export const JourneySearchResult: React.FC<Props> = ({ connection }) => {
         Direction {connection.sections[0]?.journey.to}
       </p>
       <JourneyStopIndicator className="w-full" connection={connection} />
+      <div className="flex justify-between">
+        <p>
+          {connection.transfers} {connection.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
+          {parseDurationString(connection.duration)} min
+        </p>
+        <AddButton connection={connection} />
+      </div>
     </li>
   );
+};
+
+export const JourneySearchResult: React.FC<Props> = ({ connection }) => {
+  const isDesktop = useBreakpoint('md');
+
+  if (isDesktop) return <DesktopSearchResult connection={connection} />;
+
+  return <MobileSearchResult connection={connection} />;
 };
