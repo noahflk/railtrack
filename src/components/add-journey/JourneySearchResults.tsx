@@ -16,7 +16,7 @@ const ResultDisplay: React.FC = () => {
 
   if (!connections) {
     return (
-      <div className="flex items-center justify-center h-full pb-6">
+      <div className="flex items-center justify-center h-full pb-10">
         <p>{t('searchFor')}</p>
       </div>
     );

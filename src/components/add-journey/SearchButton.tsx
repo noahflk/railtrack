@@ -36,19 +36,13 @@ export const SearchButton: React.FC = () => {
   };
 
   return (
-    <div className="w-full">
-      {/* This is a hacky workaround to get a correct desktop layout */}
-      <label htmlFor="time" className="hidden text-sm font-medium text-gray-700 lg:block lg:invisible">
-        Search
-      </label>
-      <div className="mt-1">
-        <button
-          onClick={getConnections}
-          className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-        >
-          {loading ? <LoadingSpinner /> : t('add.search')}
-        </button>
-      </div>
+    <div className="flex items-end w-full mt-1">
+      <button
+        onClick={getConnections}
+        className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+      >
+        {loading ? <LoadingSpinner /> : t('add.search')}
+      </button>
     </div>
   );
 };

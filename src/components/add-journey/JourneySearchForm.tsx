@@ -15,23 +15,19 @@ export const JourneySearchForm: React.FC = () => {
 
   return (
     <li className="col-span-1 bg-white rounded-lg shadow">
-      <div className="grid w-full grid-cols-1 gap-6 p-6 lg:grid-cols-2">
-        <div className="space-y-6">
-          <StationSearchField
-            label={t('departure')}
-            selectedStation={departureStation}
-            setSelectedStation={setDepartureStation}
-          />
-          <StationSearchField
-            label={t('arrival')}
-            selectedStation={arrivalStation}
-            setSelectedStation={setArrivalStation}
-          />
-        </div>
-        <div className="space-y-6">
-          <DepartureTimeField />
-          <SearchButton />
-        </div>
+      <div className="grid w-full grid-rows-1 gap-6 p-6 lg:grid-cols-2">
+        <StationSearchField
+          label={t('departure')}
+          selectedStation={departureStation}
+          setSelectedStation={setDepartureStation}
+        />
+        <StationSearchField
+          label={t('arrival')}
+          selectedStation={arrivalStation}
+          setSelectedStation={setArrivalStation}
+        />
+        <DepartureTimeField />
+        <SearchButton />
       </div>
     </li>
   );
