@@ -11,7 +11,7 @@ const Add: NextPage = () => {
 
   return (
     <Wrapper title={t('navigation.addJourney')}>
-      <ul role="list" className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <ul role="list" className="grid grid-cols-1 gap-6">
         <JourneySearchForm />
         <JourneySearchResults />
       </ul>

@@ -13,7 +13,7 @@ export const DepartureTimeField: React.FC = () => {
   const showNowButton = departureTime !== format(new Date(), "yyyy-MM-dd'T'HH:mm");
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <div className="flex justify-between">
         <label htmlFor="time" className="block text-sm font-medium text-gray-700">
           {t('time')}
