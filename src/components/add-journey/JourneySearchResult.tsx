@@ -1,12 +1,10 @@
-import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import router from 'next/router';
 import { useBreakpoint } from 'react-breakout';
 import toast from 'react-hot-toast';
 
-import { RodIcon } from '@/components/Icons';
-import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { JourneyStopIndicator } from '@/components/add-journey/JourneyStopIndicator';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Connection } from '@/types/opendata';
 import { parseDurationString } from '@/utils/duration';
