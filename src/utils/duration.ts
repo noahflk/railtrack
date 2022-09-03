@@ -3,19 +3,22 @@ export const parseDurationString = (duration: string): number => {
   let hours = 0;
   let minutes = 0;
 
-  const daysMatch = duration.match(/^(?:[0-9]){2}(?=d)/);
-  if (daysMatch && daysMatch[0]) {
-    days = parseInt(daysMatch[0]);
+  const splitDuration = duration.split(':');
+
+  if (splitDuration[0]) {
+    const [daysString, hoursString] = splitDuration[0].split('d');
+
+    if (daysString) {
+      days = parseInt(daysString);
+    }
+
+    if (hoursString) {
+      hours = parseInt(hoursString);
+    }
   }
 
-  const hoursMatch = duration.match(/(?<=d)(?:[0-9]){2}/);
-  if (hoursMatch && hoursMatch[0]) {
-    hours = parseInt(hoursMatch[0]);
-  }
-
-  const minutesMatch = duration.match(/(?<=:)(?:[0-9]){2}(?=:)/);
-  if (minutesMatch && minutesMatch[0]) {
-    minutes = parseInt(minutesMatch[0]);
+  if (splitDuration[1]) {
+    minutes = parseInt(splitDuration[1]);
   }
 
   return days * 24 * 60 + hours * 60 + minutes;
