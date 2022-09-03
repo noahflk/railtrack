@@ -49,9 +49,11 @@ const AddButton: React.FC<Props> = ({ connection }) => {
           }
         )
       }
-      className="font-medium text-small text-primary hover:text-primary-light"
+      className="inline-flex justify-center font-medium text-small text-primary hover:text-primary-light"
     >
-      {t('save')}
+      {/* invisible means text remains hidden in the background to preserve the button width */}
+      <span className={mutation.isLoading ? 'invisible' : undefined}>{t('save')}</span>
+      {mutation.isLoading && <LoadingSpinner className="absolute" />}
     </button>
   );
 };
