@@ -27,5 +27,6 @@ export const useJourneySearchStore = create<JourneySearchState>((set) => ({
       departureStation: undefined,
       arrivalStation: undefined,
       departureTime: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+      connections: undefined,
     })),
 }));
