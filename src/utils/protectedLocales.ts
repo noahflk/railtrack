@@ -1,7 +1,7 @@
 import type { GetServerSidePropsContext } from 'next';
 
-import { protectedRoute, protectedAuth } from '@/utils/protected';
-import { getCookieLocale, getLocale } from '@/utils/getLocale';
+import { getLocaleProps } from '@/utils/locales';
+import { protectedAuth, protectedRoute } from '@/utils/protected';
 
 export const protectedRouteWithLocales = async (ctx: GetServerSidePropsContext) => {
   const authCheck = await protectedRoute(ctx);
@@ -11,11 +11,7 @@ export const protectedRouteWithLocales = async (ctx: GetServerSidePropsContext) 
     return authCheck;
   }
 
-  const locale = await getLocale(ctx);
-
-  return {
-    props: { messages: (await import(`../locales/${locale}.json`)).default, locale },
-  };
+  return getLocaleProps(ctx);
 };
 
 export const protectedAuthWithLocales = async (ctx: GetServerSidePropsContext) => {
@@ -26,9 +22,5 @@ export const protectedAuthWithLocales = async (ctx: GetServerSidePropsContext) =
     return authCheck;
   }
 
-  const locale = await getCookieLocale(ctx);
-
-  return {
-    props: { messages: (await import(`../locales/${locale}.json`)).default, locale },
-  };
+  return getLocaleProps(ctx);
 };
