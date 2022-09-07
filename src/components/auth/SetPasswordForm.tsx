@@ -1,9 +1,10 @@
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-import toast from 'react-hot-toast';
+import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 export const SetPasswordForm: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -13,6 +14,8 @@ export const SetPasswordForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const t = useTranslations('auth');
+
+  const router = useRouter();
 
   useEffect(() => {
     setHash(window.location.hash);
@@ -40,11 +43,11 @@ export const SetPasswordForm: React.FC = () => {
     }
 
     if (type !== 'recovery' || !accessToken || typeof accessToken === 'object') {
-      toast.error('Invalid access token or type');
+      toast.error(t('setError'));
       return;
     }
 
-    const { data, error } = await supabaseClient.auth.api.updateUser(accessToken, {
+    const { error } = await supabaseClient.auth.api.updateUser(accessToken, {
       password: password,
     });
 
@@ -55,7 +58,8 @@ export const SetPasswordForm: React.FC = () => {
       return;
     }
 
-    if (data) setSuccessMessage('Successfully set a new password. Please login.');
+    toast.success(t('setSuccess'));
+    router.push('/dashboard');
   };
 
   return (

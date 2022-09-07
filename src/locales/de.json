@@ -20,6 +20,8 @@
     "setTitle": "Setze ein neues Passwort",
     "reset": "Passwort zurücksetzen",
     "set": "Neues Passwort speichern",
+    "setSuccess": "Neues Passwort erfolgreich gespeichert.",
+    "setError": "Ungültiges access token oder type.",
     "email": "Email-Adresse",
     "password": "Passwort",
     "forgot": "Passwort vergessen?",
