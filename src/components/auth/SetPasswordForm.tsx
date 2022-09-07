@@ -1,25 +1,51 @@
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import toast from 'react-hot-toast';
 
-export const ForgotPasswordForm: React.FC = () => {
-  const [email, setEmail] = useState('');
+export const SetPasswordForm: React.FC = () => {
+  const [password, setPassword] = useState('');
+  const [hash, setHash] = useState('');
   const [successMessage, setSuccessMessage] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState(false);
 
   const t = useTranslations('auth');
 
-  const handleForgot = async () => {
+  useEffect(() => {
+    setHash(window.location.hash);
+  }, []);
+
+  const handleSubmit = async () => {
     // clear messages
     setSuccessMessage(undefined);
     setErrorMessage(undefined);
     setLoading(true);
 
-    const { data, error } = await supabaseClient.auth.api.resetPasswordForEmail(email, {
-      redirectTo: process.env.NEXT_PUBLIC_APP_URL + '/auth/set',
+    const hashArr = hash
+      .substring(1)
+      .split('&')
+      .map((param) => param.split('='));
+
+    let type;
+    let accessToken;
+    for (const [key, value] of hashArr) {
+      if (key === 'type') {
+        type = value;
+      } else if (key === 'access_token') {
+        accessToken = value;
+      }
+    }
+
+    if (type !== 'recovery' || !accessToken || typeof accessToken === 'object') {
+      toast.error('Invalid access token or type');
+      return;
+    }
+
+    const { data, error } = await supabaseClient.auth.api.updateUser(accessToken, {
+      password: password,
     });
 
     setLoading(false);
@@ -29,29 +55,29 @@ export const ForgotPasswordForm: React.FC = () => {
       return;
     }
 
-    if (data) setSuccessMessage('Password reset email sent');
+    if (data) setSuccessMessage('Successfully set a new password. Please login.');
   };
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        handleForgot();
+        handleSubmit();
       }}
       method="POST"
       className="space-y-6"
     >
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          {t('email')}
+          {t('password')}
         </label>
         <div className="mt-1">
           <input
-            id="email"
-            name="email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
             autoComplete="email"
             required
             className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
@@ -68,7 +94,7 @@ export const ForgotPasswordForm: React.FC = () => {
           disabled={loading}
           className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
         >
-          {loading ? <LoadingSpinner /> : t('reset')}
+          {loading ? <LoadingSpinner /> : t('set')}
         </button>
       </div>
     </form>
