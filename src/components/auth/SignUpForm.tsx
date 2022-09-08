@@ -21,10 +21,15 @@ export const SignUpForm: React.FC = () => {
     setErrorMessage(undefined);
     setLoading(true);
 
-    const { session, error } = await supabaseClient.auth.signUp({
-      email,
-      password,
-    });
+    const { session, error } = await supabaseClient.auth.signUp(
+      {
+        email,
+        password,
+      },
+      {
+        redirectTo: process.env.NEXT_PUBLIC_APP_URL + '/auth/success',
+      }
+    );
 
     setLoading(false);
 
