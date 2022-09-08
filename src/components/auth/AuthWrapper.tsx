@@ -6,7 +6,7 @@ import { Link } from '@/components/Link';
 import { Logo } from '@/components/Logo';
 import image from 'public/images/symbolic-1.jpg';
 
-type AuthType = 'signin' | 'signup' | 'forgot' | 'set';
+type AuthType = 'signin' | 'signup' | 'forgot' | 'set' | 'verify';
 
 type Props = {
   type: AuthType;
@@ -27,6 +27,7 @@ const AlternativeLink: React.FC<{ type: AuthType }> = ({ type }) => {
 const authTypeToText = (type: AuthType): string => {
   if (type === 'signin') return 'SignIn';
   if (type === 'signup') return 'SignUp';
+  if (type === 'verify') return 'Verify email';
   if (type === 'set') return 'Set new password';
 
   return 'Forgot password';
@@ -47,9 +48,10 @@ export const AuthWrapper: React.FC<Props> = ({ children, type }) => {
                 {type === 'signup' && t('signUpTitle')}
                 {type === 'signin' && t('signInTitle')}
                 {type === 'forgot' && t('forgotTitle')}
+                {type === 'verify' && 'Verify your email'}
                 {type === 'set' && t('setTitle')}
               </h2>
-              {type !== 'forgot' && type !== 'set' && (
+              {['signup', 'signin'].includes(type) && (
                 <p className="mt-2 text-sm">
                   {t('or')} <AlternativeLink type={type} />
                 </p>
