@@ -70,6 +70,8 @@
     "email": "Email",
     "account": "Account",
     "updateSuccess": "Successfully updated settings",
-    "updateFail": "Failed to update settings"
+    "updateFail": "Failed to update settings",
+    "supportProject": "Support this project by",
+    "buyMeACoffee": "buying me a coffee"
   }
 }

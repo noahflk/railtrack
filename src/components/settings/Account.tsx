@@ -1,11 +1,11 @@
+import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
+import { setCookie } from 'cookies-next';
 import toast from 'react-hot-toast';
 
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { LANG_COOKIE_KEY } from '@/constants';
 import { trpc } from '@/utils/trpc';
-import { setCookie } from 'cookies-next';
-import { useEffect, useState } from 'react';
-import { LoadingSpinner } from '../LoadingSpinner';
 
 export const Account: React.FC = () => {
   const t = useTranslations('settings');
@@ -52,11 +52,11 @@ export const Account: React.FC = () => {
   };
 
   return (
-    <section aria-labelledby="payment-details-heading">
+    <section aria-labelledby="account-heading">
       <div className="max-w-3xl mx-auto shadow sm:rounded-md sm:overflow-hidden">
         <div className="px-4 py-6 space-y-4 bg-white sm:p-6">
           <div>
-            <h2 id="payment-details-heading" className="text-lg font-medium leading-6 text-gray-900">
+            <h2 id="account-heading" className="text-lg font-medium leading-6 text-gray-900">
               {t('account')}
             </h2>
           </div>

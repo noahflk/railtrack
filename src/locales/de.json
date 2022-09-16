@@ -70,6 +70,8 @@
     "email": "E-Mail",
     "account": "Konto",
     "updateSuccess": "Einstellungen erfolgreich gespeichert",
-    "updateFail": "Einstellungen konnten nicht gespeichert werden"
+    "updateFail": "Einstellungen konnten nicht gespeichert werden",
+    "supportProject": "Untersütze dieses Projekt, indem du mir",
+    "buyMeACoffee": "einen Kaffee kaufst"
   }
 }
