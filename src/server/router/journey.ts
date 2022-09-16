@@ -5,10 +5,10 @@ import { z } from 'zod';
 
 import { TRANSPORT_API_URL } from '@/constants';
 import { createProtectedRouter } from '@/server/router/protected';
-import type { Connection } from '@/types/opendata';
 import { calculateJourneyDistance } from '@/utils/calculateDistance';
 import { parseDurationString } from '@/utils/duration';
 import { roundToOneDecimal } from '@/utils/rounding';
+import type { Journey } from '@/types/opendata';
 import type { Section } from '@prisma/client';
 
 type ConnectionParams = {
@@ -28,8 +28,8 @@ const findConnection = async ({
   arrivalStation,
   departureTime,
   platform,
-}: ConnectionParams): Promise<Connection | undefined> => {
-  const { data } = await axios.get<{ connections: Connection[] }>(
+}: ConnectionParams): Promise<Journey | undefined> => {
+  const { data } = await axios.get<{ connections: Journey[] }>(
     `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${
       departureTime.split('T')[0]
     }&time=${departureTime.split('T')[1]}`

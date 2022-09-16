@@ -1,7 +1,7 @@
 import create from 'zustand';
 import { format } from 'date-fns';
 
-import type { Connection, Station } from '@/types/opendata';
+import type { Journey, Station } from '@/types/opendata';
 
 type JourneySearchState = {
   departureStation?: Station;
@@ -11,8 +11,8 @@ type JourneySearchState = {
   clearSearchInfo: () => void;
   setDepartureStation: (station: Station) => void;
   setArrivalStation: (station: Station) => void;
-  connections?: Connection[];
-  setConnections: (connections: Connection[]) => void;
+  connections?: Journey[];
+  setConnections: (connections: Journey[]) => void;
 };
 
 export const useJourneySearchStore = create<JourneySearchState>((set) => ({

@@ -1,4 +1,4 @@
-export type Connection = {
+export type Journey = {
   duration: string;
   products: string[];
   transfers: number;

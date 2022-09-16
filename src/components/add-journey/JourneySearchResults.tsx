@@ -2,10 +2,10 @@ import { useTranslations } from 'next-intl';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
-import type { Connection } from '@/types/opendata';
+import type { Journey } from '@/types/opendata';
 
-const generateJourneyKey = (connection: Connection) => {
-  return `${connection.from.departureTimestamp}${connection.from.departure}${connection.to.arrivalTimestamp}${connection.to.arrival}`;
+const generateJourneyKey = (journey: Journey) => {
+  return `${journey.from.departureTimestamp}${journey.from.departure}${journey.to.arrivalTimestamp}${journey.to.arrival}`;
 };
 
 const ResultDisplay: React.FC = () => {
@@ -31,8 +31,8 @@ const ResultDisplay: React.FC = () => {
 
   return (
     <ul role="list">
-      {connections.map((connection) => (
-        <JourneySearchResult key={generateJourneyKey(connection)} connection={connection} />
+      {connections.map((journey) => (
+        <JourneySearchResult key={generateJourneyKey(journey)} journey={journey} />
       ))}
     </ul>
   );

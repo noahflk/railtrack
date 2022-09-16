@@ -6,15 +6,15 @@ import toast from 'react-hot-toast';
 import { JourneyStopIndicator } from '@/components/add-journey/JourneyStopIndicator';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
-import type { Connection } from '@/types/opendata';
+import type { Journey } from '@/types/opendata';
 import { parseDurationString } from '@/utils/duration';
 import { trpc } from '@/utils/trpc';
 
 type Props = {
-  connection: Connection;
+  journey: Journey;
 };
 
-const AddButton: React.FC<Props> = ({ connection }) => {
+const AddButton: React.FC<Props> = ({ journey }) => {
   const mutation = trpc.useMutation('journey.add');
   const utils = trpc.useContext();
 
@@ -29,10 +29,10 @@ const AddButton: React.FC<Props> = ({ connection }) => {
       onClick={() =>
         mutation.mutate(
           {
-            departureStation: connection.from.station.name,
-            arrivalStation: connection.to.station.name,
-            departureTime: connection.from.departure,
-            platform: connection.from.platform,
+            departureStation: journey.from.station.name,
+            arrivalStation: journey.to.station.name,
+            departureTime: journey.from.departure,
+            platform: journey.from.platform,
           },
           {
             onSuccess: () => {
@@ -58,56 +58,56 @@ const AddButton: React.FC<Props> = ({ connection }) => {
   );
 };
 
-const DesktopSearchResult: React.FC<Props> = ({ connection }) => {
+const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
   return (
     <li className="py-2 pt-4 space-y-2">
       <p>
         <span className="inline-flex items-center px-2.5 mr-2 py-1 rounded-full text-sm font-medium bg-primary text-white">
-          {connection.products[0]}
+          {journey.products[0]}
         </span>
-        Direction {connection.sections[0]?.journey.to}
+        Direction {journey.sections[0]?.journey.to}
       </p>
       <div className="flex justify-between space-x-2">
-        <JourneyStopIndicator className="w-96" connection={connection} />
+        <JourneyStopIndicator className="w-96" connection={journey} />
         <p>
-          {connection.transfers} {connection.transfers === 1 ? t('stop_one') : t('stop_other')}
+          {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')}
         </p>
-        <p>{parseDurationString(connection.duration)} min</p>
-        <AddButton connection={connection} />
+        <p>{parseDurationString(journey.duration)} min</p>
+        <AddButton journey={journey} />
       </div>
     </li>
   );
 };
 
-const MobileSearchResult: React.FC<Props> = ({ connection }) => {
+const MobileSearchResult: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
   return (
     <li className="py-2 pt-4 space-y-2">
       <p>
         <span className="inline-flex items-center px-2.5 mr-2 py-1 rounded-full text-sm font-medium bg-primary text-white">
-          {connection.products[0]}
+          {journey.products[0]}
         </span>
-        Direction {connection.sections[0]?.journey.to}
+        Direction {journey.sections[0]?.journey.to}
       </p>
-      <JourneyStopIndicator className="w-full" connection={connection} />
+      <JourneyStopIndicator className="w-full" connection={journey} />
       <div className="flex justify-between">
         <p>
-          {connection.transfers} {connection.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
-          {parseDurationString(connection.duration)} min
+          {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
+          {parseDurationString(journey.duration)} min
         </p>
-        <AddButton connection={connection} />
+        <AddButton journey={journey} />
       </div>
     </li>
   );
 };
 
-export const JourneySearchResult: React.FC<Props> = ({ connection }) => {
+export const JourneySearchResult: React.FC<Props> = ({ journey }) => {
   const isDesktop = useBreakpoint('md');
 
-  if (isDesktop) return <DesktopSearchResult connection={connection} />;
+  if (isDesktop) return <DesktopSearchResult journey={journey} />;
 
-  return <MobileSearchResult connection={connection} />;
+  return <MobileSearchResult journey={journey} />;
 };
