@@ -11,6 +11,7 @@ import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 import type { AppRouter } from '@/server/router';
 import { DEFAULT_LANG } from '@/constants';
 import '@/styles/globals.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const { toasts } = useToasterStore();
