@@ -2,16 +2,16 @@ import type { GetServerSideProps, NextPage } from 'next';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { getLocaleProps } from '@/utils/locales';
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const Success: NextPage = () => {
-  useEffect(() => {
-    console.log('asasaaaaa', window.location.hash);
-  }, []);
+  const router = useRouter();
+
+  const { success } = router.query;
 
   return (
     <AuthWrapper type="verify">
-      Check your email and click the link in the message to activate your account.
+      Check your email and click the link in the message to activate your account. {success} aaa
     </AuthWrapper>
   );
 };
