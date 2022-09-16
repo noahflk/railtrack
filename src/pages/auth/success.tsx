@@ -4,6 +4,7 @@ import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { getLocaleProps } from '@/utils/locales';
 import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/router';
+import { Link } from '@/components/Link';
 
 const Success: NextPage = () => {
   const user = supabaseClient.auth.user();
@@ -15,8 +16,8 @@ const Success: NextPage = () => {
   }
 
   return (
-    <AuthWrapper type="verify">
-      Check your email and click the link in the message to activate your account.
+    <AuthWrapper type="success">
+      <Link href="/dashboard">Go to your dashboard</Link>
     </AuthWrapper>
   );
 };

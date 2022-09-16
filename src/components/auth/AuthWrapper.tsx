@@ -6,7 +6,7 @@ import { Link } from '@/components/Link';
 import { Logo } from '@/components/Logo';
 import image from 'public/images/symbolic-1.jpg';
 
-type AuthType = 'signin' | 'signup' | 'forgot' | 'set' | 'verify';
+type AuthType = 'signin' | 'signup' | 'forgot' | 'set' | 'verify' | 'success';
 
 type Props = {
   type: AuthType;
@@ -28,6 +28,7 @@ const authTypeToText = (type: AuthType): string => {
   if (type === 'signin') return 'SignIn';
   if (type === 'signup') return 'SignUp';
   if (type === 'verify') return 'Verify email';
+  if (type === 'success') return 'Email verified';
   if (type === 'set') return 'Set new password';
 
   return 'Forgot password';
@@ -49,6 +50,7 @@ export const AuthWrapper: React.FC<Props> = ({ children, type }) => {
                 {type === 'signin' && t('signInTitle')}
                 {type === 'forgot' && t('forgotTitle')}
                 {type === 'verify' && 'Verify your email'}
+                {type === 'success' && 'Email verified successfully'}
                 {type === 'set' && t('setTitle')}
               </h2>
               {['signup', 'signin'].includes(type) && (
