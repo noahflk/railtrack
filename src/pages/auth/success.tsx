@@ -1,14 +1,19 @@
 import type { GetServerSideProps, NextPage } from 'next';
+import { useTranslations } from 'next-intl';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { Link } from '@/components/Link';
 import { protectedAuthWithLocales } from '@/utils/protectedLocales';
 
-const Success: NextPage = () => (
-  <AuthWrapper type="success">
-    <Link href="/dashboard">Go to your dashboard</Link>
-  </AuthWrapper>
-);
+const Success: NextPage = () => {
+  const t = useTranslations('auth');
+
+  return (
+    <AuthWrapper type="success">
+      <Link href="/dashboard">{t('continueToDashboard')}</Link>
+    </AuthWrapper>
+  );
+};
 
 export const getServerSideProps: GetServerSideProps = (ctx) => {
   return protectedAuthWithLocales(ctx);

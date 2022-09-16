@@ -17,6 +17,8 @@
     "signUpTitle": "Create a new account",
     "signInTitle": "Sign in with your account",
     "forgotTitle": "Reset your password",
+    "verifyTitle": "Email verification",
+    "verifySuccessTitle": "Email verified successfully",
     "setTitle": "Set a new password",
     "reset": "Reset password",
     "set": "Save new password",
@@ -30,7 +32,8 @@
     "signOut": "Sign Out",
     "signUpGoogle": "Sign Up with Google",
     "signInGoogle": "Sign In with Google ",
-    "or": "Or"
+    "or": "Or",
+    "continueToDashboard": "Continue to your dashboard"
   },
   "dashboard": {
     "distance": "Distance travelled",

@@ -49,8 +49,8 @@ export const AuthWrapper: React.FC<Props> = ({ children, type }) => {
                 {type === 'signup' && t('signUpTitle')}
                 {type === 'signin' && t('signInTitle')}
                 {type === 'forgot' && t('forgotTitle')}
-                {type === 'verify' && 'Verify your email'}
-                {type === 'success' && 'Email verified successfully'}
+                {type === 'verify' && t('verifyTitle')}
+                {type === 'success' && t('verifySuccessTitle')}
                 {type === 'set' && t('setTitle')}
               </h2>
               {['signup', 'signin'].includes(type) && (

@@ -17,6 +17,8 @@
     "signUpTitle": "Neuen Account erstellen",
     "signInTitle": "Mit Account anmelden",
     "forgotTitle": "Setze dein Passwort zurück",
+    "verifyTitle": "Email-Adresse bestätigen",
+    "verifySuccessTitle": "Email-Adresse erfolgreich verifiziert",
     "setTitle": "Setze ein neues Passwort",
     "reset": "Passwort zurücksetzen",
     "set": "Neues Passwort speichern",
@@ -30,7 +32,8 @@
     "signOut": "Abmelden",
     "signUpGoogle": "Registrieren mit Google",
     "signInGoogle": "Anmelden mit Google ",
-    "or": "Oder"
+    "or": "Oder",
+    "continueToDashboard": "Fortfahren zum Dashboard"
   },
   "dashboard": {
     "distance": "Gereiste Distanz",
