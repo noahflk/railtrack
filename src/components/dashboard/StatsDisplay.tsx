@@ -5,7 +5,7 @@ import { Stat } from '@/components/dashboard/Stat';
 import { trpc } from '@/utils/trpc';
 
 export const StatsDisplay: React.FC = () => {
-  const { data: stats } = trpc.useQuery(['connection.stats']);
+  const { data: stats } = trpc.useQuery(['journey.stats']);
 
   const t = useTranslations('dashboard');
 

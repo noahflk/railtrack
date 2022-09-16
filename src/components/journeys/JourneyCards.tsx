@@ -7,7 +7,7 @@ import { InferQueryOutput } from '@/server/trpc-helper';
 
 type CardProps = {
   // the [number] ensures we only get the item type without the array
-  journey: InferQueryOutput<'connection.get'>[number];
+  journey: InferQueryOutput<'journey.get'>[number];
   handleDelete: (id: number) => void;
 };
 
@@ -54,7 +54,7 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
 };
 
 type Props = {
-  journeys: InferQueryOutput<'connection.get'>;
+  journeys: InferQueryOutput<'journey.get'>;
   handleDelete: (id: number) => void;
 };
 

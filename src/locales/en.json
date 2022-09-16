@@ -4,10 +4,10 @@
   "add": {
     "time": "Departure time",
     "currentTime": "Now",
-    "search": "Find connections",
-    "connections": "Connections",
-    "searchFor": "Search for a connection",
-    "notFound": "No conections found",
+    "search": "Find journey",
+    "journeys": "Journeys",
+    "searchFor": "Search for a journey",
+    "notFound": "No journeys found",
     "save": "Save",
     "stop_one": "change",
     "stop_other": "changes"

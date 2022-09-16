@@ -2,7 +2,7 @@ import { Map } from '@/components/Map';
 import { trpc } from '@/utils/trpc';
 
 export const JourneyMap: React.FC = () => {
-  const { data: stats } = trpc.useQuery(['connection.stats']);
+  const { data: stats } = trpc.useQuery(['journey.stats']);
 
   // render map with no journeys while loading them
   if (!stats) return <Map journeys={[]} />;

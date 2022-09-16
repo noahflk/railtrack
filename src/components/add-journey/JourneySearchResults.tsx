@@ -44,7 +44,7 @@ export const JourneySearchResults: React.FC = () => {
   return (
     <li className="col-span-1 bg-white divide-y rounded-lg shadow divide-gray-200npm ">
       <div className="w-full h-full p-6">
-        <h3 className="text-xl font-semibold text-gray-900">{t('connections')}</h3>
+        <h3 className="text-xl font-semibold text-gray-900">{t('journeys')}</h3>
         <ResultDisplay />
       </div>
     </li>

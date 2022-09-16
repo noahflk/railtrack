@@ -3,7 +3,7 @@ import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 
 type Props = {
   // the [number] ensures we only get the item type without the array
-  journey: InferQueryOutput<'connection.get'>[number];
+  journey: InferQueryOutput<'journey.get'>[number];
 };
 
 export const Journey: React.FC<Props> = ({ journey }) => (

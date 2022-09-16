@@ -30,13 +30,15 @@ const findConnection = async ({
   platform,
 }: ConnectionParams): Promise<Connection | undefined> => {
   const { data } = await axios.get<{ connections: Connection[] }>(
-    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${departureTime.split('T')[0]}&time=${
-      departureTime.split('T')[1]
-    }`
+    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${
+      departureTime.split('T')[0]
+    }&time=${departureTime.split('T')[1]}`
   );
 
   // ensure we have the desired connection by comparing departure time and platform
-  return data.connections.find((connection) => connection.from.platform === platform && connection.from.departure === departureTime);
+  return data.connections.find(
+    (connection) => connection.from.platform === platform && connection.from.departure === departureTime
+  );
 };
 
 const getDepartureStation = (sections: Section[]): StationInformation => {
@@ -75,7 +77,7 @@ const getArrivalStation = (sections: Section[]): StationInformation => {
   };
 };
 
-export const connectionRouter = createProtectedRouter()
+export const journeyRouter = createProtectedRouter()
   .mutation('add', {
     // this information is enough to precicely find the precise connection again
     // that way we avoid passing the whole connection object from the client to the server
@@ -195,7 +197,10 @@ export const connectionRouter = createProtectedRouter()
         },
       });
 
-      const distance = connections.reduce((partial, connection) => partial + calculateJourneyDistance(connection.sections), 0);
+      const distance = connections.reduce(
+        (partial, connection) => partial + calculateJourneyDistance(connection.sections),
+        0
+      );
 
       const numberOfConnections = await ctx.prisma.connection.count({
         where: {

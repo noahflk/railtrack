@@ -19,7 +19,7 @@ const RecentJourneysWrapper: React.FC<{ children: React.ReactNode }> = ({ childr
 const FETCH_CONNECTION_LIMIT = 7;
 
 export const RecentJourneys: React.FC = () => {
-  const { data: connections } = trpc.useQuery(['connection.get', FETCH_CONNECTION_LIMIT]);
+  const { data: connections } = trpc.useQuery(['journey.get', FETCH_CONNECTION_LIMIT]);
 
   const t = useTranslations('dashboard');
 

@@ -6,7 +6,7 @@ import { InferQueryOutput } from '@/server/trpc-helper';
 // import TablePagination from '@/components/journeys/TablePagination';
 
 type RowProps = {
-  journey: InferQueryOutput<'connection.get'>[number];
+  journey: InferQueryOutput<'journey.get'>[number];
   handleDelete: (id: number) => void;
 };
 
@@ -42,7 +42,7 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
 };
 
 type TableProps = {
-  journeys: InferQueryOutput<'connection.get'>;
+  journeys: InferQueryOutput<'journey.get'>;
   handleDelete: (id: number) => void;
 };
 
