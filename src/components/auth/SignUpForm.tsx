@@ -27,7 +27,7 @@ export const SignUpForm: React.FC = () => {
         password,
       },
       {
-        redirectTo: process.env.NEXT_PUBLIC_APP_URL + '/dashboard',
+        redirectTo: process.env.NEXT_PUBLIC_APP_URL + '/auth/success',
       }
     );
 
