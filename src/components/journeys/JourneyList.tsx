@@ -25,14 +25,14 @@ export const JourneyList: React.FC = () => {
 
   // const page = router.query.page ? parseInt(router.query.page as string) : undefined;
 
-  const { data: connections } = trpc.useQuery(['journey.get']);
+  const { data: journeys } = trpc.useQuery(['journey.get']);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<number>();
 
   const isDesktop = useBreakpoint('md');
 
-  const deleteConnectionMutation = trpc.useMutation(['journey.delete'], {
+  const deleteJourneyMutation = trpc.useMutation(['journey.delete'], {
     onSettled: () => {
       setModalOpen(false);
 
@@ -49,29 +49,29 @@ export const JourneyList: React.FC = () => {
     setPendingJourneyDeleteId(journeyId);
   };
 
-  if (!connections) return <Placeholder />;
+  if (!journeys) return <Placeholder />;
 
-  if (connections.length === 0)
+  if (journeys.length === 0)
     return (
       <div className="pt-12">
         <EmptyJourneyNotice />
       </div>
     );
 
-  const sortedConnections = connections.sort((a, b) => b.departureTime.getTime() - a.departureTime.getTime());
+  const sortedJourneys = journeys.sort((a, b) => b.departureTime.getTime() - a.departureTime.getTime());
 
   return (
     <>
       <DeleteConfirmModal
         isOpen={modalOpen}
         onDismiss={() => setModalOpen(false)}
-        onConfirm={() => pendingJourneyDeleteId && deleteConnectionMutation.mutate(pendingJourneyDeleteId)}
-        isLoading={deleteConnectionMutation.isLoading}
+        onConfirm={() => pendingJourneyDeleteId && deleteJourneyMutation.mutate(pendingJourneyDeleteId)}
+        isLoading={deleteJourneyMutation.isLoading}
       />
       {isDesktop ? (
-        <JourneyTable journeys={sortedConnections} handleDelete={handleDeleteIntent} />
+        <JourneyTable journeys={sortedJourneys} handleDelete={handleDeleteIntent} />
       ) : (
-        <JourneyCards journeys={connections} handleDelete={handleDeleteIntent} />
+        <JourneyCards journeys={journeys} handleDelete={handleDeleteIntent} />
       )}
     </>
   );

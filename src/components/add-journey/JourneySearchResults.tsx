@@ -9,11 +9,11 @@ const generateJourneyKey = (journey: Journey) => {
 };
 
 const ResultDisplay: React.FC = () => {
-  const connections = useJourneySearchStore((state) => state.connections);
+  const journeys = useJourneySearchStore((state) => state.connections);
 
   const t = useTranslations('add');
 
-  if (!connections) {
+  if (!journeys) {
     return (
       <div className="flex items-center justify-center h-full pb-10">
         <p>{t('searchFor')}</p>
@@ -21,7 +21,7 @@ const ResultDisplay: React.FC = () => {
     );
   }
 
-  if (connections.length === 0) {
+  if (journeys.length === 0) {
     return (
       <div className="flex items-center justify-center h-full pb-6">
         <p>{t('notFound')}</p>
@@ -31,7 +31,7 @@ const ResultDisplay: React.FC = () => {
 
   return (
     <ul role="list">
-      {connections.map((journey) => (
+      {journeys.map((journey) => (
         <JourneySearchResult key={generateJourneyKey(journey)} journey={journey} />
       ))}
     </ul>

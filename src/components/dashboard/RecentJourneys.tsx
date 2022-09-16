@@ -16,14 +16,14 @@ const RecentJourneysWrapper: React.FC<{ children: React.ReactNode }> = ({ childr
   );
 };
 
-const FETCH_CONNECTION_LIMIT = 7;
+const FETCH_JOURNEY_LIMIT = 7;
 
 export const RecentJourneys: React.FC = () => {
-  const { data: connections } = trpc.useQuery(['journey.get', FETCH_CONNECTION_LIMIT]);
+  const { data: journeys } = trpc.useQuery(['journey.get', FETCH_JOURNEY_LIMIT]);
 
   const t = useTranslations('dashboard');
 
-  if (!connections)
+  if (!journeys)
     return (
       <RecentJourneysWrapper>
         <div className="w-full pt-4 space-y-4 animate-pulse ">
@@ -34,9 +34,9 @@ export const RecentJourneys: React.FC = () => {
       </RecentJourneysWrapper>
     );
 
-  const sortedConnections = connections.sort((a, b) => b.departureTime.getTime() - a.departureTime.getTime());
+  const sortedJourneys = journeys.sort((a, b) => b.departureTime.getTime() - a.departureTime.getTime());
 
-  if (sortedConnections.length === 0)
+  if (sortedJourneys.length === 0)
     return (
       <RecentJourneysWrapper>
         <EmptyJourneyNotice />
@@ -47,8 +47,8 @@ export const RecentJourneys: React.FC = () => {
     <RecentJourneysWrapper>
       <div className="flex flex-col justify-between h-full pb-5">
         <ul>
-          {sortedConnections.map((connection) => (
-            <Journey key={connection.id} journey={connection} />
+          {sortedJourneys.map((journey) => (
+            <Journey key={journey.id} journey={journey} />
           ))}
         </ul>
         <div className="p-1">

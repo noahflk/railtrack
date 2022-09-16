@@ -70,7 +70,7 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
         Direction {journey.sections[0]?.journey.to}
       </p>
       <div className="flex justify-between space-x-2">
-        <JourneyStopIndicator className="w-96" connection={journey} />
+        <JourneyStopIndicator className="w-96" journey={journey} />
         <p>
           {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')}
         </p>
@@ -92,7 +92,7 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
         </span>
         Direction {journey.sections[0]?.journey.to}
       </p>
-      <JourneyStopIndicator className="w-full" connection={journey} />
+      <JourneyStopIndicator className="w-full" journey={journey} />
       <div className="flex justify-between">
         <p>
           {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
