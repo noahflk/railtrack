@@ -6,9 +6,19 @@ import { RecentJourneys } from '@/components/dashboard/RecentJourneys';
 import { StatsDisplay } from '@/components/dashboard/StatsDisplay';
 import { Wrapper } from '@/components/Wrapper';
 import { protectedRouteWithLocales } from '@/utils/protectedLocales';
+import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 const Dashboard: NextPage = () => {
+  const router = useRouter();
+
   const t = useTranslations();
+
+  const { success } = router.query;
+
+  if (success) {
+    toast.success('Your email is now verified');
+  }
 
   return (
     <Wrapper title={t('navigation.dashboard')}>
