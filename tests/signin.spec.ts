@@ -1,4 +1,8 @@
 import { expect, test } from '@playwright/test';
+import login from './utils/login';
+
+const email = process.env.PLAYWRIGHT_EMAIL ?? '';
+const password = process.env.PLAYWRIGHT_PASSWORD ?? '';
 
 test.describe('Check sign in page', () => {
   test.beforeEach(async ({ page }) => {
@@ -42,5 +46,15 @@ test.describe('Check sign in page', () => {
     await page.locator('button[type="submit"]').click();
 
     await page.isVisible("text='Invalid login credentials'");
+  });
+
+  test('sign in works and redirects to dashbaord', async ({ page }) => {
+    // sign in
+    login(page, email, password);
+
+    // check if redirected to dashboard
+    await expect(page).toHaveTitle(/Dashboard/);
+    await expect(page).toHaveURL(/\/dashboard/);
+    await page.isVisible("text='Dashboard'");
   });
 });
