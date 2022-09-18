@@ -18,7 +18,7 @@
     "signInTitle": "Sign in with your account",
     "forgotTitle": "Reset your password",
     "verifyTitle": "Email verification",
-    "verifySuccessTitle": "Email verified successfully",
+    "verifySuccessTitle": "Email verified!",
     "setTitle": "Set a new password",
     "reset": "Reset password",
     "set": "Save new password",
@@ -33,7 +33,7 @@
     "signUpGoogle": "Sign Up with Google",
     "signInGoogle": "Sign In with Google ",
     "or": "Or",
-    "continueToDashboard": "Continue to your dashboard"
+    "loginNow": "Sign In to continue"
   },
   "dashboard": {
     "distance": "Distance travelled",

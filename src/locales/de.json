@@ -18,7 +18,7 @@
     "signInTitle": "Mit Account anmelden",
     "forgotTitle": "Setze dein Passwort zurück",
     "verifyTitle": "Email-Adresse bestätigen",
-    "verifySuccessTitle": "Email-Adresse erfolgreich verifiziert",
+    "verifySuccessTitle": "Email-Adresse verifiziert!",
     "setTitle": "Setze ein neues Passwort",
     "reset": "Passwort zurücksetzen",
     "set": "Neues Passwort speichern",
@@ -33,7 +33,7 @@
     "signUpGoogle": "Registrieren mit Google",
     "signInGoogle": "Anmelden mit Google ",
     "or": "Oder",
-    "continueToDashboard": "Fortfahren zum Dashboard"
+    "loginNow": "Anmelden um forzufahren"
   },
   "dashboard": {
     "distance": "Gereiste Distanz",

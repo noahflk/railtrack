@@ -10,7 +10,7 @@ const Success: NextPage = () => {
 
   return (
     <AuthWrapper type="success">
-      <Link href="/dashboard">{t('continueToDashboard')}</Link>
+      <Link href="/signin">{t('loginNow')}</Link>
     </AuthWrapper>
   );
 };
