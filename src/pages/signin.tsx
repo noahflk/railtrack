@@ -1,13 +1,19 @@
+import { useRouter } from 'next/router';
+import { useUser } from '@supabase/auth-helpers-react';
 import type { GetServerSideProps, NextPage } from 'next';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { SignInForm } from '@/components/auth/SignInForm';
 import { protectedAuthWithLocales } from '@/utils/protectedLocales';
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 const SignIn: NextPage = () => {
-  const user = supabaseClient.auth.user();
-  console.log(user, 'balbla');
+  const { user } = useUser();
+  const router = useRouter();
+
+  // work around in case logged in user state doesn't get captured by gSSP for social auth
+  if (user?.role === 'authenticated') {
+    router.push('/dashboard');
+  }
 
   return (
     <AuthWrapper type="signin">
