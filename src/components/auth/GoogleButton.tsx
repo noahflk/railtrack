@@ -11,10 +11,14 @@ export const GoogleButton: React.FC<Props> = ({ type }) => {
   const t = useTranslations('auth');
 
   const handleGoogleSignUp = async () => {
-    await supabaseClient.auth.signIn({
-      provider: 'google',
-      redirectTo: '/test',
-    });
+    await supabaseClient.auth.signIn(
+      {
+        provider: 'google',
+      },
+      {
+        redirectTo: '/test',
+      }
+    );
   };
 
   return (
