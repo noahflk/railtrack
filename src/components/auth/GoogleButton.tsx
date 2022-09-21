@@ -13,6 +13,7 @@ export const GoogleButton: React.FC<Props> = ({ type }) => {
   const handleGoogleSignUp = async () => {
     await supabaseClient.auth.signIn({
       provider: 'google',
+      redirectTo: '/test',
     });
   };
 
