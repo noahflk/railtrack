@@ -15,7 +15,7 @@ type ConnectionParams = {
   departureStation: string;
   arrivalStation: string;
   departureTime: string;
-  platform: string;
+  platform: string | null;
 };
 
 type StationInformation = {
@@ -85,7 +85,7 @@ export const journeyRouter = createProtectedRouter()
       departureStation: z.string(),
       arrivalStation: z.string(),
       departureTime: z.string(),
-      platform: z.string(),
+      platform: z.nullable(z.string()),
     }),
     async resolve({ input, ctx }) {
       const connection = await findConnection(input);
