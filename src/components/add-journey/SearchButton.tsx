@@ -4,14 +4,15 @@ import toast from 'react-hot-toast';
 import { useThrottleState } from 'react-relaxed';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-import { TRANSPORT_API_URL } from '@/constants';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
+import { TRANSPORT_API_URL } from '@/constants';
+import type { Journey } from '@/types/opendata';
 
 export const SearchButton: React.FC = () => {
   const departureTime = useJourneySearchStore((state) => state.departureTime);
   const departureStation = useJourneySearchStore((state) => state.departureStation);
   const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
-  const setConnections = useJourneySearchStore((state) => state.setConnections);
+  const setJourneys = useJourneySearchStore((state) => state.setJourneys);
 
   const [, setLoading, loading] = useThrottleState(false, 150);
 
@@ -21,15 +22,15 @@ export const SearchButton: React.FC = () => {
     try {
       setLoading(true);
 
-      const { data } = await axios.get(
+      const { data } = await axios.get<{ connections: Journey[] }>(
         `${TRANSPORT_API_URL}/connections?from=${departureStation?.name}&to=${arrivalStation?.name}&date=${
           departureTime.split('T')[0]
         }&time=${departureTime.split('T')[1]}`
       );
 
-      setConnections(data.connections);
+      setJourneys(data.connections);
     } catch (error) {
-      toast.error('Unable to load connections');
+      toast.error('Unable to load journeys');
     } finally {
       setLoading(false);
     }

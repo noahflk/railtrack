@@ -11,22 +11,22 @@ type JourneySearchState = {
   clearSearchInfo: () => void;
   setDepartureStation: (station: Station) => void;
   setArrivalStation: (station: Station) => void;
-  connections?: Journey[];
-  setConnections: (connections: Journey[]) => void;
+  journeys?: Journey[];
+  setJourneys: (journeys: Journey[]) => void;
 };
 
 export const useJourneySearchStore = create<JourneySearchState>((set) => ({
-  connections: undefined,
+  journeys: undefined,
   departureTime: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
   setDepartureTime: (date) => set(() => ({ departureTime: date })),
   setDepartureStation: (station) => set(() => ({ departureStation: station })),
   setArrivalStation: (station) => set(() => ({ arrivalStation: station })),
-  setConnections: (connections) => set(() => ({ connections })),
+  setJourneys: (journeys) => set(() => ({ journeys })),
   clearSearchInfo: () =>
     set(() => ({
       departureStation: undefined,
       arrivalStation: undefined,
       departureTime: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
-      connections: undefined,
+      journeys: undefined,
     })),
 }));
