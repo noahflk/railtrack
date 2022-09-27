@@ -43,8 +43,8 @@ const AddButton: React.FC<Props> = ({ journey }) => {
               utils.invalidateQueries(['journey.get']);
               utils.invalidateQueries(['journey.stats']);
             },
-            onError: () => {
-              toast.error('Unable to add new connection');
+            onError: (error) => {
+              toast.error(error.message);
             },
           }
         )

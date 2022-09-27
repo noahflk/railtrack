@@ -159,7 +159,7 @@ export const journeyRouter = createProtectedRouter()
         },
       });
 
-      // // enhance connection with more info
+      // enhance connection with more info
       return connections.map((connection) => {
         const departureStation = getDepartureStation(connection.sections);
         const arrivalStation = getArrivalStation(connection.sections);
