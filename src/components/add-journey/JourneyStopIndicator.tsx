@@ -17,10 +17,13 @@ export const JourneyStopIndicator: React.FC<Props> = ({ journey, className = '' 
     return arrivalTimestamp - departureTimestamp;
   };
 
-  const journeyDurationInSeconds = journey.sections.reduce((acc, section) => getSectionDuration(section) + acc, 0);
+  // remove walks and so on
+  const filteredSections = journey.sections.filter((section) => section.journey);
+
+  const journeyDurationInSeconds = filteredSections.reduce((acc, section) => getSectionDuration(section) + acc, 0);
 
   // returns the closest numerator for the denominator 12
-  const closestTwelfethForSectionDuration = journey.sections.map((section) => {
+  const closestTwelfethForSectionDuration = filteredSections.map((section) => {
     const proportionOfWholeJourney = getSectionDuration(section) / journeyDurationInSeconds;
 
     // get the closest twelfeth for the proportion of the whole journey
