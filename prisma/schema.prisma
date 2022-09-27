@@ -13,11 +13,12 @@ model Settings {
 }
 
 model Connection {
-    id        Int      @id @default(autoincrement())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    userId    String
-    duration  Int
+    id         Int      @id @default(autoincrement())
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    userId     String
+    duration   Int
+    identifier String   @unique
 
     sections Section[]
 }

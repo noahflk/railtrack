@@ -8,6 +8,7 @@ import { createProtectedRouter } from '@/server/router/protected';
 import { calculateJourneyDistance } from '@/utils/calculateDistance';
 import { parseDurationString } from '@/utils/duration';
 import { roundToOneDecimal } from '@/utils/rounding';
+import { hashJourneyIdentifier } from '@/utils/journeyIdentifier';
 import type { Journey } from '@/types/opendata';
 import type { Section } from '@prisma/client';
 
@@ -94,6 +95,24 @@ export const journeyRouter = createProtectedRouter()
         throw new TRPCError({ code: 'NOT_FOUND', message: 'Connection not found' });
       }
 
+      // store the hashed journey identifier so that we can easily check for duplicate journeys
+      const identifier = hashJourneyIdentifier({
+        departureStation: input.departureStation,
+        arrivalStation: input.arrivalStation,
+        departureTime: input.departureTime,
+        platform: input.platform,
+      });
+
+      const existingJourney = await ctx.prisma.connection.findFirst({
+        where: {
+          identifier,
+        },
+      });
+
+      if (existingJourney) {
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Journey already exists' });
+      }
+
       const sections = connection.sections.filter((section) => section.journey);
 
       // create structured data for connection to save it
@@ -134,6 +153,7 @@ export const journeyRouter = createProtectedRouter()
           sections: {
             create: sectionsData,
           },
+          identifier,
         },
       });
 
