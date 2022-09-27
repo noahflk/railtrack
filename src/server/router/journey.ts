@@ -2,6 +2,7 @@ import { TRPCError } from '@trpc/server';
 import axios from 'axios';
 import { isBefore } from 'date-fns';
 import { z } from 'zod';
+import type { Section } from '@prisma/client';
 
 import { TRANSPORT_API_URL } from '@/constants';
 import { createProtectedRouter } from '@/server/router/protected';
@@ -10,14 +11,7 @@ import { parseDurationString } from '@/utils/duration';
 import { roundToOneDecimal } from '@/utils/rounding';
 import { hashJourneyIdentifier } from '@/utils/journeyIdentifier';
 import type { Journey } from '@/types/opendata';
-import type { Section } from '@prisma/client';
-
-type ConnectionParams = {
-  departureStation: string;
-  arrivalStation: string;
-  departureTime: string;
-  platform: string | null;
-};
+import type { JourneyIdentifier } from '@/types/journey';
 
 type StationInformation = {
   name: string;
@@ -29,7 +23,7 @@ const findConnection = async ({
   arrivalStation,
   departureTime,
   platform,
-}: ConnectionParams): Promise<Journey | undefined> => {
+}: JourneyIdentifier): Promise<Journey | undefined> => {
   const { data } = await axios.get<{ connections: Journey[] }>(
     `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${
       departureTime.split('T')[0]
@@ -80,8 +74,8 @@ const getArrivalStation = (sections: Section[]): StationInformation => {
 
 export const journeyRouter = createProtectedRouter()
   .mutation('add', {
-    // this information is enough to precicely find the precise connection again
-    // that way we avoid passing the whole connection object from the client to the server
+    // this information is enough to precicely find the precise journey again
+    // that way we avoid passing the whole journey object from the client to the server
     input: z.object({
       departureStation: z.string(),
       arrivalStation: z.string(),
@@ -89,10 +83,10 @@ export const journeyRouter = createProtectedRouter()
       platform: z.nullable(z.string()),
     }),
     async resolve({ input, ctx }) {
-      const connection = await findConnection(input);
+      const journey = await findConnection(input);
 
-      if (!connection) {
-        throw new TRPCError({ code: 'NOT_FOUND', message: 'Connection not found' });
+      if (!journey) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Journey not found' });
       }
 
       // store the hashed journey identifier so that we can easily check for duplicate journeys
@@ -103,7 +97,7 @@ export const journeyRouter = createProtectedRouter()
         platform: input.platform,
       });
 
-      const existingJourney = await ctx.prisma.connection.findFirst({
+      const existingJourney = await ctx.prisma.journey.findFirst({
         where: {
           identifier,
         },
@@ -113,9 +107,9 @@ export const journeyRouter = createProtectedRouter()
         throw new TRPCError({ code: 'BAD_REQUEST', message: 'Journey already exists' });
       }
 
-      const sections = connection.sections.filter((section) => section.journey);
+      const sections = journey.sections.filter((section) => section.journey);
 
-      // create structured data for connection to save it
+      // create structured data for journey to save it
       const sectionsData = sections.map((section) => {
         const passes = section.journey.passList.map((pass) => {
           return {
@@ -146,9 +140,9 @@ export const journeyRouter = createProtectedRouter()
         };
       });
 
-      await ctx.prisma.connection.create({
+      await ctx.prisma.journey.create({
         data: {
-          duration: parseDurationString(connection.duration),
+          duration: parseDurationString(journey.duration),
           userId: ctx.user.id,
           sections: {
             create: sectionsData,
@@ -163,8 +157,8 @@ export const journeyRouter = createProtectedRouter()
   .query('get', {
     input: z.optional(z.number()),
     async resolve({ input, ctx }) {
-      const connections = await ctx.prisma.connection.findMany({
-        // this limits the number of returned connections if provided
+      const journeys = await ctx.prisma.journey.findMany({
+        // this limits the number of returned journeys if provided
         // otherwise all will be returned
         take: input,
         where: {
@@ -179,26 +173,26 @@ export const journeyRouter = createProtectedRouter()
         },
       });
 
-      // enhance connection with more info
-      return connections.map((connection) => {
-        const departureStation = getDepartureStation(connection.sections);
-        const arrivalStation = getArrivalStation(connection.sections);
+      // enhance journey with more info
+      return journeys.map((journey) => {
+        const departureStation = getDepartureStation(journey.sections);
+        const arrivalStation = getArrivalStation(journey.sections);
 
         return {
-          ...connection,
+          ...journey,
           departureStation: departureStation.name,
           arrivalStation: arrivalStation.name,
           departureTime: departureStation.time,
           arrivalTime: arrivalStation.time,
-          stops: connection.sections.length - 1,
-          distance: roundToOneDecimal(calculateJourneyDistance(connection.sections)),
+          stops: journey.sections.length - 1,
+          distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
         };
       });
     },
   })
   .query('stats', {
     async resolve({ ctx }) {
-      const connections = await ctx.prisma.connection.findMany({
+      const journeys = await ctx.prisma.journey.findMany({
         where: {
           userId: ctx.user.id,
         },
@@ -217,12 +211,9 @@ export const journeyRouter = createProtectedRouter()
         },
       });
 
-      const distance = connections.reduce(
-        (partial, connection) => partial + calculateJourneyDistance(connection.sections),
-        0
-      );
+      const distance = journeys.reduce((partial, journey) => partial + calculateJourneyDistance(journey.sections), 0);
 
-      const numberOfConnections = await ctx.prisma.connection.count({
+      const numberOfJourneys = await ctx.prisma.journey.count({
         where: {
           userId: ctx.user.id,
         },
@@ -230,14 +221,14 @@ export const journeyRouter = createProtectedRouter()
 
       const durationResult = await ctx.prisma.$queryRaw<
         { sum: bigint }[]
-      >`SELECT sum(duration) FROM "Connection" WHERE "userId" = ${ctx.user.id}`;
+      >`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${ctx.user.id}`;
 
       const durationInMinutes = Number(durationResult[0]?.sum);
 
       return {
         distance: roundToOneDecimal(distance),
-        count: numberOfConnections,
-        coordinates: connections,
+        count: numberOfJourneys,
+        coordinates: journeys,
         duration: roundToOneDecimal(durationInMinutes / 60),
       };
     },
@@ -245,20 +236,20 @@ export const journeyRouter = createProtectedRouter()
   .mutation('delete', {
     input: z.number(),
     async resolve({ input, ctx }) {
-      // check if connection exists and belongs to user
-      const connection = await ctx.prisma.connection.findFirst({
+      // check if journey exists and belongs to user
+      const journey = await ctx.prisma.journey.findFirst({
         where: {
           id: input,
           userId: ctx.user.id,
         },
       });
 
-      if (!connection) {
-        throw new TRPCError({ code: 'NOT_FOUND', message: 'Connection not found' });
+      if (!journey) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Journey not found' });
       }
 
-      // actually delete the connection
-      await ctx.prisma.connection.delete({
+      // actually delete the journey
+      await ctx.prisma.journey.delete({
         where: {
           id: input,
         },

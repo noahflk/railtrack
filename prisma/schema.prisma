@@ -12,7 +12,7 @@ model Settings {
     language String
 }
 
-model Connection {
+model Journey {
     id         Int      @id @default(autoincrement())
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
@@ -23,14 +23,14 @@ model Connection {
     sections Section[]
 }
 
-// a connection has multiple sections
+// a journey has multiple sections
 model Section {
     id        Int      @id @default(autoincrement())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    connection   Connection? @relation(fields: [connectionId], references: [id], onDelete: Cascade)
-    connectionId Int?
+    journey   Journey? @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+    journeyId Int?
 
     departureTime DateTime
     arrivalTime   DateTime
