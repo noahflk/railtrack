@@ -5,6 +5,7 @@ import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { GoogleButton } from '@/components/auth/GoogleButton';
+import { trpc } from '@/utils/trpc';
 
 export const SignUpForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -15,6 +16,8 @@ export const SignUpForm: React.FC = () => {
   const t = useTranslations('auth');
 
   const router = useRouter();
+
+  const logSignup = trpc.useMutation(['log.signup']);
 
   const handleSignUp = async () => {
     // clear error message
@@ -37,6 +40,9 @@ export const SignUpForm: React.FC = () => {
       setErrorMessage(error.message);
       return;
     }
+
+    // signup is successful, so dispatch logsnag messagbe
+    logSignup.mutate(email);
 
     // if there is a session it means that we do not need to verify the email beforehand
     if (session) {
