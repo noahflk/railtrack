@@ -1,8 +1,8 @@
 import { LogSnag, PublishOptions } from 'logsnag';
 
 const logsnag = new LogSnag({
-  token: process.env.LOGSNAG_KEY ?? '',
-  project: 'pingparrot',
+  token: process.env.LOGSNAG_TOKEN ?? '',
+  project: 'railtrack',
 });
 
 export const log = (options: PublishOptions) => {
