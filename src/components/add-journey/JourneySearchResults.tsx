@@ -9,7 +9,7 @@ const generateJourneyKey = (journey: Journey) => {
 };
 
 const ResultDisplay: React.FC = () => {
-  const journeys = useJourneySearchStore((state) => state.connections);
+  const journeys = useJourneySearchStore((state) => state.journeys);
 
   const t = useTranslations('add');
 
