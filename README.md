@@ -66,4 +66,4 @@ npm run dev
 
 ## License
 
-`railtrack` is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
+`railtrack` is available under the AGPL-3.0 license. See the [LICENSE](LICENSE.md) file for more info.
