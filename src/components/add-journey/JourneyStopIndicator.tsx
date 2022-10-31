@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { format } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 
 import type { Journey, Section } from '@/types/opendata';
 import { classNames } from '@/utils/styling';
@@ -33,7 +33,7 @@ export const JourneyStopIndicator: React.FC<Props> = ({ journey, className = '' 
 
   return (
     <div className={classNames('flex items-center justify-between space-x-4', className)}>
-      <span>{format(new Date(journey.from.departureTimestamp * 1000), 'HH:mm')}</span>
+      <span>{formatInTimeZone(new Date(journey.from.departureTimestamp * 1000), 'Europe/Zurich', 'HH:mm')}</span>
 
       <ol className="flex items-center w-full px-1">
         {closestTwelfethForSectionDuration.map((numerator, index) => {
@@ -48,7 +48,7 @@ export const JourneyStopIndicator: React.FC<Props> = ({ journey, className = '' 
         })}
         <li className="relative w-4 h-4 -mx-1 rounded-full bg-primary"></li>
       </ol>
-      <span>{format(new Date(journey.to.arrivalTimestamp * 1000), 'HH:mm')}</span>
+      <span>{formatInTimeZone(new Date(journey.to.arrivalTimestamp * 1000), 'Europe/Zurich', 'HH:mm')}</span>
     </div>
   );
 };

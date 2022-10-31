@@ -1,6 +1,6 @@
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
-import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
+import { formatInTimeZone } from 'date-fns-tz';
 
 import { TextButton } from '@/components/TextButton';
 import { InferQueryOutput } from '@/server/trpc-helper';
@@ -28,12 +28,13 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
             </p>
           </div>
           <div>
-            <p className="xs:text-right">{format(departureTime, 'dd.MM.yyyy')}</p>
+            <p className="xs:text-right">{formatInTimeZone(departureTime, 'Europe/Zurich', 'dd.MM.yyyy')}</p>
           </div>
         </div>
         <div>
           <p>
-            {format(departureTime, 'HH:mm')} - {format(arrivalTime, 'HH:mm')}
+            {formatInTimeZone(departureTime, 'Europe/Zurich', 'HH:mm')} -{' '}
+            {formatInTimeZone(arrivalTime, 'Europe/Zurich', 'HH:mm')}
           </p>
           <p>
             Duration: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}

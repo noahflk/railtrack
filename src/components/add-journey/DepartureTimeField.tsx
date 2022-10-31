@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import { classNames } from '@/utils/styling';
@@ -10,7 +10,7 @@ export const DepartureTimeField: React.FC = () => {
 
   const t = useTranslations('add');
 
-  const showNowButton = departureTime !== format(new Date(), "yyyy-MM-dd'T'HH:mm");
+  const showNowButton = departureTime !== formatInTimeZone(new Date(), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm");
 
   return (
     <div className="w-full">
@@ -20,7 +20,7 @@ export const DepartureTimeField: React.FC = () => {
         </label>
         <button
           disabled={!showNowButton}
-          onClick={() => setDepartureTime(format(new Date(), "yyyy-MM-dd'T'HH:mm"))}
+          onClick={() => setDepartureTime(formatInTimeZone(new Date(), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm"))}
           className={classNames(
             'text-sm font-medium',
             showNowButton ? 'text-primary hover:text-primary-light' : 'text-gray-500'
