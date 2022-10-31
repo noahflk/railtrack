@@ -83,24 +83,25 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
                 </div>
                 <nav className="px-2 mt-5 space-y-1">
                   {navigation.map((item) => (
-                    <Link key={item.name} href={item.href} passHref>
-                      <a
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      passHref
+                      className={classNames(
+                        item.href === pathname
+                          ? 'bg-gray-100 text-gray-900'
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                        'group flex items-center px-2 py-2 text-base font-medium rounded-md'
+                      )}
+                    >
+                      <item.icon
                         className={classNames(
-                          item.href === pathname
-                            ? 'bg-gray-100 text-gray-900'
-                            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                          'group flex items-center px-2 py-2 text-base font-medium rounded-md'
+                          item.href === pathname ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                          'mr-4 flex-shrink-0 h-6 w-6'
                         )}
-                      >
-                        <item.icon
-                          className={classNames(
-                            item.href === pathname ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
-                            'mr-4 flex-shrink-0 h-6 w-6'
-                          )}
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </a>
+                        aria-hidden="true"
+                      />
+                      {item.name}
                     </Link>
                   ))}
                 </nav>
@@ -124,24 +125,25 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
             </div>
             <nav className="flex-1 px-2 mt-5 space-y-1 bg-white">
               {navigation.map((item) => (
-                <Link key={item.name} href={item.href} passHref>
-                  <a
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  passHref
+                  className={classNames(
+                    item.href === pathname
+                      ? 'bg-gray-100 text-gray-900'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+                  )}
+                >
+                  <item.icon
                     className={classNames(
-                      item.href === pathname
-                        ? 'bg-gray-100 text-gray-900'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                      'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+                      item.href === pathname ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                      'mr-3 flex-shrink-0 h-6 w-6'
                     )}
-                  >
-                    <item.icon
-                      className={classNames(
-                        item.href === pathname ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
-                        'mr-3 flex-shrink-0 h-6 w-6'
-                      )}
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
+                    aria-hidden="true"
+                  />
+                  {item.name}
                 </Link>
               ))}
             </nav>
