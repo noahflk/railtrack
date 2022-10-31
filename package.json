@@ -22,7 +22,7 @@
     "@trpc/react": "9.27.4",
     "@trpc/server": "9.27.4",
     "accept-language-parser": "1.5.0",
-    "axios": "0.27.2",
+    "axios": "1.1.3",
     "cookies-next": "2.1.1",
     "date-fns": "2.29.3",
     "logsnag": "0.1.3",
