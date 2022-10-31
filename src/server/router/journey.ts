@@ -12,10 +12,24 @@ import { roundToOneDecimal } from '@/utils/rounding';
 import { hashJourneyIdentifier } from '@/utils/journeyIdentifier';
 import type { Journey } from '@/types/opendata';
 import type { JourneyIdentifier } from '@/types/journey';
+import { log } from '@/utils/logger';
 
 type StationInformation = {
   name: string;
   time: Date;
+};
+
+const logAddJourney = (email: string, from: string, to: string) => {
+  log({
+    channel: 'add-journey',
+    event: 'User added journey',
+    description: `from ${from} to ${to}`,
+    icon: '🚝',
+    tags: {
+      email: email,
+    },
+    notify: false,
+  });
 };
 
 const findConnection = async ({
@@ -150,6 +164,8 @@ export const journeyRouter = createProtectedRouter()
           identifier,
         },
       });
+
+      logAddJourney(ctx.user.email, input.departureStation, input.arrivalStation);
 
       return { success: true };
     },
