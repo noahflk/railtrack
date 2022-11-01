@@ -1,11 +1,11 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 
 import { JourneyMap } from '@/components/dashboard/JourneyMap';
 import { RecentJourneys } from '@/components/dashboard/RecentJourneys';
 import { StatsDisplay } from '@/components/dashboard/StatsDisplay';
 import { Wrapper } from '@/components/Wrapper';
-import { protectedRouteWithLocales } from '@/utils/protectedLocales';
+import { getLocaleProps } from '@/utils/locales';
 
 const Dashboard: NextPage = () => {
   const t = useTranslations();
@@ -21,8 +21,6 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return protectedRouteWithLocales(ctx);
-};
+export const getServerSideProps = getLocaleProps;
 
 export default Dashboard;

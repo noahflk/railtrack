@@ -1,9 +1,9 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 
 import { JourneyList } from '@/components/journeys/JourneyList';
 import { Wrapper } from '@/components/Wrapper';
-import { protectedRouteWithLocales } from '@/utils/protectedLocales';
+import { getLocaleProps } from '@/utils/locales';
 
 const Journeys: NextPage = () => {
   const t = useTranslations();
@@ -15,8 +15,6 @@ const Journeys: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = (ctx) => {
-  return protectedRouteWithLocales(ctx);
-};
+export const getServerSideProps = getLocaleProps;
 
 export default Journeys;
