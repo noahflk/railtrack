@@ -2,9 +2,9 @@ import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 export const SetPasswordForm: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -12,6 +12,8 @@ export const SetPasswordForm: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState(false);
+
+  const { supabaseClient } = useSessionContext();
 
   const t = useTranslations('auth');
 
@@ -47,7 +49,7 @@ export const SetPasswordForm: React.FC = () => {
       return;
     }
 
-    const { error } = await supabaseClient.auth.api.updateUser(accessToken, {
+    const { error } = await supabaseClient.auth.updateUser({
       password: password,
     });
 

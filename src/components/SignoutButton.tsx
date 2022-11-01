@@ -2,10 +2,10 @@ import router from 'next/router';
 import { useTranslations } from 'next-intl';
 import { LogoutIcon } from '@heroicons/react/outline';
 import toast from 'react-hot-toast';
-
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 
 export const SignoutButton: React.FC = () => {
+  const { supabaseClient } = useSessionContext();
   const t = useTranslations('navigation');
 
   return (

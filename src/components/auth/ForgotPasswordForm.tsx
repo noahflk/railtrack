@@ -1,5 +1,5 @@
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useTranslations } from 'next-intl';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
@@ -10,6 +10,8 @@ export const ForgotPasswordForm: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState(false);
 
+  const { supabaseClient } = useSessionContext();
+
   const t = useTranslations('auth');
 
   const handleForgot = async () => {
@@ -18,7 +20,7 @@ export const ForgotPasswordForm: React.FC = () => {
     setErrorMessage(undefined);
     setLoading(true);
 
-    const { data, error } = await supabaseClient.auth.api.resetPasswordForEmail(email, {
+    const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email, {
       redirectTo: process.env.NEXT_PUBLIC_APP_URL + '/auth/set',
     });
 

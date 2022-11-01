@@ -1,7 +1,7 @@
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 
 import { Link } from '@/components/Link';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
@@ -15,6 +15,8 @@ export const SignInForm: React.FC = () => {
 
   const router = useRouter();
 
+  const { supabaseClient } = useSessionContext();
+
   const t = useTranslations('auth');
 
   const handleSignIn = async () => {
@@ -22,7 +24,7 @@ export const SignInForm: React.FC = () => {
     setErrorMessage(undefined);
     setLoading(true);
 
-    const { user, error } = await supabaseClient.auth.signIn({
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
       email,
       password,
     });
@@ -34,7 +36,7 @@ export const SignInForm: React.FC = () => {
       return;
     }
 
-    if (user) router.push('/dashboard');
+    if (data) router.push('/dashboard');
   };
 
   return (

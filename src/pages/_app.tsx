@@ -1,20 +1,28 @@
-import Head from 'next/head';
-import { useEffect } from 'react';
+import { createBrowserSupabaseClient, Session } from '@supabase/auth-helpers-nextjs';
+import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { withTRPC } from '@trpc/next';
+import { AbstractIntlMessages, NextIntlProvider } from 'next-intl';
 import type { AppType } from 'next/dist/shared/lib/utils';
+import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
-import { NextIntlProvider } from 'next-intl';
 import superjson from 'superjson';
-import { UserProvider } from '@supabase/auth-helpers-react';
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
-import type { AppRouter } from '@/server/router';
 import { DEFAULT_LANG } from '@/constants';
+import type { AppRouter } from '@/server/router';
 import '@/styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+type Props = {
+  messages: AbstractIntlMessages;
+  locale: string;
+  initialSession: Session;
+};
+
+const MyApp: AppType<Props> = ({ Component, pageProps }) => {
   const { toasts } = useToasterStore();
+
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   const TOAST_LIMIT = 3;
 
@@ -32,10 +40,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
-        <UserProvider supabaseClient={supabaseClient}>
+        <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
           <Component {...pageProps} />
           <Toaster />
-        </UserProvider>
+        </SessionContextProvider>
       </NextIntlProvider>
     </>
   );
