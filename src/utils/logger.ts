@@ -2,7 +2,7 @@ import { LogSnag, PublishOptions } from 'logsnag';
 
 const logsnag = new LogSnag({
   token: process.env.LOGSNAG_TOKEN ?? '',
-  project: 'railtrack',
+  project: process.env.NEXT_PUBLIC_APP_NAME ?? '',
 });
 
 export const log = (options: PublishOptions) => {

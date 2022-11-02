@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { SetPasswordForm } from '@/components/auth/SetPasswordForm';
@@ -12,8 +12,6 @@ const SetPassword: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = (ctx) => {
-  return getLocaleProps(ctx);
-};
+export const getServerSideProps = getLocaleProps;
 
 export default SetPassword;

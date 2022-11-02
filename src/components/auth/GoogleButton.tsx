@@ -1,17 +1,19 @@
 import { useTranslations } from 'next-intl';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 
 import { GoogleIcon } from '@/components/Icons';
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
 
 type Props = {
   type: 'signin' | 'signup';
 };
 
 export const GoogleButton: React.FC<Props> = ({ type }) => {
+  const { supabaseClient } = useSessionContext();
+
   const t = useTranslations('auth');
 
   const handleGoogleSignUp = async () => {
-    await supabaseClient.auth.signIn({
+    await supabaseClient.auth.signInWithOAuth({
       provider: 'google',
     });
   };

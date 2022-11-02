@@ -1,23 +1,10 @@
-import { GetServerSidePropsContext } from 'next';
-import { getUser } from '@supabase/auth-helpers-nextjs';
-import { getCookie, setCookie } from 'cookies-next';
 import parser from 'accept-language-parser';
+import { getCookie, setCookie } from 'cookies-next';
+import { GetServerSidePropsContext } from 'next';
 
-import { prisma } from '@/server/db/client';
 import { DEFAULT_LANG, LANG_COOKIE_KEY, SUPPORTED_LANGS } from '@/constants';
-
-export const getCookieLocale = (ctx: GetServerSidePropsContext): string => {
-  // first check for actual cookie
-  const cookieLanguage = getCookie(LANG_COOKIE_KEY, ctx);
-
-  // if we have the actual cookie with a valid language
-  if (cookieLanguage && typeof cookieLanguage === 'string' && SUPPORTED_LANGS.includes(cookieLanguage)) {
-    return cookieLanguage;
-  }
-
-  // otherwise return default language
-  return DEFAULT_LANG;
-};
+import { prisma } from '@/server/db/client';
+import { getUserFromContext } from '@/utils/serverUser';
 
 export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string> => {
   // first check for actual cookie
@@ -29,7 +16,7 @@ export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string>
   }
 
   // Only check auth after cookie fails
-  const { user } = await getUser(ctx);
+  const user = await getUserFromContext(ctx);
 
   const isAuthenticated = user && user.role === 'authenticated';
 

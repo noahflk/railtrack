@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import { supabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { GoogleButton } from '@/components/auth/GoogleButton';
@@ -12,6 +12,8 @@ export const SignUpForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState(false);
+
+  const { supabaseClient } = useSessionContext();
 
   const t = useTranslations('auth');
 
@@ -24,15 +26,13 @@ export const SignUpForm: React.FC = () => {
     setErrorMessage(undefined);
     setLoading(true);
 
-    const { session, error } = await supabaseClient.auth.signUp(
-      {
-        email,
-        password,
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: process.env.NEXT_PUBLIC_APP_URL + '/auth/success',
       },
-      {
-        redirectTo: process.env.NEXT_PUBLIC_APP_URL + '/auth/success',
-      }
-    );
+    });
 
     setLoading(false);
 
@@ -45,7 +45,7 @@ export const SignUpForm: React.FC = () => {
     logSignup.mutate(email);
 
     // if there is a session it means that we do not need to verify the email beforehand
-    if (session) {
+    if (data) {
       router.push('/dashboard');
     } else {
       router.push('/auth/verify');

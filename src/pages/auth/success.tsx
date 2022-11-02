@@ -1,9 +1,9 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { Link } from '@/components/Link';
-import { protectedAuthWithLocales } from '@/utils/protectedLocales';
+import { getLocaleProps } from '@/utils/locales';
 
 const Success: NextPage = () => {
   const t = useTranslations('auth');
@@ -15,8 +15,6 @@ const Success: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = (ctx) => {
-  return protectedAuthWithLocales(ctx);
-};
+export const getServerSideProps = getLocaleProps;
 
 export default Success;

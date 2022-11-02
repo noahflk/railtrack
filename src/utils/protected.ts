@@ -1,21 +1,10 @@
-import { GetServerSidePropsContext } from 'next';
+import type { GetServerSidePropsContext } from 'next';
 
-import { getUser } from '@supabase/auth-helpers-nextjs';
+import { getUserFromContext } from '@/utils/serverUser';
+import { getLocaleProps } from '@/utils//locales';
 
-export const protectedRoute = async (ctx: GetServerSidePropsContext) => {
-  const { user } = await getUser(ctx);
-
-  const isAuthenticated = user && user.role === 'authenticated';
-
-  if (!isAuthenticated) {
-    return { props: {}, redirect: { destination: '/signin' } };
-  }
-
-  return { props: {} };
-};
-
-export const protectedAuth = async (ctx: GetServerSidePropsContext) => {
-  const { user } = await getUser(ctx);
+const protectedAuth = async (ctx: GetServerSidePropsContext) => {
+  const user = await getUserFromContext(ctx);
 
   const isAuthenticated = user && user.role === 'authenticated';
 
@@ -24,4 +13,15 @@ export const protectedAuth = async (ctx: GetServerSidePropsContext) => {
   }
 
   return { props: {} };
+};
+
+export const protectedAuthWithLocales = async (ctx: GetServerSidePropsContext) => {
+  const authCheck = await protectedAuth(ctx);
+
+  // immediately perform redirect if authenticated
+  if (authCheck.redirect) {
+    return authCheck;
+  }
+
+  return getLocaleProps(ctx);
 };

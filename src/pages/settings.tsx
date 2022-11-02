@@ -1,10 +1,10 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 
 import { Account } from '@/components/settings/Account';
 import { Support } from '@/components/settings/Support';
 import { Wrapper } from '@/components/Wrapper';
-import { protectedRouteWithLocales } from '@/utils/protectedLocales';
+import { getLocaleProps } from '@/utils/locales';
 
 const Settings: NextPage = () => {
   const t = useTranslations();
@@ -19,8 +19,6 @@ const Settings: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = (ctx) => {
-  return protectedRouteWithLocales(ctx);
-};
+export const getServerSideProps = getLocaleProps;
 
 export default Settings;

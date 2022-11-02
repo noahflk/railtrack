@@ -1,17 +1,17 @@
-import { useRouter } from 'next/router';
 import { useUser } from '@supabase/auth-helpers-react';
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { SignInForm } from '@/components/auth/SignInForm';
-import { protectedAuthWithLocales } from '@/utils/protectedLocales';
+import { protectedAuthWithLocales } from '@/utils/protected';
 
 const SignIn: NextPage = () => {
-  const { user } = useUser();
+  const user = useUser();
   const router = useRouter();
 
-  // work around in case logged in user state doesn't get captured by gSSP for social auth
-  if (user?.role === 'authenticated') {
+  // redirect back to dashboard when user is authenticated
+  if (user) {
     router.push('/dashboard');
   }
 
@@ -22,8 +22,6 @@ const SignIn: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = (ctx) => {
-  return protectedAuthWithLocales(ctx);
-};
+export const getServerSideProps = protectedAuthWithLocales;
 
 export default SignIn;
