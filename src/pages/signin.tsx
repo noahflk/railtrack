@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { SignInForm } from '@/components/auth/SignInForm';
-import { getLocaleProps } from '@/utils/locales';
+import { protectedAuthWithLocales } from '@/utils/protected';
 
 const SignIn: NextPage = () => {
   const user = useUser();
   const router = useRouter();
 
-  // work around in case logged in user state doesn't get captured by gSSP for social auth
-  if (user?.role === 'authenticated') {
+  // redirect back to dashboard when user is authenticated
+  if (user) {
     router.push('/dashboard');
   }
 
@@ -22,6 +22,6 @@ const SignIn: NextPage = () => {
   );
 };
 
-export const getServerSideProps = getLocaleProps;
+export const getServerSideProps = protectedAuthWithLocales;
 
 export default SignIn;

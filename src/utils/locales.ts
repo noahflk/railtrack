@@ -1,9 +1,9 @@
 import { GetServerSidePropsContext } from 'next/types';
 
-import { getCookieLocale } from '@/utils/getLocale';
+import { getLocale } from '@/utils/getLocale';
 
 export const getLocaleProps = async (ctx: GetServerSidePropsContext) => {
-  const locale = await getCookieLocale(ctx);
+  const locale = await getLocale(ctx);
 
   return {
     props: { messages: (await import(`../locales/${locale}.json`)).default, locale },
