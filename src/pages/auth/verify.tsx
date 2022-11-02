@@ -1,7 +1,7 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 
 import { AuthWrapper } from '@/components/auth/AuthWrapper';
-import { protectedAuthWithLocales } from '@/utils/protectedLocales';
+import { getLocaleProps } from '@/utils/locales';
 
 const Verify: NextPage = () => {
   return (
@@ -11,8 +11,6 @@ const Verify: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = (ctx) => {
-  return protectedAuthWithLocales(ctx);
-};
+export const getServerSideProps = getLocaleProps;
 
 export default Verify;
