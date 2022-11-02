@@ -16,11 +16,11 @@ const SocialSignupSuccess: NextPage = () => {
       // send request to server to notify for new google login
       mutation.mutate();
 
-      router.push('/dashboard');
+      // router.push('/dashboard');
     }
   }, [user, router, mutation]);
 
-  return null;
+  return <p>Welcome here</p>;
 };
 
 export default SocialSignupSuccess;
