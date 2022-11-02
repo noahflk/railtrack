@@ -15,6 +15,7 @@ export const GoogleButton: React.FC<Props> = ({ type }) => {
   const handleGoogleSignUp = async () => {
     await supabaseClient.auth.signInWithOAuth({
       provider: 'google',
+      options: { redirectTo: '/social-signup-success' },
     });
   };
 
