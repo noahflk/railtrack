@@ -66,13 +66,7 @@ export const AuthWrapper: React.FC<Props> = ({ children, type }) => {
           </div>
         </div>
         <div className="relative flex-1 hidden w-0 lg:block">
-          <Image
-            className="absolute inset-0 w-full h-full"
-            layout="fill"
-            objectFit="cover"
-            src={image}
-            alt="Symbolic train image"
-          />
+          <Image className="absolute inset-0 w-full h-full object-cover" src={image} alt="Symbolic train image" />
         </div>
       </div>
     </>
