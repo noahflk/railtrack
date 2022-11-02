@@ -12,13 +12,11 @@ const SocialSignupSuccess: NextPage = () => {
 
   useEffect(() => {
     if (user) {
-      // we do this on client because we don't yet have the access token on server
-      // send request to server to notify for new google login
       mutation.mutate();
 
-      // router.push('/dashboard');
+      router.push('/dashboard');
     }
-  }, [user, router, mutation]);
+  }, [user, router]);
 
   return <p>Welcome here</p>;
 };

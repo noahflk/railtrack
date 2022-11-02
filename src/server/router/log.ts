@@ -32,7 +32,7 @@ export const logRouter = createRouter()
       const createdAtDate = new Date(user.created_at);
 
       // check if createdAtDate in the last 60 seconds
-      if (differenceInSeconds(createdAtDate, new Date()) < 60) {
+      if (differenceInSeconds(new Date(), createdAtDate) < 60) {
         logSignup(user.email);
       }
     },
