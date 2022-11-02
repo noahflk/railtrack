@@ -22,6 +22,12 @@ export const Support: React.FC = () => {
               </Link>
             </p>
           </div>
+
+          <div className="space-y-4">
+            <p>
+              Email contact: <Link href="mailto:railtrack@flk.li">railtrack@flk.li</Link>
+            </p>
+          </div>
         </div>
       </div>
     </section>
