@@ -16,6 +16,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         where: { createdAt: { gt: fifteenMinutesAgo }, processedAt: null },
       });
 
+      console.log('Found the following unprocessed users: ', unprocessedUsers);
+
       unprocessedUsers.forEach((user) => {
         // send notification to user
         log({
@@ -28,6 +30,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           },
           notify: true,
         });
+
+        console.log('Sent notification to user: ', user.email);
 
         // set processedAt time
         prisma.profiles.update({
