@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { log } from '@/utils/logger';
 import axios from 'axios';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
