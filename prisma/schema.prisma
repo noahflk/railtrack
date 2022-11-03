@@ -13,11 +13,11 @@ model Settings {
 }
 
 model Profiles {
-    userId      String   @unique
+    userId      String    @unique
     email       String
-    provider    String
-    createdAt   DateTime @default(now())
-    processedAt DateTime
+    provider    String?
+    createdAt   DateTime  @default(now())
+    processedAt DateTime?
 }
 
 model Journey {
