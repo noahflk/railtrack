@@ -1,14 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { log } from '@/utils/logger';
+import axios from 'axios';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      log({
-        channel: 'signup',
-        event: 'From bla',
-      });
+      const config = {
+        headers: { Authorization: `Bearer 1320610c9f08fb2745bad077541f8717` },
+      };
+
+      axios.post(
+        'https://api.logsnag.com/v1/log',
+        {
+          project: 'railtrack',
+          channel: 'test',
+          event: 'From blabla',
+          icon: '📩',
+          notify: true,
+        },
+        config
+      );
 
       res.status(200).json({ success: true });
     } catch {
