@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { verifySignature } from '@upstash/qstash/nextjs';
-import { subMinutes } from 'date-fns';
 
 import { prisma } from '@/server/db/client';
 import { log } from '@/utils/logger';
@@ -8,17 +6,14 @@ import { log } from '@/utils/logger';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      // create date from 15 minutes ago with date-fns
-      const fifteenMinutesAgo = subMinutes(new Date(), 15);
-
-      // Get unprocessed users of the last 15 minutes
+      // Get all unprocessed users
       const unprocessedUsers = await prisma.profiles.findMany({
-        where: { createdAt: { gt: fifteenMinutesAgo }, processedAt: null },
+        where: { processedAt: null },
       });
 
       console.log('Found the following unprocessed users: ', unprocessedUsers);
 
-      unprocessedUsers.forEach((user) => {
+      unprocessedUsers.forEach(async (user) => {
         // send notification to user
         log({
           channel: 'signup',
@@ -34,7 +29,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         console.log('Sent notification to user: ', user.email);
 
         // set processedAt time
-        prisma.profiles.update({
+        await prisma.profiles.update({
           where: { userId: user.userId },
           data: { processedAt: new Date() },
         });
@@ -50,7 +45,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default verifySignature(handler);
+export default handler;
 
 export const config = {
   api: {
