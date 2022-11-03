@@ -8,8 +8,16 @@ datasource db {
 }
 
 model Settings {
-    userId   String @unique
+    userId   String @id @unique
     language String
+}
+
+model Profiles {
+    userId      String    @id @unique
+    email       String
+    provider    String?
+    createdAt   DateTime  @default(now())
+    processedAt DateTime?
 }
 
 model Journey {
