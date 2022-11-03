@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import { useSessionContext } from '@supabase/auth-helpers-react';
+import { useState } from 'react';
 
-import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { GoogleButton } from '@/components/auth/GoogleButton';
-import { trpc } from '@/utils/trpc';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 export const SignUpForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -18,8 +17,6 @@ export const SignUpForm: React.FC = () => {
   const t = useTranslations('auth');
 
   const router = useRouter();
-
-  const logSignup = trpc.useMutation(['log.signup']);
 
   const handleSignUp = async () => {
     // clear error message
@@ -40,9 +37,6 @@ export const SignUpForm: React.FC = () => {
       setErrorMessage(error.message);
       return;
     }
-
-    // signup is successful, so dispatch logsnag messagbe
-    logSignup.mutate(email);
 
     // if there is a session it means that we do not need to verify the email beforehand
     if (data) {
