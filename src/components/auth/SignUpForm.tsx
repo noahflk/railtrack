@@ -23,7 +23,10 @@ export const SignUpForm: React.FC = () => {
     setErrorMessage(undefined);
     setLoading(true);
 
-    const { data, error } = await supabaseClient.auth.signUp({
+    const {
+      data: { session },
+      error,
+    } = await supabaseClient.auth.signUp({
       email,
       password,
       options: {
@@ -39,7 +42,7 @@ export const SignUpForm: React.FC = () => {
     }
 
     // if there is a session it means that we do not need to verify the email beforehand
-    if (data) {
+    if (session) {
       router.push('/dashboard');
     } else {
       router.push('/auth/verify');
