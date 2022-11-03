@@ -1,5 +1,7 @@
-type Props = {
-  className: string;
-};
+import Image from 'next/image';
 
-export const Logo: React.FC<Props> = (props) => <img src="/images/logo.svg" alt="Railtrack logo" {...props} />;
+import image from 'public/images/logo.svg';
+
+export const Logo: React.FC<{
+  className: string;
+}> = (props) => <Image src={image} alt="Railtrack logo" {...props} />;
