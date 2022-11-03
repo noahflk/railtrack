@@ -12,6 +12,14 @@ model Settings {
     language String
 }
 
+model Profiles {
+    userId      String   @unique
+    email       String
+    provider    String
+    createdAt   DateTime @default(now())
+    processedAt DateTime
+}
+
 model Journey {
     id         Int      @id @default(autoincrement())
     createdAt  DateTime @default(now())
