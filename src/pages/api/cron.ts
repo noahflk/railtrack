@@ -1,39 +1,53 @@
+import axios from 'axios';
+import { verifySignature } from '@upstash/qstash/nextjs';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { prisma } from '@/server/db/client';
-import { log } from '@/utils/logger';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      // Get all unprocessed users
-      const unprocessedUsers = await prisma.profiles.findMany({
+      // Get the first unprocessed user
+      const user = await prisma.profiles.findFirst({
         where: { processedAt: null },
       });
 
-      console.log('Found the following unprocessed users: ', unprocessedUsers);
+      if (!user) {
+        return res.status(204).json({ success: true, message: 'No new users' });
+      }
 
-      unprocessedUsers.forEach(async (user) => {
-        // send notification to user
-        log({
+      console.log('Found the following unprocessed user: ', user);
+
+      await axios.post(
+        'https://api.logsnag.com/v1/log',
+        {
+          project: 'railtrack',
           channel: 'signup',
           event: 'User signed up',
-          description: `Email: ${user.email}`,
           icon: '🎉',
+          description: user.email,
           tags: {
             email: user.email,
           },
           notify: true,
-        });
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.LOGSNAG_TOKEN}`,
+          },
+        }
+      );
 
-        console.log('Sent notification to user: ', user.email);
+      console.log('Sent signup notification for user: ' + user.email);
 
-        // set processedAt time
-        await prisma.profiles.update({
-          where: { userId: user.userId },
-          data: { processedAt: new Date() },
-        });
+      // set processedAt time
+      await prisma.profiles.update({
+        where: { userId: user.userId },
+        data: { processedAt: new Date() },
       });
+
+      console.log('Set processedAt time for user: ' + user.email);
 
       res.status(200).json({ success: true });
     } catch {
@@ -45,7 +59,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default handler;
+export default verifySignature(handler);
 
 export const config = {
   api: {

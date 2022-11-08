@@ -1,35 +1,35 @@
+import type { Section } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import axios from 'axios';
 import { isBefore } from 'date-fns';
 import { z } from 'zod';
-import type { Section } from '@prisma/client';
 
 import { TRANSPORT_API_URL } from '@/constants';
 import { createProtectedRouter } from '@/server/router/protected';
+import type { JourneyIdentifier } from '@/types/journey';
+import type { Journey } from '@/types/opendata';
 import { calculateJourneyDistance } from '@/utils/calculateDistance';
 import { parseDurationString } from '@/utils/duration';
-import { roundToOneDecimal } from '@/utils/rounding';
 import { hashJourneyIdentifier } from '@/utils/journeyIdentifier';
-import type { Journey } from '@/types/opendata';
-import type { JourneyIdentifier } from '@/types/journey';
-import { log } from '@/utils/logger';
+import { roundToOneDecimal } from '@/utils/rounding';
 
 type StationInformation = {
   name: string;
   time: Date;
 };
 
-const logAddJourney = (email: string, from: string, to: string) => {
-  log({
-    channel: 'add-journey',
-    event: 'User added journey',
-    description: `from ${from} to ${to}`,
-    icon: '🚝',
-    tags: {
-      email: email,
-    },
-    notify: false,
-  });
+const logAddJourney = (email: string | undefined, from: string, to: string) => {
+  // log({
+  //   channel: 'add-journey',
+  //   event: 'User added journey',
+  //   description: `from ${from} to ${to}`,
+  //   icon: '🚝',
+  //   tags: {
+  //     email: email,
+  //   },
+  //   notify: false,
+  // });
+  console.log(email, from, to, 'logging to console for now');
 };
 
 const findConnection = async ({
