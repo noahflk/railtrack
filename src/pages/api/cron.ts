@@ -1,8 +1,11 @@
-import axios from 'axios';
 import { verifySignature } from '@upstash/qstash/nextjs';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { prisma } from '@/server/db/client';
+import { log } from '@/utils/logger';
+
+// we only send on request at a time because Vercel lambda functions had trouble
+// processing multiple requests at the same thime
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -18,26 +21,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
       console.log('Found the following unprocessed user: ', user);
 
-      await axios.post(
-        'https://api.logsnag.com/v1/log',
-        {
-          project: 'railtrack',
-          channel: 'signup',
-          event: 'User signed up',
-          icon: '🎉',
-          description: user.email,
-          tags: {
-            email: user.email,
-          },
-          notify: true,
+      await log({
+        channel: 'signup',
+        event: 'User signed up',
+        icon: '🎉',
+        description: user.email,
+        tags: {
+          email: user.email,
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.LOGSNAG_TOKEN}`,
-          },
-        }
-      );
+        notify: true,
+      });
 
       console.log('Sent signup notification for user: ' + user.email);
 
