@@ -12,6 +12,7 @@ import { calculateJourneyDistance } from '@/utils/calculateDistance';
 import { parseDurationString } from '@/utils/duration';
 import { hashJourneyIdentifier } from '@/utils/journeyIdentifier';
 import { roundToOneDecimal } from '@/utils/rounding';
+import { log } from '@/utils/logger';
 
 type StationInformation = {
   name: string;
@@ -19,17 +20,16 @@ type StationInformation = {
 };
 
 const logAddJourney = (email: string | undefined, from: string, to: string) => {
-  // log({
-  //   channel: 'add-journey',
-  //   event: 'User added journey',
-  //   description: `from ${from} to ${to}`,
-  //   icon: '🚝',
-  //   tags: {
-  //     email: email,
-  //   },
-  //   notify: false,
-  // });
-  console.log(email, from, to, 'logging to console for now');
+  log({
+    channel: 'add-journey',
+    event: 'User added journey',
+    description: `from ${from} to ${to}`,
+    icon: '🚝',
+    tags: {
+      email: email,
+    },
+    notify: false,
+  });
 };
 
 const findConnection = async ({

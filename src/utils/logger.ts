@@ -5,7 +5,7 @@ type LogsnagConfig = {
   event: string;
   icon: string;
   description: string;
-  tags: { [key: string]: string };
+  tags: { [key: string]: string | undefined };
   notify: boolean;
 };
 
