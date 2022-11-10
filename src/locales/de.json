@@ -6,6 +6,8 @@
     "currentTime": "Jetzt",
     "search": "Verbindungen finden",
     "journeys": "Verbindungen",
+    "journeyAdded": "Verbindung hinzugefügt!",
+    "journeyAddFailed": "Verbindung hinzufügen fehlgeschlagen",
     "searchFor": "Suche nach einer Verbindung",
     "notFound": "Keine Verbindungen gefunden",
     "save": "Speichern",

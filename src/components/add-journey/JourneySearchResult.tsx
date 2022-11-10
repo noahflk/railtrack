@@ -36,6 +36,8 @@ const AddButton: React.FC<Props> = ({ journey }) => {
           },
           {
             onSuccess: () => {
+              toast.success(t('journeyAdded'));
+
               // Redirect away after creating new journey
               router.push('/dashboard');
               clearSearchInfo();
@@ -43,8 +45,8 @@ const AddButton: React.FC<Props> = ({ journey }) => {
               utils.invalidateQueries(['journey.get']);
               utils.invalidateQueries(['journey.stats']);
             },
-            onError: (error) => {
-              toast.error(error.message);
+            onError: () => {
+              toast.error(t('journeyAddFailed'));
             },
           }
         )
