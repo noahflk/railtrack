@@ -10,6 +10,7 @@ import superjson from 'superjson';
 
 import { DEFAULT_LANG } from '@/constants';
 import type { AppRouter } from '@/server/router';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import '@/styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -39,12 +40,14 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
       <Head>
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
-      <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
-        <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-          <Component {...pageProps} />
-          <Toaster />
-        </SessionContextProvider>
-      </NextIntlProvider>
+      <ErrorBoundary>
+        <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
+          <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
+            <Component {...pageProps} />
+            <Toaster />
+          </SessionContextProvider>
+        </NextIntlProvider>
+      </ErrorBoundary>
     </>
   );
 };
