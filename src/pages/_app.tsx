@@ -6,6 +6,7 @@ import type { AppType } from 'next/dist/shared/lib/utils';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
+import PlausibleProvider from 'next-plausible';
 import superjson from 'superjson';
 
 import { DEFAULT_LANG } from '@/constants';
@@ -41,12 +42,14 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <ErrorBoundary>
-        <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
-          <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-            <Component {...pageProps} />
-            <Toaster />
-          </SessionContextProvider>
-        </NextIntlProvider>
+        <PlausibleProvider domain="railtrack.flk.li">
+          <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
+            <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
+              <Component {...pageProps} />
+              <Toaster />
+            </SessionContextProvider>
+          </NextIntlProvider>
+        </PlausibleProvider>
       </ErrorBoundary>
     </>
   );

@@ -31,6 +31,7 @@
     "md5": "2.3.0",
     "next": "^13.0.0",
     "next-intl": "^2.9.0",
+    "next-plausible": "^3.6.4",
     "react": "^18.2.0",
     "react-breakout": "1.0.1",
     "react-dom": "^18.2.0",
