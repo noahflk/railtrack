@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  Web app to track your train journeys in and around Switzerland 
+  Web app to track your train journeys in Europe 
 </p>
 
 ---
@@ -16,13 +16,13 @@
   <h3 align="center">Railtrack</h3>
 
   <p align="center">
-    Track your train journeys in and around Switzerland 
+    Track your train journeys in Europe 
     <br />
-    <a href="https://railtrack.vercel.app"><strong>Try it out »</strong></a>
+    <a href="https://railtrack.flk.li"><strong>Try it out »</strong></a>
   </p>
 </p>
 
-# Track your train journeys in and around Switzerland
+# Track your train journeys in Europe
 
 Railtrack allows you to keep track of your journeys with public transport in and around Switzerland. Journey data comes from the [Swiss public transport API](https://transport.opendata.ch). Railtrack will give you an overview and statistics about your past journeys.
 
