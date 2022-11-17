@@ -6,9 +6,21 @@ import { DEFAULT_LANG, LANG_COOKIE_KEY, SUPPORTED_LANGS } from '@/constants';
 import { prisma } from '@/server/db/client';
 import { getUserFromContext } from '@/utils/serverUser';
 
+const getBrowserLanguage = (ctx: GetServerSidePropsContext) => {
+  const languages = ctx.req.headers['accept-language'];
+
+  // use english as the default
+  return parser.pick(SUPPORTED_LANGS, languages ?? '', { loose: true }) ?? DEFAULT_LANG;
+};
+
 export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string> => {
   // first check for actual cookie
   const cookieLanguage = getCookie(LANG_COOKIE_KEY, ctx);
+
+  if (cookieLanguage === 'browser') {
+    // then check for browser language
+    return getBrowserLanguage(ctx);
+  }
 
   // if we have the actual cookie with a valid language
   if (cookieLanguage && typeof cookieLanguage === 'string' && SUPPORTED_LANGS.includes(cookieLanguage)) {
@@ -28,7 +40,7 @@ export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string>
   // so now we fetch settings and check there.
   const settings = await prisma.settings.findUnique({ where: { userId: user.id } });
 
-  // and if it's there store in cookie and use it
+  // and if it's there, store in cookie and use it
   if (settings?.language) {
     setCookie(LANG_COOKIE_KEY, settings?.language, { ...ctx, sameSite: 'lax' });
 
@@ -36,15 +48,10 @@ export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string>
   }
 
   // if we also have no lib, just use the browser language
-  // we also store it in a cookie. This is not ideal if the user changes the language of the browser
-  // but it can always be adjusted in settings
-  // we do this because it would be inefficient to make the DB call on every page load
 
-  const languages = ctx.req.headers['accept-language'];
-  // use english as the default
-  const language = parser.pick(SUPPORTED_LANGS, languages ?? '', { loose: true }) ?? DEFAULT_LANG;
+  // set the language selection to browser from now on
+  // this prevents us from having to make a DB query each time
+  setCookie(LANG_COOKIE_KEY, 'browser', { ...ctx, sameSite: 'lax' });
 
-  setCookie(LANG_COOKIE_KEY, language, { ...ctx, sameSite: 'lax' });
-
-  return language;
+  return getBrowserLanguage(ctx);
 };
