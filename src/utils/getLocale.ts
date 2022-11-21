@@ -47,7 +47,7 @@ export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string>
     return settings?.language;
   }
 
-  // if we also have no lib, just use the browser language
+  // if we also have nothing in the DB, just use the browser language
 
   // set the language selection to browser from now on
   // this prevents us from having to make a DB query each time
