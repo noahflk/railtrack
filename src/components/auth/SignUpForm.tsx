@@ -1,10 +1,12 @@
 import { useSessionContext } from '@supabase/auth-helpers-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
+import { deleteCookie } from 'cookies-next';
 import { useState } from 'react';
 
 import { GoogleButton } from '@/components/auth/GoogleButton';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { LANG_COOKIE_KEY } from '@/constants';
 
 export const SignUpForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -40,6 +42,10 @@ export const SignUpForm: React.FC = () => {
       setErrorMessage(error.message);
       return;
     }
+
+    // invalidate the stored language cookie
+    // this will cause a DB re-fetch of the language preference on the next request
+    deleteCookie(LANG_COOKIE_KEY);
 
     // if there is a session it means that we do not need to verify the email beforehand
     if (session) {

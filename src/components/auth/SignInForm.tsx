@@ -2,10 +2,12 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useSessionContext } from '@supabase/auth-helpers-react';
+import { deleteCookie } from 'cookies-next';
 
 import { Link } from '@/components/Link';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { GoogleButton } from '@/components/auth/GoogleButton';
+import { LANG_COOKIE_KEY } from '@/constants';
 
 export const SignInForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -35,6 +37,10 @@ export const SignInForm: React.FC = () => {
       setErrorMessage(error.message);
       return;
     }
+
+    // invalidate the stored language cookie
+    // this will cause a DB re-fetch of the language preference on the next request
+    deleteCookie(LANG_COOKIE_KEY);
 
     if (data) router.push('/dashboard');
   };
