@@ -11,8 +11,8 @@ export const Account: React.FC = () => {
   const t = useTranslations('settings');
   const locale = useLocale();
 
-  const { data: settings } = trpc.useQuery(['settings.get']);
-  const mutation = trpc.useMutation('settings.set-language');
+  const { data: settings } = trpc.settings.get.useQuery();
+  const mutation = trpc.settings.setLanguage.useMutation();
 
   const [selectedLang, setSelectedLang] = useState<string>();
 

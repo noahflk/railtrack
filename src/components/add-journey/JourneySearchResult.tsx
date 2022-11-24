@@ -15,7 +15,7 @@ type Props = {
 };
 
 const AddButton: React.FC<Props> = ({ journey }) => {
-  const mutation = trpc.useMutation('journey.add');
+  const mutation = trpc.journey.add.useMutation();
   const utils = trpc.useContext();
 
   const clearSearchInfo = useJourneySearchStore((state) => state.clearSearchInfo);
@@ -42,8 +42,8 @@ const AddButton: React.FC<Props> = ({ journey }) => {
               router.push('/dashboard');
               clearSearchInfo();
 
-              utils.invalidateQueries(['journey.get']);
-              utils.invalidateQueries(['journey.stats']);
+              utils.journey.get.invalidate();
+              utils.journey.stats.invalidate();
             },
             onError: () => {
               toast.error(t('journeyAddFailed'));

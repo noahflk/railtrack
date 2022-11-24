@@ -3,11 +3,11 @@ import { useTranslations } from 'next-intl';
 import { formatInTimeZone } from 'date-fns-tz';
 
 import { TextButton } from '@/components/TextButton';
-import { InferQueryOutput } from '@/server/trpc-helper';
+import { RouterOutputs } from '@/utils/trpc';
 
 type CardProps = {
   // the [number] ensures we only get the item type without the array
-  journey: InferQueryOutput<'journey.get'>[number];
+  journey: RouterOutputs['journey']['get'][number];
   handleDelete: (id: number) => void;
 };
 
@@ -55,7 +55,7 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
 };
 
 type Props = {
-  journeys: InferQueryOutput<'journey.get'>;
+  journeys: RouterOutputs['journey']['get'];
   handleDelete: (id: number) => void;
 };
 

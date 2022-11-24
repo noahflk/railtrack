@@ -19,7 +19,7 @@ const RecentJourneysWrapper: React.FC<{ children: React.ReactNode }> = ({ childr
 const FETCH_JOURNEY_LIMIT = 7;
 
 export const RecentJourneys: React.FC = () => {
-  const { data: journeys } = trpc.useQuery(['journey.get', FETCH_JOURNEY_LIMIT]);
+  const { data: journeys } = trpc.journey.get.useQuery(FETCH_JOURNEY_LIMIT);
 
   const t = useTranslations('dashboard');
 

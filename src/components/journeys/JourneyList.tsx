@@ -19,25 +19,21 @@ const Placeholder: React.FC = () => (
 );
 
 export const JourneyList: React.FC = () => {
-  // const router = useRouter();
-
   const utils = trpc.useContext();
 
-  // const page = router.query.page ? parseInt(router.query.page as string) : undefined;
-
-  const { data: journeys } = trpc.useQuery(['journey.get']);
+  const { data: journeys } = trpc.journey.get.useQuery();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<number>();
 
   const isDesktop = useBreakpoint('md');
 
-  const deleteJourneyMutation = trpc.useMutation(['journey.delete'], {
+  const deleteJourneyMutation = trpc.journey.delete.useMutation({
     onSettled: () => {
       setModalOpen(false);
 
-      utils.invalidateQueries(['journey.get']);
-      utils.invalidateQueries(['journey.stats']);
+      utils.journey.get.invalidate();
+      utils.journey.stats.invalidate();
     },
     onError: () => {
       toast.error('Unable to delete journey');
