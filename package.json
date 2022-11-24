@@ -60,7 +60,7 @@
     "eslint-config-next": "^13.0.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-jsx-a11y": "6.6.1",
-    "eslint-plugin-unicorn": "44.0.2",
+    "eslint-plugin-unicorn": "45.0.0",
     "postcss": "8.4.19",
     "prettier": "2.7.1",
     "prisma": "4.6.1",
