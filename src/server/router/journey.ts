@@ -5,14 +5,14 @@ import { isBefore } from 'date-fns';
 import { z } from 'zod';
 
 import { TRANSPORT_API_URL } from '@/constants';
-import { createProtectedRouter } from '@/server/router/protected';
+import { protectedProcedure, router } from '@/server/trpc';
 import type { JourneyIdentifier } from '@/types/journey';
 import type { Journey } from '@/types/opendata';
 import { calculateJourneyDistance } from '@/utils/calculateDistance';
 import { parseDurationString } from '@/utils/duration';
 import { hashJourneyIdentifier } from '@/utils/journeyIdentifier';
-import { roundToOneDecimal } from '@/utils/rounding';
 import { log } from '@/utils/logger';
+import { roundToOneDecimal } from '@/utils/rounding';
 
 type StationInformation = {
   name: string;
@@ -86,17 +86,17 @@ const getArrivalStation = (sections: Section[]): StationInformation => {
   };
 };
 
-export const journeyRouter = createProtectedRouter()
-  .mutation('add', {
-    // this information is enough to precicely find the precise journey again
-    // that way we avoid passing the whole journey object from the client to the server
-    input: z.object({
-      departureStation: z.string(),
-      arrivalStation: z.string(),
-      departureTime: z.string(),
-      platform: z.nullable(z.string()),
-    }),
-    async resolve({ input, ctx }) {
+export const journeyRouter = router({
+  add: protectedProcedure
+    .input(
+      z.object({
+        departureStation: z.string(),
+        arrivalStation: z.string(),
+        departureTime: z.string(),
+        platform: z.nullable(z.string()),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
       const journey = await findConnection(input);
 
       if (!journey) {
@@ -168,109 +168,101 @@ export const journeyRouter = createProtectedRouter()
       logAddJourney(ctx.user.email, input.departureStation, input.arrivalStation);
 
       return { success: true };
-    },
-  })
-  .query('get', {
-    input: z.optional(z.number()),
-    async resolve({ input, ctx }) {
-      const journeys = await ctx.prisma.journey.findMany({
-        // this limits the number of returned journeys if provided
-        // otherwise all will be returned
-        take: input,
-        where: {
-          userId: ctx.user.id,
-        },
-        include: {
-          sections: {
-            include: {
-              passes: true,
-            },
+    }),
+  get: protectedProcedure.input(z.optional(z.number())).query(async ({ ctx, input }) => {
+    const journeys = await ctx.prisma.journey.findMany({
+      // this limits the number of returned `journeys` if provided
+      // otherwise all will be returned
+      take: input,
+      where: {
+        userId: ctx.user.id,
+      },
+      include: {
+        sections: {
+          include: {
+            passes: true,
           },
         },
-      });
+      },
+    });
 
-      // enhance journey with more info
-      return journeys.map((journey) => {
-        const departureStation = getDepartureStation(journey.sections);
-        const arrivalStation = getArrivalStation(journey.sections);
+    // enhance journey with more info
+    return journeys.map((journey) => {
+      const departureStation = getDepartureStation(journey.sections);
+      const arrivalStation = getArrivalStation(journey.sections);
 
-        return {
-          ...journey,
-          departureStation: departureStation.name,
-          arrivalStation: arrivalStation.name,
-          departureTime: departureStation.time,
-          arrivalTime: arrivalStation.time,
-          stops: journey.sections.length - 1,
-          distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
-        };
-      });
-    },
-  })
-  .query('stats', {
-    async resolve({ ctx }) {
-      const journeys = await ctx.prisma.journey.findMany({
-        where: {
-          userId: ctx.user.id,
-        },
-        select: {
-          sections: {
-            select: {
-              passes: {
-                select: {
-                  stationCoordinateX: true,
-                  stationCoordinateY: true,
-                  stationName: true,
-                },
+      return {
+        ...journey,
+        departureStation: departureStation.name,
+        arrivalStation: arrivalStation.name,
+        departureTime: departureStation.time,
+        arrivalTime: arrivalStation.time,
+        stops: journey.sections.length - 1,
+        distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
+      };
+    });
+  }),
+  stats: protectedProcedure.query(async ({ ctx }) => {
+    const journeys = await ctx.prisma.journey.findMany({
+      where: {
+        userId: ctx.user.id,
+      },
+      select: {
+        sections: {
+          select: {
+            passes: {
+              select: {
+                stationCoordinateX: true,
+                stationCoordinateY: true,
+                stationName: true,
               },
             },
           },
         },
-      });
+      },
+    });
 
-      const distance = journeys.reduce((partial, journey) => partial + calculateJourneyDistance(journey.sections), 0);
+    const distance = journeys.reduce((partial, journey) => partial + calculateJourneyDistance(journey.sections), 0);
 
-      const numberOfJourneys = await ctx.prisma.journey.count({
-        where: {
-          userId: ctx.user.id,
-        },
-      });
+    const numberOfJourneys = await ctx.prisma.journey.count({
+      where: {
+        userId: ctx.user.id,
+      },
+    });
 
-      const durationResult = await ctx.prisma.$queryRaw<
-        { sum: bigint }[]
-      >`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${ctx.user.id}`;
+    const durationResult = await ctx.prisma.$queryRaw<
+      { sum: bigint }[]
+    >`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${ctx.user.id}`;
 
-      const durationInMinutes = Number(durationResult[0]?.sum);
+    const durationInMinutes = Number(durationResult[0]?.sum);
 
-      return {
-        distance: roundToOneDecimal(distance),
-        count: numberOfJourneys,
-        coordinates: journeys,
-        duration: roundToOneDecimal(durationInMinutes / 60),
-      };
-    },
-  })
-  .mutation('delete', {
-    input: z.number(),
-    async resolve({ input, ctx }) {
-      // check if journey exists and belongs to user
-      const journey = await ctx.prisma.journey.findFirst({
-        where: {
-          id: input,
-          userId: ctx.user.id,
-        },
-      });
+    return {
+      distance: roundToOneDecimal(distance),
+      count: numberOfJourneys,
+      coordinates: journeys,
+      duration: roundToOneDecimal(durationInMinutes / 60),
+    };
+  }),
+  delete: protectedProcedure.input(z.number()).mutation(async ({ ctx, input }) => {
+    // check if journey exists and belongs to user
+    const journey = await ctx.prisma.journey.findFirst({
+      where: {
+        id: input,
+        userId: ctx.user.id,
+      },
+    });
 
-      if (!journey) {
-        throw new TRPCError({ code: 'NOT_FOUND', message: 'Journey not found' });
-      }
+    if (!journey) {
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Journey not found' });
+    }
 
-      // actually delete the journey
-      await ctx.prisma.journey.delete({
-        where: {
-          id: input,
-        },
-      });
+    // actually delete the journey
+    await ctx.prisma.journey.delete({
+      where: {
+        id: input,
+      },
+    });
 
-      return { success: true };
-    },
-  });
+    return { success: true };
+  }),
+});

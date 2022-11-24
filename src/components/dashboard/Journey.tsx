@@ -1,11 +1,11 @@
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 import { formatInTimeZone } from 'date-fns-tz';
 
-import { InferQueryOutput } from '@/server/trpc-helper';
+import { RouterOutputs } from '@/utils/trpc';
 
 type Props = {
   // the [number] ensures we only get the item type without the array
-  journey: InferQueryOutput<'journey.get'>[number];
+  journey: RouterOutputs['journey']['get'][number];
 };
 
 export const Journey: React.FC<Props> = ({ journey }) => (

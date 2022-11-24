@@ -1,10 +1,10 @@
-import * as trpc from '@trpc/server';
-import * as trpcNext from '@trpc/server/adapters/next';
+import { type inferAsyncReturnType } from '@trpc/server';
+import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
 
 import { prisma } from '@/server/db/client';
 import { getUserFromContext } from '@/utils/serverUser';
 
-export const createContext = async (opts: trpcNext.CreateNextContextOptions) => {
+export const createContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
 
   // @ts-expect-error context types do not quite match up
@@ -18,6 +18,4 @@ export const createContext = async (opts: trpcNext.CreateNextContextOptions) => 
   };
 };
 
-type Context = trpc.inferAsyncReturnType<typeof createContext>;
-
-export const createRouter = () => trpc.router<Context>();
+export type Context = inferAsyncReturnType<typeof createContext>;

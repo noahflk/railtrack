@@ -1,12 +1,10 @@
 import { useTranslations } from 'next-intl';
 import { format } from 'date-fns';
 
-import { InferQueryOutput } from '@/server/trpc-helper';
-
-// import TablePagination from '@/components/journeys/TablePagination';
+import { RouterOutputs } from '@/utils/trpc';
 
 type RowProps = {
-  journey: InferQueryOutput<'journey.get'>[number];
+  journey: RouterOutputs['journey']['get'][number];
   handleDelete: (id: number) => void;
 };
 
@@ -42,7 +40,7 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
 };
 
 type TableProps = {
-  journeys: InferQueryOutput<'journey.get'>;
+  journeys: RouterOutputs['journey']['get'];
   handleDelete: (id: number) => void;
 };
 
