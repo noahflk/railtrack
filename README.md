@@ -42,7 +42,7 @@ Railtrack allows you to keep track of your journeys with public transport in and
 After cloning the repository, install the dependencies.
 
 ```bash
-npm install
+pnpm install
 ```
 
 Set up the local environment variables with your personal Supabase and Mapbox tokens. You must create the database schema in Supabase.
