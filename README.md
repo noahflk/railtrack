@@ -48,8 +48,8 @@ pnpm install
 Set up the local environment variables with your personal Supabase and Mapbox tokens. You must create the database schema in Supabase.
 
 ```bash
-cp .env-example .env.local
-# now edit the .env.local file
+cp .env-example .env
+# now edit the .env file
 ```
 
 Push the schema to the database
