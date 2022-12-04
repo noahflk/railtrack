@@ -1,19 +1,17 @@
 import { createBrowserSupabaseClient, type Session } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
-import { withTRPC } from '@trpc/next';
-import { type AbstractIntlMessages, NextIntlProvider } from 'next-intl';
+import { NextIntlProvider, type AbstractIntlMessages } from 'next-intl';
+import PlausibleProvider from 'next-plausible';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
-import PlausibleProvider from 'next-plausible';
-import superjson from 'superjson';
-
-import { DEFAULT_LANG } from '@/constants';
-import type { AppRouter } from '@/server/router';
-import ErrorBoundary from '@/components/ErrorBoundary';
-import '@/styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+
+import ErrorBoundary from '@/components/ErrorBoundary';
+import { DEFAULT_LANG } from '@/constants';
+import '@/styles/globals.css';
+import { trpc } from '@/utils/trpc';
 
 type Props = {
   messages: AbstractIntlMessages;
@@ -55,35 +53,4 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
   );
 };
 
-const getBaseUrl = () => {
-  if (typeof window !== 'undefined') {
-    return '';
-  }
-  if (process.browser) return ''; // Browser should use current path
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
-
-  return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
-};
-
-export default withTRPC<AppRouter>({
-  config() {
-    /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
-    const url = `${getBaseUrl()}/api/trpc`;
-
-    return {
-      url,
-      transformer: superjson,
-      /**
-       * @link https://react-query.tanstack.com/reference/QueryClient
-       */
-      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
-    };
-  },
-  /**
-   * @link https://trpc.io/docs/ssr
-   */
-  ssr: false,
-})(MyApp);
+export default trpc.withTRPC(MyApp);
