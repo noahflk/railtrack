@@ -1,14 +1,13 @@
-import { type inferAsyncReturnType } from '@trpc/server';
-import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
+import type { inferAsyncReturnType } from '@trpc/server';
+import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
 
 import { prisma } from '@/server/db/client';
 import { getUserFromContext } from '@/utils/serverUser';
 
 export const createContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
+  const user = await getUserFromContext(opts);
 
-  // @ts-expect-error context types do not quite match up
-  const user = await getUserFromContext({ req, res });
+  const { req, res } = opts;
 
   return {
     req,

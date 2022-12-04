@@ -1,7 +1,12 @@
-import type { GetServerSidePropsContext } from 'next';
 import { createServerSupabaseClient, type User } from '@supabase/auth-helpers-nextjs';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-export const getUserFromContext = async (ctx: GetServerSidePropsContext): Promise<User | null> => {
+type Ctx = {
+  res: NextApiResponse;
+  req: NextApiRequest;
+};
+
+export const getUserFromContext = async (ctx: Ctx): Promise<User | null> => {
   const supabaseServerClient = createServerSupabaseClient(ctx);
 
   const {
