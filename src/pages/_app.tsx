@@ -1,7 +1,7 @@
-import { createBrowserSupabaseClient, Session } from '@supabase/auth-helpers-nextjs';
+import { createBrowserSupabaseClient, type Session } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { withTRPC } from '@trpc/next';
-import { AbstractIntlMessages, NextIntlProvider } from 'next-intl';
+import { type AbstractIntlMessages, NextIntlProvider } from 'next-intl';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';

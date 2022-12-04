@@ -1,6 +1,6 @@
 import md5 from 'md5';
 
-import { JourneyIdentifier } from '@/types/journey';
+import type { JourneyIdentifier } from '@/types/journey';
 
 export const hashJourneyIdentifier = ({
   departureStation,

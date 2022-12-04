@@ -1,4 +1,4 @@
-import { GetServerSidePropsContext } from 'next/types';
+import type { GetServerSidePropsContext } from 'next/types';
 
 import { getLocale } from '@/utils/getLocale';
 

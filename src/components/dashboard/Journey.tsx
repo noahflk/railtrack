@@ -1,7 +1,7 @@
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 import { formatInTimeZone } from 'date-fns-tz';
 
-import { RouterOutputs } from '@/utils/trpc';
+import type { RouterOutputs } from '@/utils/trpc';
 
 type Props = {
   // the [number] ensures we only get the item type without the array

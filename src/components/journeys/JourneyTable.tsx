@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { format } from 'date-fns';
 
-import { RouterOutputs } from '@/utils/trpc';
+import type { RouterOutputs } from '@/utils/trpc';
 
 type RowProps = {
   journey: RouterOutputs['journey']['get'][number];

@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { formatInTimeZone } from 'date-fns-tz';
 
 import { TextButton } from '@/components/TextButton';
-import { RouterOutputs } from '@/utils/trpc';
+import type { RouterOutputs } from '@/utils/trpc';
 
 type CardProps = {
   // the [number] ensures we only get the item type without the array

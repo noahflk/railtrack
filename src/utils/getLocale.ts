@@ -1,6 +1,6 @@
 import parser from 'accept-language-parser';
 import { getCookie, setCookie } from 'cookies-next';
-import { GetServerSidePropsContext } from 'next';
+import type { GetServerSidePropsContext } from 'next';
 
 import { DEFAULT_LANG, LANG_COOKIE_KEY, SUPPORTED_LANGS } from '@/constants';
 import { prisma } from '@/server/db/client';
