@@ -53,8 +53,8 @@ export const Account: React.FC = () => {
 
   return (
     <section aria-labelledby="account-heading">
-      <div className="max-w-3xl mx-auto shadow sm:rounded-md sm:overflow-hidden">
-        <div className="px-4 py-6 space-y-4 bg-white sm:p-6">
+      <div className="mx-auto max-w-3xl shadow sm:overflow-hidden sm:rounded-md">
+        <div className="space-y-4 bg-white px-4 py-6 sm:p-6">
           <div>
             <h2 id="account-heading" className="text-lg font-medium leading-6 text-gray-900">
               {t('account')}
@@ -73,7 +73,7 @@ export const Account: React.FC = () => {
                 onChange={(e) => setSelectedLang(e.target.value)}
                 defaultValue="default"
                 autoComplete="country-name"
-                className="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
               >
                 <option value="en">English</option>
                 <option value="de">Deutsch</option>
@@ -81,10 +81,10 @@ export const Account: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="px-4 py-3 text-right bg-white sm:px-6">
+        <div className="bg-white px-4 py-3 text-right sm:px-6">
           <button
             type="submit"
-            className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             onClick={saveLocale}
             disabled={mutation.isLoading}
           >

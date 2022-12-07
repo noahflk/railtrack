@@ -15,7 +15,7 @@ const ResultDisplay: React.FC = () => {
 
   if (!journeys) {
     return (
-      <div className="flex items-center justify-center h-full pb-10">
+      <div className="flex h-full items-center justify-center pb-10">
         <p>{t('searchFor')}</p>
       </div>
     );
@@ -23,7 +23,7 @@ const ResultDisplay: React.FC = () => {
 
   if (journeys.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full pb-6">
+      <div className="flex h-full items-center justify-center pb-6">
         <p>{t('notFound')}</p>
       </div>
     );
@@ -42,8 +42,8 @@ export const JourneySearchResults: React.FC = () => {
   const t = useTranslations('add');
 
   return (
-    <li className="col-span-1 bg-white divide-y rounded-lg shadow divide-gray-200npm ">
-      <div className="w-full h-full p-6">
+    <li className="divide-gray-200npm col-span-1 divide-y rounded-lg bg-white shadow ">
+      <div className="h-full w-full p-6">
         <h3 className="text-xl font-semibold text-gray-900">{t('journeys')}</h3>
         <ResultDisplay />
       </div>

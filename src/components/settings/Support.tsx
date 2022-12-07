@@ -6,8 +6,8 @@ export const Support: React.FC = () => {
 
   return (
     <section aria-labelledby="account-heading">
-      <div className="max-w-3xl mx-auto shadow sm:rounded-md sm:overflow-hidden">
-        <div className="px-4 py-6 space-y-4 bg-white sm:p-6">
+      <div className="mx-auto max-w-3xl shadow sm:overflow-hidden sm:rounded-md">
+        <div className="space-y-4 bg-white px-4 py-6 sm:p-6">
           <div>
             <h2 id="account-heading" className="text-lg font-medium leading-6 text-gray-900">
               Support

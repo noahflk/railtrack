@@ -14,7 +14,7 @@ export const JourneySearchForm: React.FC = () => {
   const t = useTranslations();
 
   return (
-    <li className="col-span-1 bg-white rounded-lg shadow">
+    <li className="col-span-1 rounded-lg bg-white shadow">
       <div className="grid w-full grid-rows-1 gap-6 p-6 lg:grid-cols-2">
         <StationSearchField
           label={t('departure')}

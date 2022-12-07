@@ -9,7 +9,7 @@ const RecentJourneysWrapper: React.FC<{ children: React.ReactNode }> = ({ childr
   const t = useTranslations('dashboard');
 
   return (
-    <div className="col-span-1 p-4 bg-white rounded-lg shadow">
+    <div className="col-span-1 rounded-lg bg-white p-4 shadow">
       <h3 className="text-xl font-medium text-gray-900">{t('recent')}</h3>
       {children}
     </div>
@@ -26,10 +26,10 @@ export const RecentJourneys: React.FC = () => {
   if (!journeys)
     return (
       <RecentJourneysWrapper>
-        <div className="w-full pt-4 space-y-4 animate-pulse ">
-          <div className="h-6 bg-gray-300 rounded-md "></div>
-          <div className="h-6 bg-gray-300 rounded-md "></div>
-          <div className="h-6 bg-gray-300 rounded-md "></div>
+        <div className="w-full animate-pulse space-y-4 pt-4 ">
+          <div className="h-6 rounded-md bg-gray-300 "></div>
+          <div className="h-6 rounded-md bg-gray-300 "></div>
+          <div className="h-6 rounded-md bg-gray-300 "></div>
         </div>
       </RecentJourneysWrapper>
     );
@@ -45,7 +45,7 @@ export const RecentJourneys: React.FC = () => {
 
   return (
     <RecentJourneysWrapper>
-      <div className="flex flex-col justify-between h-full pb-5">
+      <div className="flex h-full flex-col justify-between pb-5">
         <ul>
           {sortedJourneys.map((journey) => (
             <Journey key={journey.id} journey={journey} />
