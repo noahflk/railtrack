@@ -21,6 +21,7 @@ type Props = {
 
 const MyApp: AppType<Props> = ({ Component, pageProps }) => {
   const { toasts } = useToasterStore();
+  const invalidateLanguage = trpc.settings.invalidateLanguage.useMutation();
 
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
@@ -33,6 +34,11 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
       .filter((_, i) => i >= TOAST_LIMIT)
       .forEach((t) => toast.dismiss(t.id));
   }, [toasts]);
+
+  // invalidate language cookie and fetch new one on every page laod
+  useEffect(() => {
+    invalidateLanguage.mutate();
+  }, [invalidateLanguage]);
 
   return (
     <>

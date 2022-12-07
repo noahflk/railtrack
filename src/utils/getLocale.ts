@@ -48,7 +48,6 @@ export const getLocale = async (ctx: Context): Promise<string> => {
   }
 
   // if we also have nothing in the DB, just use the browser language
-
   // set the language selection to browser from now on
   // this prevents us from having to make a DB query each time
   setCookie(LANG_COOKIE_KEY, 'browser', { ...ctx, sameSite: 'lax' });
