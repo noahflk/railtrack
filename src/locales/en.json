@@ -63,6 +63,7 @@
     "settings": "Settings",
     "journeys": "Journeys",
     "addJourney": "Add journey",
+    "signedInAs": "Signed in as",
     "signOut": "Sign Out",
     "signOutError": "Unable to sign out"
   },

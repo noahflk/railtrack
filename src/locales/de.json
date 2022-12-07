@@ -63,6 +63,7 @@
     "settings": "Einstellungen",
     "journeys": "Reisen",
     "addJourney": "Reise hinzufügen",
+    "signedInAs": "Eingeloggt als",
     "signOut": "Abmelden",
     "signOutError": "Abmelden fehlgeschlagen"
   },
