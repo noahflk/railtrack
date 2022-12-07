@@ -41,10 +41,10 @@ export const AuthWrapper: React.FC<Props> = ({ children, type }) => {
     <>
       <Head title={authTypeToText(type)} />
       <div className="flex min-h-screen">
-        <div className="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-          <div className="w-full max-w-sm mx-auto lg:w-96">
+        <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+          <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
-              <Logo className="w-auto h-12" />
+              <Logo className="h-12 w-auto" />
               <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
                 {type === 'signup' && t('signUpTitle')}
                 {type === 'signin' && t('signInTitle')}
@@ -65,8 +65,8 @@ export const AuthWrapper: React.FC<Props> = ({ children, type }) => {
             </div>
           </div>
         </div>
-        <div className="relative flex-1 hidden w-0 lg:block">
-          <Image className="absolute inset-0 w-full h-full object-cover" src={image} alt="Symbolic train image" />
+        <div className="relative hidden w-0 flex-1 lg:block">
+          <Image className="absolute inset-0 h-full w-full object-cover" src={image} alt="Symbolic train image" />
         </div>
       </div>
     </>

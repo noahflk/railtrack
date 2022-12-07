@@ -51,7 +51,7 @@ const AddButton: React.FC<Props> = ({ journey }) => {
           }
         )
       }
-      className="inline-flex justify-center font-medium text-small text-primary hover:text-primary-light"
+      className="text-small inline-flex justify-center font-medium text-primary hover:text-primary-light"
     >
       {/* invisible means text remains hidden in the background to preserve the button width */}
       <span className={mutation.isLoading ? 'invisible' : undefined}>{t('save')}</span>
@@ -64,9 +64,9 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
   return (
-    <li className="py-2 pt-4 space-y-2">
+    <li className="space-y-2 py-2 pt-4">
       <p>
-        <span className="inline-flex items-center px-2.5 mr-2 py-1 rounded-full text-sm font-medium bg-primary text-white">
+        <span className="mr-2 inline-flex items-center rounded-full bg-primary px-2.5 py-1 text-sm font-medium text-white">
           {journey.products[0]}
         </span>
         Direction {journey.sections[0]?.journey.to}
@@ -87,9 +87,9 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
   return (
-    <li className="py-2 pt-4 space-y-2">
+    <li className="space-y-2 py-2 pt-4">
       <p>
-        <span className="inline-flex items-center px-2.5 mr-2 py-1 rounded-full text-sm font-medium bg-primary text-white">
+        <span className="mr-2 inline-flex items-center rounded-full bg-primary px-2.5 py-1 text-sm font-medium text-white">
           {journey.products[0]}
         </span>
         Direction {journey.sections[0]?.journey.to}

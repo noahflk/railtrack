@@ -18,9 +18,9 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
   const t = useTranslations('journeys');
 
   return (
-    <li className="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow">
+    <li className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
       <div className="w-full p-6">
-        <div className="grid flex-1 grid-cols-1 gap-2 mb-2 font-semibold text-gray-900 truncate xs:grid-cols-2">
+        <div className="mb-2 grid flex-1 grid-cols-1 gap-2 truncate font-semibold text-gray-900 xs:grid-cols-2">
           <div>
             <p>
               {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" />{' '}

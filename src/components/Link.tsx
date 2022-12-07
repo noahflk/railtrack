@@ -7,13 +7,7 @@ type Props = {
 };
 
 export const Link: React.FC<Props> = ({ href, target, children }) => (
-  (<NextLink
-    href={href}
-    passHref
-    target={target}
-    className="font-medium text-primary hover:text-primary-light">
-
+  <NextLink href={href} passHref target={target} className="font-medium text-primary hover:text-primary-light">
     {children}
-
-  </NextLink>)
+  </NextLink>
 );

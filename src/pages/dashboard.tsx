@@ -13,7 +13,7 @@ const Dashboard: NextPage = () => {
   return (
     <Wrapper title={t('navigation.dashboard')}>
       <StatsDisplay />
-      <div className="grid grid-cols-1 gap-y-6 xl:gap-6 mt-4 xl:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-y-6 xl:grid-cols-3 xl:gap-6">
         <RecentJourneys />
         <JourneyMap />
       </div>

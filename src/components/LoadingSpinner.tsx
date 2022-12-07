@@ -2,7 +2,7 @@ import { classNames } from '@/utils/styling';
 
 export const LoadingSpinner: React.FC<{ color?: string; className?: string }> = ({ color, className }) => (
   <svg
-    className={classNames('w-5 h-5 animate-spin', `text-${color}` ?? 'text-white', className ?? '')}
+    className={classNames('h-5 w-5 animate-spin', `text-${color}` ?? 'text-white', className ?? '')}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"

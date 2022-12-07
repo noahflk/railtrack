@@ -37,10 +37,10 @@ export const SearchButton: React.FC = () => {
   };
 
   return (
-    <div className="flex items-end w-full mt-1">
+    <div className="mt-1 flex w-full items-end">
       <button
         onClick={getJourneys}
-        className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+        className="flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       >
         {loading ? <LoadingSpinner /> : t('add.search')}
       </button>

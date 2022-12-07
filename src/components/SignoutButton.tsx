@@ -17,9 +17,9 @@ export const SignoutButton: React.FC = () => {
 
         router.push('/signin');
       }}
-      className="flex items-center w-full px-2 py-2 text-base font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-gray-900 group focus:outline-none focus:ring-primary focus:border-primary"
+      className="group flex w-full items-center rounded-md px-2 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 focus:border-primary focus:outline-none focus:ring-primary"
     >
-      <LogoutIcon className="flex-shrink-0 w-6 h-6 mr-4 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+      <LogoutIcon className="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
       {t('signOut')}
     </button>
   );

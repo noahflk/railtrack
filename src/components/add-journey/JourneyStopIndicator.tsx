@@ -35,18 +35,18 @@ export const JourneyStopIndicator: React.FC<Props> = ({ journey, className = '' 
     <div className={classNames('flex items-center justify-between space-x-4', className)}>
       <span>{formatInTimeZone(new Date(journey.from.departureTimestamp * 1000), 'Europe/Zurich', 'HH:mm')}</span>
 
-      <ol className="flex items-center w-full px-1">
+      <ol className="flex w-full items-center px-1">
         {closestTwelfethForSectionDuration.map((numerator, index) => {
           // const width = numerator === 12 ? 'w-full' : `w-${numerator}/12`;
 
           return (
             <Fragment key={index}>
-              <li className="relative w-4 h-4 -mx-1 rounded-full bg-primary"></li>
+              <li className="relative -mx-1 h-4 w-4 rounded-full bg-primary"></li>
               <li style={{ width: numerator + '%' }} className={`h-1 rounded-full bg-primary`}></li>
             </Fragment>
           );
         })}
-        <li className="relative w-4 h-4 -mx-1 rounded-full bg-primary"></li>
+        <li className="relative -mx-1 h-4 w-4 rounded-full bg-primary"></li>
       </ol>
       <span>{formatInTimeZone(new Date(journey.to.arrivalTimestamp * 1000), 'Europe/Zurich', 'HH:mm')}</span>
     </div>

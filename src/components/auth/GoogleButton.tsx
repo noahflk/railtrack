@@ -20,7 +20,7 @@ export const GoogleButton: React.FC<Props> = ({ type }) => {
 
   return (
     <button
-      className="flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 border-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+      className="border-1 flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       type="button"
       onClick={handleGoogleSignUp}
     >

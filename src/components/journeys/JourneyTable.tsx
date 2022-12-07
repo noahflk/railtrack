@@ -16,21 +16,21 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
 
   return (
     <tr>
-      <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
+      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
         {format(departureTime, 'dd.MM.yyyy')}
       </td>
-      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         {journey.departureStation} ({format(departureTime, 'HH:mm')})
       </td>
-      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         {journey.arrivalStation} ({format(arrivalTime, 'HH:mm')})
       </td>
-      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.distance} km</td>
-      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{journey.distance} km</td>
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
         {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
       </td>
-      <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{journey.stops}</td>
-      <td className="relative py-4 pl-3 pr-4 text-sm font-medium text-right whitespace-nowrap sm:pr-6">
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{journey.stops}</td>
+      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
         <button onClick={() => handleDelete(journey.id)} className="text-primary hover:text-primary-light">
           {t('delete')}
         </button>
@@ -75,7 +75,7 @@ export const JourneyTable: React.FC<TableProps> = ({ journeys, handleDelete }) =
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 bg-white">
                 {journeys.map((journey) => (
                   <JourneyRow journey={journey} key={journey.id} handleDelete={handleDelete} />
                 ))}
