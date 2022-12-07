@@ -1,8 +1,7 @@
-import type { GetServerSidePropsContext } from 'next/types';
-
+import type { Context } from '@/types/context';
 import { getLocale } from '@/utils/getLocale';
 
-export const getLocaleProps = async (ctx: GetServerSidePropsContext) => {
+export const getLocaleProps = async (ctx: Context) => {
   const locale = await getLocale(ctx);
 
   return {

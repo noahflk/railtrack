@@ -1,19 +1,19 @@
 import parser from 'accept-language-parser';
 import { getCookie, setCookie } from 'cookies-next';
-import type { GetServerSidePropsContext } from 'next';
 
 import { DEFAULT_LANG, LANG_COOKIE_KEY, SUPPORTED_LANGS } from '@/constants';
 import { prisma } from '@/server/db/client';
+import type { Context } from '@/types/context';
 import { getUserFromContext } from '@/utils/serverUser';
 
-const getBrowserLanguage = (ctx: GetServerSidePropsContext) => {
+const getBrowserLanguage = (ctx: Context) => {
   const languages = ctx.req.headers['accept-language'];
 
   // use english as the default
   return parser.pick(SUPPORTED_LANGS, languages ?? '', { loose: true }) ?? DEFAULT_LANG;
 };
 
-export const getLocale = async (ctx: GetServerSidePropsContext): Promise<string> => {
+export const getLocale = async (ctx: Context): Promise<string> => {
   // first check for actual cookie
   const cookieLanguage = getCookie(LANG_COOKIE_KEY, ctx);
 
