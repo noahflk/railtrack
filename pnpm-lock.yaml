@@ -14,6 +14,7 @@ specifiers:
   '@trpc/next': 10.4.1
   '@trpc/react-query': ^10.1.0
   '@trpc/server': 10.4.1
+  '@turf/bbox': ^6.5.0
   '@types/accept-language-parser': 1.5.3
   '@types/md5': 2.3.2
   '@types/node': 18.11.9
@@ -68,6 +69,7 @@ dependencies:
   '@trpc/next': 10.4.1_zxsq7jtz3y5stl2mzwzakgrrjq
   '@trpc/react-query': 10.1.0_ptpgoviylwbqyngs2ahluodk3i
   '@trpc/server': 10.4.1
+  '@turf/bbox': 6.5.0
   '@upstash/qstash': 0.3.0
   '@vercel/edge': 0.1.1
   accept-language-parser: 1.5.0
@@ -647,6 +649,23 @@ packages:
 
   /@trpc/server/10.4.1:
     resolution: {integrity: sha512-GsG6jYDDt3OORn/HrrPPLIZB99nFDGbp6iIUitWq29XoRtwoRQSgEasPwfq7SbGY2MJG4ea2C2ZfY5nFoiUaPA==}
+    dev: false
+
+  /@turf/bbox/6.5.0:
+    resolution: {integrity: sha512-RBbLaao5hXTYyyg577iuMtDB8ehxMlUqHEJiMs8jT1GHkFhr6sYre3lmLsPeYEi/ZKj5TP5tt7fkzNdJ4GIVyw==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+      '@turf/meta': 6.5.0
+    dev: false
+
+  /@turf/helpers/6.5.0:
+    resolution: {integrity: sha512-VbI1dV5bLFzohYYdgqwikdMVpe7pJ9X3E+dlr425wa2/sMJqYDhTO++ec38/pcPvPE6oD9WEEeU3Xu3gza+VPw==}
+    dev: false
+
+  /@turf/meta/6.5.0:
+    resolution: {integrity: sha512-RrArvtsV0vdsCBegoBtOalgdSOfkBrTJ07VkpiCnq/491W67hnMWmDu7e6Ztw0C3WldRYTXkg3SumfdzZxLBHA==}
+    dependencies:
+      '@turf/helpers': 6.5.0
     dev: false
 
   /@types/accept-language-parser/1.5.3:

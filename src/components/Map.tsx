@@ -1,4 +1,6 @@
-import MapboxMap, { Layer, Source } from 'react-map-gl';
+import bbox from '@turf/bbox';
+import { useRef } from 'react';
+import MapboxMap, { Layer, Source, type MapRef } from 'react-map-gl';
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -47,20 +49,29 @@ const getFeatures = (journeys: Coordinates[]): Feature[] => {
 };
 
 export const Map: React.FC<{ journeys: Coordinates[] }> = ({ journeys }) => {
+  const mapRef = useRef<MapRef>();
+
   const geoData = {
     type: 'FeatureCollection',
     features: getFeatures(journeys),
   };
 
-  // console.log(journeys);
+  if (journeys.length !== 0) {
+    const [minLng, minLat, maxLng, maxLat] = bbox(geoData);
+
+    mapRef?.current?.fitBounds(
+      [
+        [minLng, minLat],
+        [maxLng, maxLat],
+      ],
+      { padding: 80, duration: 0 }
+    );
+  }
 
   return (
     <MapboxMap
-      initialViewState={{
-        longitude: 8.224,
-        latitude: 47,
-        zoom: 6,
-      }}
+      // @ts-expect-error: it doesn't accept the typed ref
+      ref={mapRef}
       cooperativeGestures
       style={{ width: '100%', height: 400, overflow: 'hidden' }}
       mapStyle="mapbox://styles/mapbox/light-v10"
