@@ -64,7 +64,7 @@ export const Map: React.FC<{ journeys: Coordinates[] }> = ({ journeys }) => {
         [minLng, minLat],
         [maxLng, maxLat],
       ],
-      { padding: 80, duration: 0 }
+      { padding: 60, duration: 0 }
     );
   }
 
