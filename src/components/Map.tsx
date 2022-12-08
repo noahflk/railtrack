@@ -52,6 +52,8 @@ export const Map: React.FC<{ journeys: Coordinates[] }> = ({ journeys }) => {
     features: getFeatures(journeys),
   };
 
+  // console.log(journeys);
+
   return (
     <MapboxMap
       initialViewState={{
