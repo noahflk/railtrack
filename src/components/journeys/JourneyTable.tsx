@@ -81,8 +81,6 @@ export const JourneyTable: React.FC<TableProps> = ({ journeys, handleDelete }) =
                 ))}
               </tbody>
             </table>
-            {/* TODO: implement pagination, virtual list or something similar */}
-            {/* <TablePagination count={journeys.count} page={journeys.page} /> */}
           </div>
         </div>
       </div>
