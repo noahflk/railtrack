@@ -10,7 +10,6 @@ import { insight, log } from '@/utils/logger';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      // count number of prisma.profiles
       const userCount = await prisma.profiles.count();
 
       await insight({
@@ -20,6 +19,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       });
 
       console.log('Updated insight for total registered users to: ' + userCount);
+
+      const journeyCount = await prisma.journey.count();
+
+      await insight({
+        title: 'Total journeys',
+        value: journeyCount,
+        icon: '🚉',
+      });
+
+      console.log('Updated insight for total journeys to: ' + journeyCount);
 
       // Get the first unprocessed user
       const user = await prisma.profiles.findFirst({
