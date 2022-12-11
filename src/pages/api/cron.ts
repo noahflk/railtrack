@@ -2,7 +2,7 @@ import { verifySignature } from '@upstash/qstash/nextjs';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { prisma } from '@/server/db/client';
-import { log } from '@/utils/logger';
+import { insight, log } from '@/utils/logger';
 
 // we only send on request at a time because Vercel lambda functions had trouble
 // processing multiple requests at the same thime
@@ -10,6 +10,17 @@ import { log } from '@/utils/logger';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
+      // count number of prisma.profiles
+      const userCount = await prisma.profiles.count();
+
+      await insight({
+        title: 'Registered users',
+        value: userCount,
+        icon: '👤',
+      });
+
+      console.log('Updated insight for total registered users to: ' + userCount);
+
       // Get the first unprocessed user
       const user = await prisma.profiles.findFirst({
         where: { processedAt: null },
