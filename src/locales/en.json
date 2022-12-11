@@ -3,6 +3,7 @@
   "arrival": "To",
   "add": {
     "time": "Departure time",
+    "direction": "Direction",
     "currentTime": "Now",
     "search": "Find journey",
     "journeys": "Journeys",
