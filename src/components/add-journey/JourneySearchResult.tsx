@@ -22,8 +22,6 @@ const AddButton: React.FC<Props> = ({ journey }) => {
 
   const t = useTranslations('add');
 
-  if (mutation.isLoading) return <LoadingSpinner color="primary" />;
-
   return (
     <button
       onClick={() =>
