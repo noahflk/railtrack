@@ -8,16 +8,15 @@ import type { Station } from '@/types/opendata';
 
 type Props = {
   label: string;
-  selectedStation?: Station;
   setSelectedStation: (station: Station) => void;
 };
 
-export const StationSearchField: React.FC<Props> = ({ label, selectedStation, setSelectedStation }) => {
+export const StationSearchField: React.FC<Props> = ({ label, setSelectedStation }) => {
   const [query, setQuery] = useState('');
   const stations = useStationSearch(query);
 
   return (
-    <Combobox as="div" value={selectedStation} onChange={setSelectedStation}>
+    <Combobox as="div" onChange={setSelectedStation}>
       <Combobox.Label className="block text-sm font-medium text-gray-700">{label}</Combobox.Label>
       <div className="relative mt-1">
         <Combobox.Input
