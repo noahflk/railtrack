@@ -40,6 +40,7 @@ export const useGetJourneys = () => {
         toast.error('Unable to load journeys');
       },
       enabled: !!departureTime && !!departureStation && !!arrivalStation,
+      refetchOnWindowFocus: false,
     }
   );
 };
