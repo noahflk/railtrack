@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { DepartureTimeField } from '@/components/add-journey/DepartureTimeField';
@@ -6,10 +7,13 @@ import { SearchButton } from '@/components/add-journey/SearchButton';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 
 export const JourneySearchForm: React.FC = () => {
-  const departureStation = useJourneySearchStore((state) => state.departureStation);
-  const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
-  const setDepartureStation = useJourneySearchStore((state) => state.setDepartureStation);
-  const setArrivalStation = useJourneySearchStore((state) => state.setArrivalStation);
+  const storeDepartureStation = useJourneySearchStore((state) => state.departureStation);
+  const storeArrivalStation = useJourneySearchStore((state) => state.arrivalStation);
+  const storeDepartureTime = useJourneySearchStore((state) => state.departureTime);
+
+  const [departureTime, setDepartureTime] = useState(storeDepartureTime);
+  const [departureStation, setDepartureStation] = useState(storeDepartureStation);
+  const [arrivalStation, setArrivalStation] = useState(storeArrivalStation);
 
   const t = useTranslations();
 
@@ -26,8 +30,12 @@ export const JourneySearchForm: React.FC = () => {
           selectedStation={arrivalStation}
           setSelectedStation={setArrivalStation}
         />
-        <DepartureTimeField />
-        <SearchButton />
+        <DepartureTimeField departureTime={departureTime} setDepartureTime={setDepartureTime} />
+        <SearchButton
+          departureTime={departureTime}
+          departureStation={departureStation}
+          arrivalStation={arrivalStation}
+        />
       </div>
     </li>
   );

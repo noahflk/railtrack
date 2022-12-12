@@ -1,13 +1,14 @@
 import { formatInTimeZone } from 'date-fns-tz';
 
-import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import { classNames } from '@/utils/styling';
 import { useTranslations } from 'next-intl';
 
-export const DepartureTimeField: React.FC = () => {
-  const departureTime = useJourneySearchStore((state) => state.departureTime);
-  const setDepartureTime = useJourneySearchStore((state) => state.setDepartureTime);
+type Props = {
+  departureTime?: string;
+  setDepartureTime: (station: string) => void;
+};
 
+export const DepartureTimeField: React.FC<Props> = ({ departureTime, setDepartureTime }) => {
   const t = useTranslations('add');
 
   const showNowButton = departureTime !== formatInTimeZone(new Date(), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm");
