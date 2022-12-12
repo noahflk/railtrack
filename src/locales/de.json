@@ -53,8 +53,8 @@
     "duration": "Dauer",
     "stops": "Stops",
     "delete": "Löschen",
-    "deleteJourney": "Delete journey",
-    "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
+    "deleteJourney": "Reise löschen",
+    "deleteConfirm": "Möchtest du diese Reise löschen? Dies kann nicht rückgängig gemacht werden.",
     "cancel": "Cancel",
     "minutes_one": "Minute",
     "minutes_other": "Minuten"
