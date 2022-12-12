@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { DepartureTimeField } from '@/components/add-journey/DepartureTimeField';
@@ -14,6 +14,10 @@ export const JourneySearchForm: React.FC = () => {
   const [departureTime, setDepartureTime] = useState(storeDepartureTime);
   const [departureStation, setDepartureStation] = useState(storeDepartureStation);
   const [arrivalStation, setArrivalStation] = useState(storeArrivalStation);
+
+  useEffect(() => {
+    setDepartureTime(storeDepartureTime);
+  }, [storeDepartureTime]);
 
   const t = useTranslations();
 
