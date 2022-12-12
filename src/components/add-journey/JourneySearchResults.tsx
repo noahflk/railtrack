@@ -52,7 +52,7 @@ const ResultDisplay: React.FC = () => {
           isFetching ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
-        Show earlier journeys
+        {t('earlierJourneys')}
       </button>
       <ul role="list">
         {journeys.map((journey) => (
@@ -74,7 +74,7 @@ const ResultDisplay: React.FC = () => {
           isFetching ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
-        Show later journeys
+        {t('laterJourneys')}
       </button>
     </>
   );
