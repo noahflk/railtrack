@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Station } from '@/types/opendata';
-import { useGetJourneys } from './hooks';
+import { useGetJourneys } from '@/hooks/useGetJourneys';
 
 type Props = {
   departureTime: string;

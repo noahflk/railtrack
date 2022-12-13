@@ -3,9 +3,9 @@ import { format } from 'date-fns-tz';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
+import { useGetJourneys } from '@/hooks/useGetJourneys';
 import type { Journey } from '@/types/opendata';
 import { classNames } from '@/utils/styling';
-import { useGetJourneys } from './hooks';
 
 const generateJourneyKey = (journey: Journey) => {
   return `${journey.from.departureTimestamp}${journey.from.departure}${journey.to.arrivalTimestamp}${journey.to.arrival}`;

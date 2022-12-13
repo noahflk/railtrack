@@ -1,9 +1,9 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { TRANSPORT_API_URL } from '@/constants';
-import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Journey, Station } from '@/types/opendata';
 import { useQuery } from '@tanstack/react-query';
+import { useJourneySearchStore } from './useJourneySearchStore';
 
 const getJourneys = ({
   departureStation,
