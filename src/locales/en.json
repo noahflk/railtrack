@@ -13,7 +13,9 @@
     "notFound": "No journeys found",
     "save": "Save",
     "stop_one": "change",
-    "stop_other": "changes"
+    "stop_other": "changes",
+    "earlierJourneys": "Earlier journeys",
+    "laterJourneys": "Later journeys"
   },
   "auth": {
     "save": "Save",

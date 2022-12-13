@@ -13,7 +13,9 @@
     "notFound": "Keine Verbindungen gefunden",
     "save": "Speichern",
     "stop_one": "Stop",
-    "stop_other": "Stops"
+    "stop_other": "Stops",
+    "earlierJourneys": "Früehere Verbindungen",
+    "laterJourneys": "Spätere Verbindungen"
   },
   "auth": {
     "save": "Speichern",
