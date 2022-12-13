@@ -22,8 +22,6 @@ const AddButton: React.FC<Props> = ({ journey }) => {
 
   const t = useTranslations('add');
 
-  if (mutation.isLoading) return <LoadingSpinner color="primary" />;
-
   return (
     <button
       onClick={() =>
@@ -64,14 +62,17 @@ const JourneyHeader: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
   const firstValidSection = journey.sections.find((section) => section.journey);
+  const firstNonEmptyProduct = journey.products.find((product) => product !== ' ');
 
   if (!firstValidSection) return null;
 
   return (
     <p>
-      <span className="mr-2 inline-flex items-center rounded-full bg-primary px-2.5 py-1 text-sm font-medium text-white">
-        {journey.products[0]}
-      </span>
+      {firstNonEmptyProduct && (
+        <span className="mr-2 inline-flex items-center rounded-full bg-primary px-2.5 py-1 text-sm font-medium text-white">
+          {firstNonEmptyProduct}
+        </span>
+      )}
       {t('direction')} {firstValidSection.journey?.to}
     </p>
   );

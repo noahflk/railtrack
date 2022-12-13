@@ -37,13 +37,15 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
             {formatInTimeZone(arrivalTime, 'Europe/Zurich', 'HH:mm')}
           </p>
           <p>
-            Duration: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
+            {t('duration')}: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
           </p>
-          <p>Distance: {journey.distance} km </p>
+          <p>
+            {t('distance')}: {journey.distance} km{' '}
+          </p>
         </div>
         <div className="grid flex-1 grid-cols-1 gap-2 truncate xs:grid-cols-2">
           <p>
-            {journey.stops} {journey.stops === 1 ? 'stop' : 'stops'}
+            {journey.stops} {t(journey.stops === 1 ? 'stops_one' : 'stops_other')}
           </p>
           <div className="justify-end xs:flex">
             <TextButton onClick={() => handleDelete(journey.id)}>{t('delete')}</TextButton>

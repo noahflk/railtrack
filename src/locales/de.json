@@ -54,6 +54,8 @@
     "distance": "Distanz",
     "duration": "Dauer",
     "stops": "Stops",
+    "stops_one": "Stop",
+    "stops_other": "Stops",
     "delete": "Löschen",
     "deleteJourney": "Reise löschen",
     "deleteConfirm": "Möchtest du diese Reise löschen? Dies kann nicht rückgängig gemacht werden.",
