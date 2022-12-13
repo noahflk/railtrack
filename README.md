@@ -61,7 +61,13 @@ npx prisma db push
 Run the app locally
 
 ```bash
-npm run dev
+pnpm run dev
+```
+
+Run tests locally. For this you need to have a local instance of the app running.
+
+```bash
+pnpm run test
 ```
 
 ## License
