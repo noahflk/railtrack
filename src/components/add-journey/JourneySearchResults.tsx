@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { format } from 'date-fns-tz';
+import { subMinutes, addMinutes } from 'date-fns';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
@@ -7,6 +8,7 @@ import { useGetJourneys } from '@/hooks/useGetJourneys';
 import type { Journey } from '@/types/opendata';
 import { classNames } from '@/utils/styling';
 
+const HOUR_AND_HALF_IN_MINUTES = 90;
 const generateJourneyKey = (journey: Journey) => {
   return `${journey.from.departureTimestamp}${journey.from.departure}${journey.to.arrivalTimestamp}${journey.to.arrival}`;
 };
@@ -40,9 +42,8 @@ const ResultDisplay: React.FC = () => {
       <button
         disabled={isFetching}
         onClick={() => {
-          // Subtracts 2 hours to the current departureTime
-          const newDepartureTime = new Date(departureTime);
-          newDepartureTime.setHours(newDepartureTime.getHours() - 2);
+          // Subtracts 1.5 hours to the current departureTime
+          const newDepartureTime = subMinutes(new Date(departureTime), HOUR_AND_HALF_IN_MINUTES);
           const formattedDepartureTime = format(newDepartureTime, "yyyy-MM-dd'T'HH:mm");
           setDepartureTime(formattedDepartureTime);
           getJourneys();
@@ -63,8 +64,7 @@ const ResultDisplay: React.FC = () => {
         disabled={isFetching}
         onClick={() => {
           // Adds 2 hours to the current departureTime
-          const newDepartureTime = new Date(departureTime);
-          newDepartureTime.setHours(newDepartureTime.getHours() + 2);
+          const newDepartureTime = addMinutes(new Date(departureTime), HOUR_AND_HALF_IN_MINUTES);
           const formattedDepartureTime = format(newDepartureTime, "yyyy-MM-dd'T'HH:mm");
           setDepartureTime(formattedDepartureTime);
           getJourneys();
