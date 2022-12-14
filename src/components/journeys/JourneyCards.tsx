@@ -6,7 +6,7 @@ import { trpc } from '@/utils/trpc';
 import { TextButton } from '@/components/TextButton';
 import type { RouterOutputs } from '@/utils/trpc';
 import { useEffect } from 'react';
-import Placeholder from '../Placeholder';
+import { Placeholder } from '../Placeholder';
 import { EmptyJourneyNotice } from '../EmptyJourneyNotice';
 
 type CardProps = {

@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 import { format } from 'date-fns';
 import { useInView } from 'react-intersection-observer';
 import { trpc } from '@/utils/trpc';
-import Placeholder from '../Placeholder';
+import { Placeholder } from '../Placeholder';
 import type { RouterOutputs } from '@/utils/trpc';
 import { useEffect } from 'react';
 import { EmptyJourneyNotice } from '../EmptyJourneyNotice';
