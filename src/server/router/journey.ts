@@ -39,8 +39,7 @@ const findConnection = async ({
   platform,
 }: JourneyIdentifier): Promise<Journey | undefined> => {
   const { data } = await axios.get<{ connections: Journey[] }>(
-    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${
-      departureTime.split('T')[0]
+    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${departureTime.split('T')[0]
     }&time=${departureTime.split('T')[1]}`
   );
 
@@ -86,6 +85,64 @@ const getArrivalStation = (sections: Section[]): StationInformation => {
   };
 };
 
+export const infiniteJourneys = router({
+  get: protectedProcedure
+    .input(
+      z.object(
+        {
+          limit: z.number().min(1).max(100).nullish(),
+          cursor: z.number().nullish()
+        }
+      )
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 10;
+      const { cursor } = input;
+      const journeys = await ctx.prisma.journey.findMany({
+        take: limit + 1,
+        where: {
+          userId: ctx.user.id,
+        },
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          id: 'asc',
+        },
+        include: {
+          sections: {
+            include: {
+              passes: true,
+            },
+          },
+        },
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (journeys.length > limit) {
+        const nextItem = journeys.pop()
+        nextCursor = nextItem?.id;
+      }
+
+      const journeyList = journeys.map((journey) => {
+        const departureStation = getDepartureStation(journey.sections);
+        const arrivalStation = getArrivalStation(journey.sections);
+
+        return {
+          ...journey,
+          departureStation: departureStation.name,
+          arrivalStation: arrivalStation.name,
+          departureTime: departureStation.time,
+          arrivalTime: arrivalStation.time,
+          stops: journey.sections.length - 1,
+          distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
+        };
+      })
+      return {
+        journeyList,
+        nextCursor
+      }
+    })
+})
+
+
 export const journeyRouter = router({
   add: protectedProcedure
     .input(
@@ -125,7 +182,7 @@ export const journeyRouter = router({
 
       // create structured data for journey to save it
       const sectionsData = sections.map((section) => {
-        const passes = section.journey.passList.map((pass) => {
+        const passes = section.journey?.passList.map((pass) => {
           return {
             arrivalTime: new Date(pass.arrival),
             departureTime: new Date(pass.departure),
@@ -144,10 +201,10 @@ export const journeyRouter = router({
           arrivalStation: section.arrival.station.name,
           arrivalStationCoordinateX: section.arrival.station.coordinate.x,
           arrivalStationCoordinateY: section.arrival.station.coordinate.y,
-          destination: section.journey.to,
-          trainOperator: section.journey.operator,
-          trainNumber: section.journey.number,
-          trainCategory: section.journey.category,
+          destination: section.journey?.to,
+          trainOperator: section.journey?.operator,
+          trainNumber: section.journey?.number,
+          trainCategory: section.journey?.category,
           passes: {
             create: passes,
           },

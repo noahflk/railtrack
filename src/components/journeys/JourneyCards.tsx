@@ -1,9 +1,13 @@
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
+import { useInView } from 'react-intersection-observer';
 import { formatInTimeZone } from 'date-fns-tz';
-
+import { trpc } from '@/utils/trpc';
 import { TextButton } from '@/components/TextButton';
 import type { RouterOutputs } from '@/utils/trpc';
+import { useEffect } from 'react';
+import Placeholder from '../Placeholder';
+import { EmptyJourneyNotice } from '../EmptyJourneyNotice';
 
 type CardProps = {
   // the [number] ensures we only get the item type without the array
@@ -14,7 +18,6 @@ type CardProps = {
 const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
   const departureTime = new Date(journey.departureTime);
   const arrivalTime = new Date(journey.arrivalTime);
-
   const t = useTranslations('journeys');
 
   return (
@@ -55,14 +58,52 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
 };
 
 type Props = {
-  journeys: RouterOutputs['journey']['get'];
   handleDelete: (id: number) => void;
 };
 
-export const JourneyCards: React.FC<Props> = ({ journeys, handleDelete }) => (
-  <ul role="list" className="space-y-4">
-    {journeys.map((journey) => (
-      <JourneyCard key={journey.id} journey={journey} handleDelete={handleDelete} />
-    ))}
-  </ul>
-);
+export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
+  const { inView, ref } = useInView();
+  const { data: journeys, fetchNextPage, hasNextPage } = trpc.infiniteJourneys.get.useInfiniteQuery(
+    {
+      limit: 6
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? false
+    }
+  )
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage])
+
+  if (!journeys) return <Placeholder />
+
+  let empty = false;
+
+  journeys.pages.map((page) => {
+    if (page.journeyList.length === 0) {
+      return empty = true;
+    }
+  })
+
+  if (empty) {
+    empty = false;
+    return (
+      <div className='pt-12'>
+        <EmptyJourneyNotice />
+      </div>
+    )
+  }
+
+  return (
+    <ul role="list" className="space-y-4">
+      {journeys?.pages.map((page) => {
+        return page.journeyList.flatMap((journey) => {
+          return <JourneyCard key={journey.id} journey={journey} handleDelete={handleDelete} />
+        })
+      })}
+      <button ref={ref} className=''>{hasNextPage ? "Loading..." : "Nothing more to load"}</button>
+    </ul>
+  )
+};

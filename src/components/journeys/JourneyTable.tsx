@@ -1,7 +1,11 @@
 import { useTranslations } from 'next-intl';
 import { format } from 'date-fns';
-
+import { useInView } from 'react-intersection-observer';
+import { trpc } from '@/utils/trpc';
+import Placeholder from '../Placeholder';
 import type { RouterOutputs } from '@/utils/trpc';
+import { useEffect } from 'react';
+import { EmptyJourneyNotice } from '../EmptyJourneyNotice';
 
 type RowProps = {
   journey: RouterOutputs['journey']['get'][number];
@@ -40,12 +44,44 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
 };
 
 type TableProps = {
-  journeys: RouterOutputs['journey']['get'];
   handleDelete: (id: number) => void;
 };
 
-export const JourneyTable: React.FC<TableProps> = ({ journeys, handleDelete }) => {
+export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
   const t = useTranslations();
+  const { inView, ref } = useInView()
+
+  const { data: journeys, fetchNextPage, hasNextPage } = trpc.infiniteJourneys.get.useInfiniteQuery(
+    {
+      limit: 13,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? false
+    }
+  )
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage()
+    }
+  }, [inView, hasNextPage])
+  if (!journeys) return <Placeholder />
+
+  let empty = false;
+
+  journeys.pages.map((page) => {
+    if (page.journeyList.length === 0) {
+      return empty = true;
+    }
+  })
+
+  if (empty) {
+    empty = false;
+    return (
+      <div className='pt-12'>
+        <EmptyJourneyNotice />
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col">
@@ -76,11 +112,19 @@ export const JourneyTable: React.FC<TableProps> = ({ journeys, handleDelete }) =
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {journeys.map((journey) => (
+                {/* {journeys.map((journey) => (
                   <JourneyRow journey={journey} key={journey.id} handleDelete={handleDelete} />
-                ))}
+                ))} */}
+                {journeys?.pages.map((page) => {
+                  return page.journeyList.flatMap((journey) => {
+                    return <JourneyRow key={journey.id} journey={journey} handleDelete={handleDelete} />
+                  })
+                })}
               </tbody>
             </table>
+            <button ref={ref} className=''>{hasNextPage ? "Load More" : "Nothing more to load"}</button>
+            {/* TODO: implement pagination, virtual list or something similar */}
+            {/* <TablePagination count={journeys.count} page={journeys.page} /> */}
           </div>
         </div>
       </div>

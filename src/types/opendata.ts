@@ -20,16 +20,13 @@ export type Station = {
 export type Section = {
   departure: From;
   arrival: To;
-  journey?: {
+  journey: {
     category: string;
     name: string;
     number: string;
     operator: string;
     to: string;
     passList: Pass[];
-  };
-  walk?: {
-    duration?: number;
   };
 };
 
