@@ -1,8 +1,8 @@
-import { trpc } from '@/utils/trpc';
+import { useRef } from 'react';
 import bbox from '@turf/bbox';
-import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
 import MapboxMap, { Layer, Source, type MapRef } from 'react-map-gl';
+
+import { trpc } from '@/utils/trpc';
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -58,33 +58,30 @@ const getGeoData = (journeys: Coordinates[]) => ({
 export const Map: React.FC = () => {
   const mapRef = useRef<MapRef>(null);
 
-  const { data: stats } = trpc.journey.stats.useQuery(undefined, {
-    onSuccess: (stats) => {
-      const journeys = stats?.coordinates;
-
-      if (journeys.length === 0) return;
-
-      const geoData = getGeoData(journeys);
-
-      const [minLng, minLat, maxLng, maxLat] = bbox(geoData);
-
-      mapRef?.current?.fitBounds(
-        [
-          [minLng, minLat],
-          [maxLng, maxLat],
-        ],
-        { padding: 60, duration: 0 }
-      );
-    },
-  });
+  const { data: stats } = trpc.journey.stats.useQuery();
 
   const journeys = stats?.coordinates ?? [];
 
   const geoData = getGeoData(journeys);
 
+  const focusMap = () => {
+    if (journeys.length === 0) return;
+
+    const [minLng, minLat, maxLng, maxLat] = bbox(geoData);
+
+    mapRef?.current?.fitBounds(
+      [
+        [minLng, minLat],
+        [maxLng, maxLat],
+      ],
+      { padding: 60, duration: 0 }
+    );
+  };
+
   return (
     <MapboxMap
       ref={mapRef}
+      onLoad={focusMap}
       cooperativeGestures
       style={{ width: '100%', height: '100%', minHeight: 450, overflow: 'hidden' }}
       initialViewState={{
