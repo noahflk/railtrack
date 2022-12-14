@@ -49,7 +49,7 @@ const getFeatures = (journeys: Coordinates[]): Feature[] => {
 };
 
 export const Map: React.FC<{ journeys: Coordinates[] }> = ({ journeys }) => {
-  const mapRef = useRef<MapRef>();
+  const mapRef = useRef<MapRef>(null);
 
   const geoData = {
     type: 'FeatureCollection',
@@ -70,10 +70,9 @@ export const Map: React.FC<{ journeys: Coordinates[] }> = ({ journeys }) => {
 
   return (
     <MapboxMap
-      // @ts-expect-error: it doesn't accept the typed ref
       ref={mapRef}
       cooperativeGestures
-      style={{ width: '100%', height: 400, overflow: 'hidden' }}
+      style={{ width: '100%', height: '100%', minHeight: 400, overflow: 'hidden' }}
       mapStyle="mapbox://styles/mapbox/light-v10"
       mapboxAccessToken={MAPBOX_TOKEN}
     >
