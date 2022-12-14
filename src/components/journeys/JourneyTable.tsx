@@ -122,7 +122,7 @@ export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
                 })}
               </tbody>
             </table>
-            <button ref={ref} className=''>{hasNextPage ? "Load More" : "Nothing more to load"}</button>
+            <button ref={ref} className=''>{hasNextPage ? "Loading..." : "Nothing more to load"}</button>
             {/* TODO: implement pagination, virtual list or something similar */}
             {/* <TablePagination count={journeys.count} page={journeys.page} /> */}
           </div>
