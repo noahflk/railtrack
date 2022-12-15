@@ -3,7 +3,6 @@ import toast from 'react-hot-toast';
 import { TRANSPORT_API_URL } from '@/constants';
 import type { Journey, Station } from '@/types/opendata';
 import { useMutation } from '@tanstack/react-query';
-// import { useJourneySearchStore } from './useJourneySearchStore';
 
 const getJourneys = ({
   departureStation,
@@ -22,9 +21,6 @@ const getJourneys = ({
 };
 
 export const useGetJourneys = () => {
-  // const departureStation = useJourneySearchStore((state) => state.departureStation);
-  // const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
-
   return useMutation({
     mutationFn: async ({
       departureStation,

@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { format } from 'date-fns-tz';
+import { format, formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 import { subMinutes, addMinutes } from 'date-fns';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
@@ -35,8 +34,20 @@ const ResultDisplay: React.FC = () => {
   const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
 
   const { isLoading, mutateAsync } = useGetJourneys();
-  const [earliestDepartureTime, setEarliestDepartureTime] = useState(departureTime);
-  const [latestDepartureTime, setLatestDepartureTime] = useState(departureTime);
+
+  const departureTimeDate = new Date(zonedTimeToUtc(departureTime, 'Europe/Zurich'));
+  const departureTimestamps = (journeys || [])
+    .map((journey) => journey.from.departureTimestamp)
+    .concat(departureTimeDate.getTime() / 1000);
+
+  const minTimestamp = departureTimestamps.length > 0 ? Math.min(...departureTimestamps) : undefined;
+  const earliestDepartureTime = minTimestamp
+    ? formatInTimeZone(new Date(minTimestamp * 1000), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm")
+    : departureTime;
+  const maxTimestamp = departureTimestamps.length > 0 ? Math.max(...departureTimestamps) : undefined;
+  const latestDepartureTime = maxTimestamp
+    ? formatInTimeZone(new Date(maxTimestamp * 1000), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm")
+    : departureTime;
 
   const t = useTranslations('add');
 
@@ -70,9 +81,7 @@ const ResultDisplay: React.FC = () => {
             { departureStation, arrivalStation, departureTime: newDepartureTime },
             {
               onSuccess: (res) => {
-                const newJourneys = unionJourneys(journeys, res);
-                setEarliestDepartureTime(newDepartureTime);
-                setJourneys(newJourneys);
+                setJourneys(unionJourneys(journeys, res));
               },
             }
           );
@@ -101,7 +110,6 @@ const ResultDisplay: React.FC = () => {
             { departureStation, arrivalStation, departureTime: newDepartureTime },
             {
               onSuccess: (res) => {
-                setLatestDepartureTime(newDepartureTime);
                 setJourneys(unionJourneys(journeys, res));
               },
             }
