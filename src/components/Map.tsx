@@ -1,22 +1,11 @@
-import { useRef } from 'react';
 import bbox from '@turf/bbox';
+import { useRef } from 'react';
 import MapboxMap, { Layer, Source, type MapRef } from 'react-map-gl';
 
+import type { Coordinates } from '@/types/journey';
 import { trpc } from '@/utils/trpc';
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-
-type Section = {
-  passes: {
-    stationCoordinateX: number;
-    stationCoordinateY: number;
-    stationName: string;
-  }[];
-};
-
-type Coordinates = {
-  sections: Section[];
-};
 
 type Coordinate = number[];
 
@@ -28,20 +17,31 @@ type Feature = {
   };
 };
 
-const getSectionCoordinates = (section: Section): Coordinate[] => {
-  return section.passes.map((pass) => [pass.stationCoordinateY, pass.stationCoordinateX]);
-};
-
-const getFeatures = (journeys: Coordinates[]): Feature[] => {
+const getDeduplicatedFeatures = (journeys: Coordinates[]): Feature[] => {
   const features: Feature[] = [];
 
   journeys.forEach((journey) => {
     journey.sections.forEach((section) => {
+      // Create a set to store the unique coordinates
+      const uniqueCoordinates = new Set<string>();
+
+      // Loop through the passes in the section
+      section.passes.forEach((pass) => {
+        // Convert the coordinates to a string
+        const coordinatesStr = JSON.stringify([pass.stationCoordinateY, pass.stationCoordinateX]);
+
+        // Add the coordinates to the set if they are not already present
+        if (!uniqueCoordinates.has(coordinatesStr)) {
+          uniqueCoordinates.add(coordinatesStr);
+        }
+      });
+
+      // Create a Feature object for the section
       features.push({
         type: 'Feature',
         geometry: {
           type: 'LineString',
-          coordinates: getSectionCoordinates(section),
+          coordinates: [...uniqueCoordinates].map((coordinatesStr) => JSON.parse(coordinatesStr)),
         },
       });
     });
@@ -52,7 +52,7 @@ const getFeatures = (journeys: Coordinates[]): Feature[] => {
 
 const getGeoData = (journeys: Coordinates[]) => ({
   type: 'FeatureCollection',
-  features: getFeatures(journeys),
+  features: getDeduplicatedFeatures(journeys),
 });
 
 export const Map: React.FC = () => {
