@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { format } from 'date-fns-tz';
 import { subMinutes, addMinutes } from 'date-fns';
@@ -13,11 +14,29 @@ const generateJourneyKey = (journey: Journey) => {
   return `${journey.from.departureTimestamp}${journey.from.departure}${journey.to.arrivalTimestamp}${journey.to.arrival}`;
 };
 
+const sortJourneys = (a: Journey, b: Journey) => {
+  return a.from.departureTimestamp - b.from.departureTimestamp;
+};
+
+const unionJourneys = (journeys: Journey[], newJourneys: Journey[]) => {
+  const concatJourneys = journeys.concat(newJourneys);
+  const filteredJourneys = concatJourneys.filter(
+    (item, idx) =>
+      concatJourneys.map((journey) => journey.from.departureTimestamp).indexOf(item.from.departureTimestamp) === idx
+  );
+  return filteredJourneys.sort(sortJourneys);
+};
+
 const ResultDisplay: React.FC = () => {
   const journeys = useJourneySearchStore((state) => state.journeys);
+  const setJourneys = useJourneySearchStore((state) => state.setJourneys);
   const departureTime = useJourneySearchStore((state) => state.departureTime);
-  const setDepartureTime = useJourneySearchStore((state) => state.setDepartureTime);
-  const { isFetching, refetch: getJourneys } = useGetJourneys();
+  const departureStation = useJourneySearchStore((state) => state.departureStation);
+  const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
+
+  const { isLoading, mutateAsync } = useGetJourneys();
+  const [earliestDepartureTime, setEarliestDepartureTime] = useState(departureTime);
+  const [latestDepartureTime, setLatestDepartureTime] = useState(departureTime);
 
   const t = useTranslations('add');
 
@@ -40,17 +59,27 @@ const ResultDisplay: React.FC = () => {
   return (
     <>
       <button
-        disabled={isFetching}
+        disabled={isLoading}
         onClick={() => {
-          // Subtracts 1.5 hours to the current departureTime
-          const newDepartureTime = subMinutes(new Date(departureTime), HOUR_AND_HALF_IN_MINUTES);
-          const formattedDepartureTime = format(newDepartureTime, "yyyy-MM-dd'T'HH:mm");
-          setDepartureTime(formattedDepartureTime);
-          getJourneys();
+          // Subtracts 1.5 hours to the earliest departureTime
+          const newDepartureTime = format(
+            subMinutes(new Date(earliestDepartureTime), HOUR_AND_HALF_IN_MINUTES),
+            "yyyy-MM-dd'T'HH:mm"
+          );
+          mutateAsync(
+            { departureStation, arrivalStation, departureTime: newDepartureTime },
+            {
+              onSuccess: (res) => {
+                const newJourneys = unionJourneys(journeys, res);
+                setEarliestDepartureTime(newDepartureTime);
+                setJourneys(newJourneys);
+              },
+            }
+          );
         }}
         className={classNames(
           'text-sm font-medium',
-          isFetching ? 'text-gray-500' : 'text-primary hover:text-primary-light'
+          isLoading ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
         {t('earlierJourneys')}
@@ -61,17 +90,26 @@ const ResultDisplay: React.FC = () => {
         ))}
       </ul>
       <button
-        disabled={isFetching}
+        disabled={isLoading}
         onClick={() => {
-          // Adds 2 hours to the current departureTime
-          const newDepartureTime = addMinutes(new Date(departureTime), HOUR_AND_HALF_IN_MINUTES);
-          const formattedDepartureTime = format(newDepartureTime, "yyyy-MM-dd'T'HH:mm");
-          setDepartureTime(formattedDepartureTime);
-          getJourneys();
+          // Adds 1.5 hours to the latest departureTime
+          const newDepartureTime = format(
+            addMinutes(new Date(latestDepartureTime), HOUR_AND_HALF_IN_MINUTES),
+            "yyyy-MM-dd'T'HH:mm"
+          );
+          mutateAsync(
+            { departureStation, arrivalStation, departureTime: newDepartureTime },
+            {
+              onSuccess: (res) => {
+                setLatestDepartureTime(newDepartureTime);
+                setJourneys(unionJourneys(journeys, res));
+              },
+            }
+          );
         }}
         className={classNames(
           'text-sm font-medium',
-          isFetching ? 'text-gray-500' : 'text-primary hover:text-primary-light'
+          isLoading ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
         {t('laterJourneys')}
