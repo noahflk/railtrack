@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { format, formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
-import { subMinutes, addMinutes } from 'date-fns';
+import { subMinutes } from 'date-fns';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
@@ -26,15 +26,7 @@ const unionJourneys = (journeys: Journey[], newJourneys: Journey[]) => {
   return filteredJourneys.sort(sortJourneys);
 };
 
-const ResultDisplay: React.FC = () => {
-  const journeys = useJourneySearchStore((state) => state.journeys);
-  const setJourneys = useJourneySearchStore((state) => state.setJourneys);
-  const departureTime = useJourneySearchStore((state) => state.departureTime);
-  const departureStation = useJourneySearchStore((state) => state.departureStation);
-  const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
-
-  const { isLoading, mutateAsync } = useGetJourneys();
-
+const getEarliestAndLatestDepartureTime = (departureTime: string, journeys?: Journey[]) => {
   const departureTimeDate = new Date(zonedTimeToUtc(departureTime, 'Europe/Zurich'));
   const departureTimestamps = (journeys || [])
     .map((journey) => journey.from.departureTimestamp)
@@ -48,6 +40,18 @@ const ResultDisplay: React.FC = () => {
   const latestDepartureTime = maxTimestamp
     ? formatInTimeZone(new Date(maxTimestamp * 1000), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm")
     : departureTime;
+  return { earliestDepartureTime, latestDepartureTime };
+};
+
+const ResultDisplay: React.FC = () => {
+  const journeys = useJourneySearchStore((state) => state.journeys);
+  const setJourneys = useJourneySearchStore((state) => state.setJourneys);
+  const departureTime = useJourneySearchStore((state) => state.departureTime);
+  const departureStation = useJourneySearchStore((state) => state.departureStation);
+  const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
+
+  const { isLoading, mutateAsync } = useGetJourneys();
+  const { earliestDepartureTime, latestDepartureTime } = getEarliestAndLatestDepartureTime(departureTime, journeys);
 
   const t = useTranslations('add');
 
@@ -101,13 +105,8 @@ const ResultDisplay: React.FC = () => {
       <button
         disabled={isLoading}
         onClick={() => {
-          // Adds 1.5 hours to the latest departureTime
-          const newDepartureTime = format(
-            addMinutes(new Date(latestDepartureTime), HOUR_AND_HALF_IN_MINUTES),
-            "yyyy-MM-dd'T'HH:mm"
-          );
           mutateAsync(
-            { departureStation, arrivalStation, departureTime: newDepartureTime },
+            { departureStation, arrivalStation, departureTime: latestDepartureTime },
             {
               onSuccess: (res) => {
                 setJourneys(unionJourneys(journeys, res));
