@@ -58,30 +58,32 @@ const getGeoData = (journeys: Coordinates[]) => ({
 export const Map: React.FC = () => {
   const mapRef = useRef<MapRef>(null);
 
-  const { data: stats } = trpc.journey.stats.useQuery();
+  const { data: stats } = trpc.journey.stats.useQuery(undefined, {
+    onSuccess: (stats) => {
+      const journeys = stats?.coordinates ?? [];
+
+      if (journeys.length === 0) return;
+
+      const geoData = getGeoData(journeys);
+
+      const [minLng, minLat, maxLng, maxLat] = bbox(geoData);
+
+      mapRef?.current?.fitBounds(
+        [
+          [minLng, minLat],
+          [maxLng, maxLat],
+        ],
+        { padding: 60, duration: 0 }
+      );
+    },
+  });
 
   const journeys = stats?.coordinates ?? [];
-
   const geoData = getGeoData(journeys);
-
-  const focusMap = () => {
-    if (journeys.length === 0) return;
-
-    const [minLng, minLat, maxLng, maxLat] = bbox(geoData);
-
-    mapRef?.current?.fitBounds(
-      [
-        [minLng, minLat],
-        [maxLng, maxLat],
-      ],
-      { padding: 60, duration: 0 }
-    );
-  };
 
   return (
     <MapboxMap
       ref={mapRef}
-      onLoad={focusMap}
       cooperativeGestures
       style={{ width: '100%', height: '100%', minHeight: 450, overflow: 'hidden' }}
       initialViewState={{
