@@ -91,7 +91,7 @@ const ResultDisplay: React.FC = () => {
           );
         }}
         className={classNames(
-          'pl-6 text-sm font-medium',
+          'pl-4 md:pl-6 text-sm font-medium',
           isLoading ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
@@ -115,7 +115,7 @@ const ResultDisplay: React.FC = () => {
           );
         }}
         className={classNames(
-          'pl-6 text-sm font-medium',
+          'pl-4 md:pl-6 text-sm font-medium',
           isLoading ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
@@ -131,7 +131,7 @@ export const JourneySearchResults: React.FC = () => {
   return (
     <li className="divide-gray-200npm col-span-1 divide-y rounded-lg bg-white shadow ">
       <div className="h-full w-full py-4">
-        <h3 className="pl-6 text-xl font-semibold text-gray-900">{t('journeys')}</h3>
+        <h3 className="pl-4 md:pl-6 text-xl font-semibold text-gray-900">{t('journeys')}</h3>
         <ResultDisplay />
       </div>
     </li>
