@@ -47,8 +47,6 @@ const findConnection = async ({
     `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${localBufferedDate}&time=${localBufferedTime}&limit=10`
   );
 
-  data.connections.forEach((connection) => console.log(connection.from.platform, connection.from.departure));
-
   // ensure we have the desired connection by comparing departure time and platform
   return data.connections.find(
     (connection) => connection.from.platform === platform && connection.from.departure === departureTime
@@ -239,7 +237,6 @@ export const journeyRouter = router({
     const journeys = await ctx.prisma.journey.findMany({
       // this limits the number of returned `journeys` if provided
       // otherwise all will be returned
-      take: input,
       where: {
         userId: ctx.user.id,
       },
@@ -253,7 +250,7 @@ export const journeyRouter = router({
     });
 
     // enhance journey with more info
-    return journeys.map((journey) => {
+    const enrichedJourneys = journeys.map((journey) => {
       const departureStation = getDepartureStation(journey.sections);
       const arrivalStation = getArrivalStation(journey.sections);
 
@@ -267,6 +264,20 @@ export const journeyRouter = router({
         distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
       };
     });
+
+    // sort journeys by departure time
+    const sortedJourneys = enrichedJourneys.sort((journeyA, journeyB) => {
+      if (isBefore(journeyA.departureTime, journeyB.departureTime)) return -1;
+      if (isBefore(journeyB.departureTime, journeyA.departureTime)) return 1;
+
+      return 0;
+    });
+
+    if (input) {
+      return sortedJourneys.slice(-input);
+    }
+
+    return sortedJourneys;
   }),
   stats: protectedProcedure.query(async ({ ctx }) => {
     const journeys = await ctx.prisma.journey.findMany({
