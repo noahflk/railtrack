@@ -20,6 +20,7 @@ export const JourneyList: React.FC = () => {
 
       utils.journey.get.invalidate();
       utils.journey.stats.invalidate();
+      utils.infiniteJourneys.get.invalidate();
     },
     onError: () => {
       toast.error('Unable to delete journey');

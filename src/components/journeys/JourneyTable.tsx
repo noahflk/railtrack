@@ -6,6 +6,7 @@ import { Placeholder } from '../Placeholder';
 import type { RouterOutputs } from '@/utils/trpc';
 import { useEffect } from 'react';
 import { EmptyJourneyNotice } from '../EmptyJourneyNotice';
+import { LoadingSpinner } from '../LoadingSpinner';
 
 type RowProps = {
   journey: RouterOutputs['journey']['get'][number];
@@ -122,10 +123,16 @@ export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
                 })}
               </tbody>
             </table>
-            <button ref={ref} className=''>{hasNextPage ? "Loading..." : "Nothing more to load"}</button>
             {/* TODO: implement pagination, virtual list or something similar */}
             {/* <TablePagination count={journeys.count} page={journeys.page} /> */}
           </div>
+          {
+            hasNextPage && <>
+              <div ref={ref} className='flex justify-center mt-2'>
+                <LoadingSpinner />
+              </div>
+            </>
+          }
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import type { RouterOutputs } from '@/utils/trpc';
 import { useEffect } from 'react';
 import { Placeholder } from '../Placeholder';
 import { EmptyJourneyNotice } from '../EmptyJourneyNotice';
+import { LoadingSpinner } from '../LoadingSpinner';
 
 type CardProps = {
   // the [number] ensures we only get the item type without the array
@@ -103,7 +104,13 @@ export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
           return <JourneyCard key={journey.id} journey={journey} handleDelete={handleDelete} />
         })
       })}
-      <button ref={ref} className=''>{hasNextPage ? "Loading..." : "Nothing more to load"}</button>
+      {
+        hasNextPage && <>
+          <div ref={ref} className='flex justify-center mt-2'>
+            <LoadingSpinner />
+          </div>
+        </>
+      }
     </ul>
   )
 };
