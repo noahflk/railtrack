@@ -109,17 +109,22 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
   return (
-    <li className="space-y-2 py-5 px-4">
-      <JourneyHeader journey={journey} />
-      <JourneyStopIndicator className="w-full" journey={journey} />
-      <div className="flex justify-between">
-        <p>
-          {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
-          {parseDurationString(journey.duration)} min
-        </p>
-        <AddButton journey={journey} />
-      </div>
-    </li>
+    <Disclosure as="li">
+      <Disclosure.Button as={Fragment}>
+        <div className="space-y-2 py-5 px-4">
+          <JourneyHeader journey={journey} />
+          <JourneyStopIndicator className="w-full" journey={journey} />
+          <div className="flex justify-between">
+            <p>
+              {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
+              {parseDurationString(journey.duration)} min
+            </p>
+            <AddButton journey={journey} />
+          </div>
+        </div>
+      </Disclosure.Button>
+      <JourneySectionsDetails journey={journey} />
+    </Disclosure>
   );
 };
 
