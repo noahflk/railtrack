@@ -1,7 +1,8 @@
 import type { Section } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import axios from 'axios';
-import { isBefore } from 'date-fns';
+import { isBefore, subMinutes } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 import { z } from 'zod';
 
 import { TRANSPORT_API_URL } from '@/constants';
@@ -38,10 +39,15 @@ const findConnection = async ({
   departureTime,
   platform,
 }: JourneyIdentifier): Promise<Journey | undefined> => {
+  const bufferedTime = subMinutes(new Date(departureTime), 10);
+  const localBufferedDate = formatInTimeZone(bufferedTime, 'Europe/Zurich', 'yyyy-MM-dd');
+  const localBufferedTime = formatInTimeZone(bufferedTime, 'Europe/Zurich', 'HH:mm');
+
   const { data } = await axios.get<{ connections: Journey[] }>(
-    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${departureTime.split('T')[0]
-    }&time=${departureTime.split('T')[1]}`
+    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${localBufferedDate}&time=${localBufferedTime}&limit=10`
   );
+
+  data.connections.forEach((connection) => console.log(connection.from.platform, connection.from.departure));
 
   // ensure we have the desired connection by comparing departure time and platform
   return data.connections.find(
@@ -181,8 +187,11 @@ export const journeyRouter = router({
       const sections = journey.sections.filter((section) => section.journey);
 
       // create structured data for journey to save it
-      const sectionsData = sections.map((section) => {
-        const passes = section.journey?.passList.map((pass) => {
+      const sectionsData = sections.flatMap((section) => {
+        // ensure we only include sections that have a journey
+        if (!section.journey) return [];
+
+        const passes = section.journey.passList.map((pass) => {
           return {
             arrivalTime: new Date(pass.arrival),
             departureTime: new Date(pass.departure),

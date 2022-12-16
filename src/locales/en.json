@@ -12,7 +12,9 @@
     "notFound": "No journeys found",
     "save": "Save",
     "stop_one": "change",
-    "stop_other": "changes"
+    "stop_other": "changes",
+    "earlierJourneys": "Earlier journeys",
+    "laterJourneys": "Later journeys"
   },
   "auth": {
     "save": "Save",
@@ -51,6 +53,8 @@
     "distance": "Distance",
     "duration": "Duration",
     "stops": "Stops",
+    "stops_one": "stop",
+    "stops_other": "stops",
     "delete": "Delete",
     "deleteJourney": "Delete journey",
     "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",

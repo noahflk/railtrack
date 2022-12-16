@@ -12,7 +12,9 @@
     "notFound": "Keine Verbindungen gefunden",
     "save": "Speichern",
     "stop_one": "Stop",
-    "stop_other": "Stops"
+    "stop_other": "Stops",
+    "earlierJourneys": "Früehere Verbindungen",
+    "laterJourneys": "Spätere Verbindungen"
   },
   "auth": {
     "save": "Speichern",
@@ -51,10 +53,12 @@
     "distance": "Distanz",
     "duration": "Dauer",
     "stops": "Stops",
+    "stops_one": "Stop",
+    "stops_other": "Stops",
     "delete": "Löschen",
-    "deleteJourney": "Delete journey",
-    "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
-    "cancel": "Cancel",
+    "deleteJourney": "Reise löschen",
+    "deleteConfirm": "Möchtest du diese Reise löschen? Dies kann nicht rückgängig gemacht werden.",
+    "cancel": "Abbrechen",
     "minutes_one": "Minute",
     "minutes_other": "Minuten"
   },
