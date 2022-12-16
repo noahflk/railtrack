@@ -91,13 +91,13 @@ const ResultDisplay: React.FC = () => {
           );
         }}
         className={classNames(
-          'text-sm font-medium',
+          'pl-6 text-sm font-medium',
           isLoading ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
         {t('earlierJourneys')}
       </button>
-      <ul role="list">
+      <ul role="list" className="divide-y">
         {journeys.map((journey) => (
           <JourneySearchResult key={generateJourneyKey(journey)} journey={journey} />
         ))}
@@ -115,7 +115,7 @@ const ResultDisplay: React.FC = () => {
           );
         }}
         className={classNames(
-          'text-sm font-medium',
+          'pl-6 text-sm font-medium',
           isLoading ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
@@ -130,8 +130,8 @@ export const JourneySearchResults: React.FC = () => {
 
   return (
     <li className="divide-gray-200npm col-span-1 divide-y rounded-lg bg-white shadow ">
-      <div className="h-full w-full p-6">
-        <h3 className="text-xl font-semibold text-gray-900">{t('journeys')}</h3>
+      <div className="h-full w-full py-4">
+        <h3 className="pl-6 text-xl font-semibold text-gray-900">{t('journeys')}</h3>
         <ResultDisplay />
       </div>
     </li>
