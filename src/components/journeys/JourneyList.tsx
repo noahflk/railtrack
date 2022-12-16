@@ -1,27 +1,13 @@
 import { useState } from 'react';
 import { useBreakpoint } from 'react-breakout';
 import toast from 'react-hot-toast';
-
-import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { DeleteConfirmModal } from '@/components/journeys/DeleteConfirmModal';
 import { JourneyTable } from '@/components/journeys/JourneyTable';
 import { JourneyCards } from '@/components/journeys/JourneyCards';
 import { trpc } from '@/utils/trpc';
 
-const Placeholder: React.FC = () => (
-  <div className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
-    <div className="w-full animate-pulse space-y-4 p-6 ">
-      <div className="h-8 rounded-md bg-gray-300 "></div>
-      <div className="h-8 rounded-md bg-gray-300 "></div>
-      <div className="h-8 rounded-md bg-gray-300 "></div>
-    </div>
-  </div>
-);
-
 export const JourneyList: React.FC = () => {
   const utils = trpc.useContext();
-
-  const { data: journeys } = trpc.journey.get.useQuery();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<number>();
@@ -34,6 +20,7 @@ export const JourneyList: React.FC = () => {
 
       utils.journey.get.invalidate();
       utils.journey.stats.invalidate();
+      utils.infiniteJourneys.get.invalidate();
     },
     onError: () => {
       toast.error('Unable to delete journey');
@@ -45,16 +32,6 @@ export const JourneyList: React.FC = () => {
     setPendingJourneyDeleteId(journeyId);
   };
 
-  if (!journeys) return <Placeholder />;
-
-  if (journeys.length === 0)
-    return (
-      <div className="pt-12">
-        <EmptyJourneyNotice />
-      </div>
-    );
-
-  const sortedJourneys = journeys.sort((a, b) => b.departureTime.getTime() - a.departureTime.getTime());
 
   return (
     <>
@@ -65,9 +42,9 @@ export const JourneyList: React.FC = () => {
         isLoading={deleteJourneyMutation.isLoading}
       />
       {isDesktop ? (
-        <JourneyTable journeys={sortedJourneys} handleDelete={handleDeleteIntent} />
+        <JourneyTable handleDelete={handleDeleteIntent} />
       ) : (
-        <JourneyCards journeys={journeys} handleDelete={handleDeleteIntent} />
+        <JourneyCards handleDelete={handleDeleteIntent} />
       )}
     </>
   );

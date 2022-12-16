@@ -83,7 +83,12 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
 
   return (
     <li className="space-y-2 py-2 pt-4">
-      <JourneyHeader journey={journey} />
+      <p>
+        <span className="mr-2 inline-flex items-center rounded-full bg-primary px-2.5 py-1 text-sm font-medium text-white">
+          {journey.products[0]}
+        </span>
+        Direction {journey.sections[0]?.journey.to}
+      </p>
       <div className="flex justify-between space-x-2">
         <JourneyStopIndicator className="w-96" journey={journey} />
         <p>
@@ -101,7 +106,12 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
 
   return (
     <li className="space-y-2 py-2 pt-4">
-      <JourneyHeader journey={journey} />
+      <p>
+        <span className="mr-2 inline-flex items-center rounded-full bg-primary px-2.5 py-1 text-sm font-medium text-white">
+          {journey.products[0]}
+        </span>
+        Direction {journey.sections[0]?.journey.to}
+      </p>
       <JourneyStopIndicator className="w-full" journey={journey} />
       <div className="flex justify-between">
         <p>
