@@ -9,7 +9,13 @@ type LogsnagConfig = {
   notify: boolean;
 };
 
-const API_URL = 'https://api.logsnag.com/v1/log';
+type LogsnagInsightConfig = {
+  title: string;
+  value: string | number;
+  icon: string;
+};
+
+const API_URL = 'https://api.logsnag.com/v1';
 const PROJECT_NAME = 'railtrack';
 
 export const log = async (config: LogsnagConfig) => {
@@ -22,7 +28,31 @@ export const log = async (config: LogsnagConfig) => {
   }
 
   axios.post(
-    API_URL,
+    API_URL + '/log',
+    {
+      project: PROJECT_NAME,
+      ...config,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.LOGSNAG_TOKEN}`,
+      },
+    }
+  );
+};
+
+export const insight = async (config: LogsnagInsightConfig) => {
+  const env = process.env.NODE_ENV;
+
+  // don't send logsnag notification in dev environment
+  if (env === 'development') {
+    console.log(config.title, config.value);
+    return;
+  }
+
+  axios.post(
+    API_URL + '/insight',
     {
       project: PROJECT_NAME,
       ...config,
