@@ -12,11 +12,11 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
   return (
     <Transition
       enter="transition duration-100 ease-out"
-      enterFrom="transform -translate-y-1 opacity-0"
-      enterTo="transform translate-y-0 opacity-100"
+      enterFrom="translate-y-[-10px] opacity-0"
+      enterTo="translate-y-0 opacity-100"
       leave="transition duration-75 ease-out"
-      leaveFrom="transform translate-y-0 opacity-100"
-      leaveTo="transform -translate-y-1 opacity-0"
+      leaveFrom="translate-y-0 opacity-100"
+      leaveTo="translate-y-[-10px] opacity-0"
     >
       <Disclosure.Panel>
         <div className="flex flex-col p-5 pt-0 transition">
@@ -33,8 +33,8 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
                     const firstOrLastItem = index === 0 || index === lastItemIndex;
                     return (
                       <div key={index} className="flex">
-                        <ul className="min-w-[40px] [&_li]:mb-1 [&_p]:leading-none">
-                          <li className="space-y-2">
+                        <ul className="flex min-w-[40px] flex-[0_0_3.5em] [&_li]:mb-1 [&_p]:leading-none">
+                          <li className="flex  flex-grow flex-col space-y-2">
                             {pass.arrivalTimestamp && index !== 0 && (
                               <p
                                 className={classNames(
@@ -54,12 +54,14 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
                         </ul>
                         <div
                           className={classNames(
-                            'bullet relative z-[1] mx-14 after:absolute after:left-1/2 after:-ml-[.30rem] after:h-3  after:w-3 after:rounded-full after:bg-gray-800',
+                            'bullet relative z-[1] mx-14 after:absolute after:left-1/2 after:-ml-[.4em] after:h-3  after:w-3 after:rounded-full after:bg-primary',
                             index !== lastItemIndex
-                              ? 'min-h-[80px] before:absolute before:top-1 before:left-1/2 before:h-full before:w-[2px] before:border-[1px] before:border-gray-800 before:bg-gray-800'
-                              : ''
+                              ? 'min-h-[80px] before:absolute before:top-1 before:left-1/2 before:-ml-[.1em] before:h-full before:w-[.13em] before:border-l-[.13em] before:border-solid before:border-primary before:bg-primary'
+                              : '',
+                            index !== 0 ? 'after:top-[15%]' : '', 
                           )}
                         >
+                          {/*TODO: add expand button for journey with a long pass list*/}
                           <div className="-left-[1rem] "></div>
                         </div>
                         <ul>
@@ -80,7 +82,7 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
                 </div>
                 <>
                   {index !== journey.sections.length - 1 && (
-                    <div className="my-8 flex space-x-8 border-t-2 border-gray-200 bg-gray-100 py-3 px-6">
+                    <div className="my-8 flex space-x-8 rounded bg-gray-100 py-3 px-6">
                       <RefreshIcon className="h-6 w-6 text-gray-600" />
                       <p className="text-sm text-gray-600">Train change</p>
                     </div>
