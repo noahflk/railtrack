@@ -15,10 +15,10 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
 
   return (
     <Transition
-      enter="transition duration-700 ease-out"
+      enter="transition duration-100 ease-out"
       enterFrom="translate-y-[-10px] opacity-0"
       enterTo="translate-y-0 opacity-100"
-      leave="transition duration-700 ease-out"
+      leave="transition duration-75 ease-out"
       leaveFrom="translate-y-0 opacity-100"
       leaveTo="translate-y-[-10px] opacity-0"
     >
