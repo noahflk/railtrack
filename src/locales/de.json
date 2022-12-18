@@ -15,7 +15,8 @@
     "stop_one": "Stop",
     "stop_other": "Stops",
     "earlierJourneys": "Früehere Verbindungen",
-    "laterJourneys": "Spätere Verbindungen"
+    "laterJourneys": "Spätere Verbindungen",
+    "trainChange": "Umsteigen"
   },
   "auth": {
     "save": "Speichern",

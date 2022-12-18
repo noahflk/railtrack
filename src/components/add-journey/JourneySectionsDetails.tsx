@@ -1,5 +1,6 @@
 import { Disclosure, Transition } from '@headlessui/react';
 import { RefreshIcon } from '@heroicons/react/outline';
+import { useTranslations } from 'next-intl';
 
 import { type Journey } from '@/types/opendata';
 import { formatDateTime } from '@/utils/formatDateTime';
@@ -10,6 +11,8 @@ type Props = {
 };
 
 export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
+  const t = useTranslations('add');
+
   return (
     <Transition
       enter="transition duration-700 ease-out"
@@ -85,7 +88,7 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
                   {index !== journey.sections.length - 1 && (
                     <div className="my-8 flex space-x-8 rounded bg-gray-100 py-3 px-6">
                       <RefreshIcon className="h-6 w-6 text-gray-600" />
-                      <p className="text-sm text-gray-600">Train change</p>
+                      <p className="text-sm text-gray-600">{t('trainChange')}</p>
                     </div>
                   )}
                 </>
