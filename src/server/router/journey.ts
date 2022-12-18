@@ -5,7 +5,7 @@ import { isBefore, subMinutes } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { z } from 'zod';
 
-import { TRANSPORT_API_URL } from '@/constants';
+import { TRANSPORT_API_URL, APP_TIMEZONE } from '@/constants';
 import { protectedProcedure, router } from '@/server/trpc';
 import type { JourneyIdentifier } from '@/types/journey';
 import type { Journey } from '@/types/opendata';
@@ -40,8 +40,8 @@ const findConnection = async ({
   platform,
 }: JourneyIdentifier): Promise<Journey | undefined> => {
   const bufferedTime = subMinutes(new Date(departureTime), 10);
-  const localBufferedDate = formatInTimeZone(bufferedTime, 'Europe/Zurich', 'yyyy-MM-dd');
-  const localBufferedTime = formatInTimeZone(bufferedTime, 'Europe/Zurich', 'HH:mm');
+  const localBufferedDate = formatInTimeZone(bufferedTime, APP_TIMEZONE, 'yyyy-MM-dd');
+  const localBufferedTime = formatInTimeZone(bufferedTime, APP_TIMEZONE, 'HH:mm');
 
   const { data } = await axios.get<{ connections: Journey[] }>(
     `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${localBufferedDate}&time=${localBufferedTime}&limit=10`
