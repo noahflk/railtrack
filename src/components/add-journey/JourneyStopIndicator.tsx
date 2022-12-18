@@ -3,6 +3,7 @@ import { formatInTimeZone } from 'date-fns-tz';
 
 import type { Journey, Section } from '@/types/opendata';
 import { classNames } from '@/utils/styling';
+import { APP_TIMEZONE } from '@/constants';
 
 type Props = {
   journey: Journey;
@@ -33,7 +34,7 @@ export const JourneyStopIndicator: React.FC<Props> = ({ journey, className = '' 
 
   return (
     <div className={classNames('flex items-center justify-between space-x-4', className)}>
-      <span>{formatInTimeZone(new Date(journey.from.departureTimestamp * 1000), 'Europe/Zurich', 'HH:mm')}</span>
+      <span>{formatInTimeZone(new Date(journey.from.departureTimestamp * 1000), APP_TIMEZONE, 'HH:mm')}</span>
 
       <ol className="flex w-full items-center px-1">
         {closestTwelfethForSectionDuration.map((numerator, index) => {
@@ -48,7 +49,7 @@ export const JourneyStopIndicator: React.FC<Props> = ({ journey, className = '' 
         })}
         <li className="relative -mx-1 h-4 w-4 rounded-full bg-primary"></li>
       </ol>
-      <span>{formatInTimeZone(new Date(journey.to.arrivalTimestamp * 1000), 'Europe/Zurich', 'HH:mm')}</span>
+      <span>{formatInTimeZone(new Date(journey.to.arrivalTimestamp * 1000), APP_TIMEZONE, 'HH:mm')}</span>
     </div>
   );
 };

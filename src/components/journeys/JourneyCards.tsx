@@ -4,6 +4,7 @@ import { formatInTimeZone } from 'date-fns-tz';
 
 import { TextButton } from '@/components/TextButton';
 import type { RouterOutputs } from '@/utils/trpc';
+import { APP_TIMEZONE } from '@/constants';
 
 type CardProps = {
   // the [number] ensures we only get the item type without the array
@@ -28,13 +29,13 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
             </p>
           </div>
           <div>
-            <p className="xs:text-right">{formatInTimeZone(departureTime, 'Europe/Zurich', 'dd.MM.yyyy')}</p>
+            <p className="xs:text-right">{formatInTimeZone(departureTime, APP_TIMEZONE, 'dd.MM.yyyy')}</p>
           </div>
         </div>
         <div>
           <p>
-            {formatInTimeZone(departureTime, 'Europe/Zurich', 'HH:mm')} -{' '}
-            {formatInTimeZone(arrivalTime, 'Europe/Zurich', 'HH:mm')}
+            {formatInTimeZone(departureTime, APP_TIMEZONE, 'HH:mm')} -{' '}
+            {formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')}
           </p>
           <p>
             {t('duration')}: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}

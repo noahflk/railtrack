@@ -1,7 +1,8 @@
 import { formatInTimeZone } from 'date-fns-tz';
-
-import { classNames } from '@/utils/styling';
 import { useTranslations } from 'next-intl';
+
+import { APP_TIMEZONE } from '@/constants';
+import { classNames } from '@/utils/styling';
 
 type Props = {
   departureTime?: string;
@@ -11,7 +12,7 @@ type Props = {
 export const DepartureTimeField: React.FC<Props> = ({ departureTime, setDepartureTime }) => {
   const t = useTranslations('add');
 
-  const showNowButton = departureTime !== formatInTimeZone(new Date(), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm");
+  const showNowButton = departureTime !== formatInTimeZone(new Date(), APP_TIMEZONE, "yyyy-MM-dd'T'HH:mm");
 
   return (
     <div className="w-full">
@@ -21,7 +22,7 @@ export const DepartureTimeField: React.FC<Props> = ({ departureTime, setDepartur
         </label>
         <button
           disabled={!showNowButton}
-          onClick={() => setDepartureTime(formatInTimeZone(new Date(), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm"))}
+          onClick={() => setDepartureTime(formatInTimeZone(new Date(), APP_TIMEZONE, "yyyy-MM-dd'T'HH:mm"))}
           className={classNames(
             'text-sm font-medium',
             showNowButton ? 'text-primary hover:text-primary-light' : 'text-gray-500'
