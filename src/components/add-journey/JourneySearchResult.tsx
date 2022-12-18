@@ -111,7 +111,7 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
   return (
     <Disclosure as="li">
       <Disclosure.Button as={Fragment}>
-        <div className="space-y-2 py-5 px-4">
+        <div className="cursor-pointer space-y-2 py-5 px-4 transition hover:bg-gray-100">
           <JourneyHeader journey={journey} />
           <JourneyStopIndicator className="w-full" journey={journey} />
           <div className="flex justify-between">
