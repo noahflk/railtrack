@@ -1,17 +1,17 @@
+import { Disclosure } from '@headlessui/react';
 import { useTranslations } from 'next-intl';
 import router from 'next/router';
+import { Fragment } from 'react';
 import { useBreakpoint } from 'react-breakout';
 import toast from 'react-hot-toast';
 
-import { JourneyStopIndicator } from '@/components/add-journey/JourneyStopIndicator';
 import { JourneySectionsDetails } from '@/components/add-journey/JourneySectionsDetails';
+import { JourneyStopIndicator } from '@/components/add-journey/JourneyStopIndicator';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Journey } from '@/types/opendata';
 import { parseDurationString } from '@/utils/duration';
 import { trpc } from '@/utils/trpc';
-import { Fragment } from 'react';
-import { Disclosure } from '@headlessui/react';
 
 type Props = {
   journey: Journey;
@@ -28,7 +28,9 @@ const AddButton: React.FC<Props> = ({ journey }) => {
   return (
     <button
       onClick={(e) => {
+        // prevents toggle of detail view when saving
         e.stopPropagation();
+
         mutation.mutate(
           {
             departureStation: journey.from.station.name,

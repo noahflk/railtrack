@@ -1,8 +1,9 @@
+import { Disclosure, Transition } from '@headlessui/react';
+import { RefreshIcon } from '@heroicons/react/outline';
+
 import { type Journey } from '@/types/opendata';
 import { formatDateTime } from '@/utils/formatDateTime';
 import { classNames } from '@/utils/styling';
-import { Disclosure, Transition } from '@headlessui/react';
-import { RefreshIcon } from '@heroicons/react/outline';
 
 type Props = {
   journey: Journey;
@@ -11,10 +12,10 @@ type Props = {
 export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
   return (
     <Transition
-      enter="transition duration-100 ease-out"
+      enter="transition duration-700 ease-out"
       enterFrom="translate-y-[-10px] opacity-0"
       enterTo="translate-y-0 opacity-100"
-      leave="transition duration-75 ease-out"
+      leave="transition duration-700 ease-out"
       leaveFrom="translate-y-0 opacity-100"
       leaveTo="translate-y-[-10px] opacity-0"
     >
@@ -58,7 +59,7 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
                             index !== lastItemIndex
                               ? 'min-h-[80px] before:absolute before:top-1 before:left-1/2 before:-ml-[.1em] before:h-full before:w-[.13em] before:border-l-[.13em] before:border-solid before:border-primary before:bg-primary'
                               : '',
-                            index !== 0 ? 'after:top-[15%]' : '', 
+                            index !== 0 ? 'after:top-[15%]' : ''
                           )}
                         >
                           {/*TODO: add expand button for journey with a long pass list*/}
