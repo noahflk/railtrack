@@ -16,7 +16,7 @@
     "stop_other": "changes",
     "earlierJourneys": "Earlier journeys",
     "laterJourneys": "Later journeys",
-    "trainChange": "Train change"
+    "trainChange": "Change"
   },
   "auth": {
     "save": "Save",
