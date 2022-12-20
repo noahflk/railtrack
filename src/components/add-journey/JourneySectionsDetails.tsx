@@ -12,9 +12,7 @@ type Props = {
 
 export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
-  //journey = journey.sections.filter((section) => section.walk?.duration !== null);
-  //console.log('journey1', journey1);
-  console.log('journey', journey);
+
   return (
     <Transition
       enter="transition duration-100 ease-out"
