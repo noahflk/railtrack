@@ -13,7 +13,7 @@ type Props = {
 export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
   const nonNullJourneys = journey.sections.filter((section) => section.journey);
-
+  
   return (
     <Transition
       enter="transition duration-100 ease-out"
@@ -24,10 +24,18 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
       leaveTo="translate-y-[-10px] opacity-0"
     >
       <Disclosure.Panel>
-        <div className="flex flex-col p-5 pt-0 transition">
+        <div className="flex flex-col px-5 pb-6 transition">
           <span className="mb-6 block w-full border-t border-gray-200" />
           {nonNullJourneys.map((section, index) => (
             <>
+              <div className='mb-5'>
+                <p>
+                  <span className="mr-2 inline-flex items-center rounded-full bg-primary px-2.5 py-1 text-sm font-medium text-white">
+                    {journey.products[index]}
+                  </span>
+                  {t('direction')} {section.journey?.to}
+                </p>
+              </div>
               <div
                 key={index}
                 className="flex min-h-[50px] flex-col  [&_div:first-child_.bullet]:mt-2 [&_div:last-child_.bullet]:border-l-0"
