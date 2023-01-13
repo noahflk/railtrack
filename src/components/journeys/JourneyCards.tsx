@@ -1,14 +1,16 @@
+import { useEffect } from 'react';
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
 import { useInView } from 'react-intersection-observer';
 import { formatInTimeZone } from 'date-fns-tz';
+
 import { trpc } from '@/utils/trpc';
 import { TextButton } from '@/components/TextButton';
 import type { RouterOutputs } from '@/utils/trpc';
-import { useEffect } from 'react';
-import { Placeholder } from '../Placeholder';
-import { EmptyJourneyNotice } from '../EmptyJourneyNotice';
-import { LoadingSpinner } from '../LoadingSpinner';
+import { Placeholder } from '@/components/Placeholder';
+import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { APP_TIMEZONE } from '@/constants';
 
 type CardProps = {
   // the [number] ensures we only get the item type without the array
@@ -32,13 +34,13 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
             </p>
           </div>
           <div>
-            <p className="xs:text-right">{formatInTimeZone(departureTime, 'Europe/Zurich', 'dd.MM.yyyy')}</p>
+            <p className="xs:text-right">{formatInTimeZone(departureTime, APP_TIMEZONE, 'dd.MM.yyyy')}</p>
           </div>
         </div>
         <div>
           <p>
-            {formatInTimeZone(departureTime, 'Europe/Zurich', 'HH:mm')} -{' '}
-            {formatInTimeZone(arrivalTime, 'Europe/Zurich', 'HH:mm')}
+            {formatInTimeZone(departureTime, APP_TIMEZONE, 'HH:mm')} -{' '}
+            {formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')}
           </p>
           <p>
             {t('duration')}: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
@@ -66,53 +68,57 @@ type Props = {
 
 export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
   const { inView, ref } = useInView();
-  const { data: journeys, fetchNextPage, hasNextPage } = trpc.infiniteJourneys.get.useInfiniteQuery(
+  const {
+    data: journeys,
+    fetchNextPage,
+    hasNextPage,
+  } = trpc.infiniteJourneys.get.useInfiniteQuery(
     {
-      limit: 6
+      limit: 6,
     },
     {
-      getNextPageParam: (lastPage) => lastPage.nextCursor ?? false
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? false,
     }
-  )
+  );
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage])
+  }, [inView, hasNextPage]);
 
-  if (!journeys) return <Placeholder />
+  if (!journeys) return <Placeholder />;
 
   let empty = false;
 
   journeys.pages.map((page) => {
     if (page.journeyList.length === 0) {
-      return empty = true;
+      return (empty = true);
     }
-  })
+  });
 
   if (empty) {
     empty = false;
     return (
-      <div className='pt-12'>
+      <div className="pt-12">
         <EmptyJourneyNotice />
       </div>
-    )
+    );
   }
 
   return (
     <ul role="list" className="space-y-4">
       {journeys?.pages.map((page) => {
         return page.journeyList.flatMap((journey) => {
-          return <JourneyCard key={journey.id} journey={journey} handleDelete={handleDelete} />
-        })
+          return <JourneyCard key={journey.id} journey={journey} handleDelete={handleDelete} />;
+        });
       })}
-      {
-        hasNextPage && <>
-          <div ref={ref} className='flex justify-center mt-2'>
+      {hasNextPage && (
+        <>
+          <div ref={ref} className="mt-2 flex justify-center">
             <LoadingSpinner />
           </div>
         </>
-      }
+      )}
     </ul>
-  )
+  );
 };

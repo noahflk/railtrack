@@ -1,8 +1,11 @@
+import { Disclosure } from '@headlessui/react';
 import { useTranslations } from 'next-intl';
 import router from 'next/router';
+import { Fragment } from 'react';
 import { useBreakpoint } from 'react-breakout';
 import toast from 'react-hot-toast';
 
+import { JourneySectionsDetails } from '@/components/add-journey/JourneySectionsDetails';
 import { JourneyStopIndicator } from '@/components/add-journey/JourneyStopIndicator';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
@@ -24,7 +27,10 @@ const AddButton: React.FC<Props> = ({ journey }) => {
 
   return (
     <button
-      onClick={() =>
+      onClick={(e) => {
+        // prevents toggle of detail view when saving
+        e.stopPropagation();
+
         mutation.mutate(
           {
             departureStation: journey.from.station.name,
@@ -47,8 +53,8 @@ const AddButton: React.FC<Props> = ({ journey }) => {
               toast.error(t('journeyAddFailed'));
             },
           }
-        )
-      }
+        );
+      }}
       className="text-small inline-flex justify-center font-medium text-primary hover:text-primary-light"
     >
       {/* invisible means text remains hidden in the background to preserve the button width */}
@@ -82,17 +88,22 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
   return (
-    <li className="space-y-2 py-2 pt-4">
-      <JourneyHeader journey={journey} />
-      <div className="flex justify-between space-x-2">
-        <JourneyStopIndicator className="w-96" journey={journey} />
-        <p>
-          {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')}
-        </p>
-        <p>{parseDurationString(journey.duration)} min</p>
-        <AddButton journey={journey} />
-      </div>
-    </li>
+    <Disclosure as="li">
+      <Disclosure.Button as={Fragment}>
+        <div className="cursor-pointer space-y-3 px-5 py-6 transition hover:bg-gray-100">
+          <JourneyHeader journey={journey} />
+          <div className="flex justify-between space-x-2">
+            <JourneyStopIndicator className="w-96" journey={journey} />
+            <p>
+              {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')}
+            </p>
+            <p>{parseDurationString(journey.duration)} min</p>
+            <AddButton journey={journey} />
+          </div>
+        </div>
+      </Disclosure.Button>
+      <JourneySectionsDetails journey={journey} />
+    </Disclosure>
   );
 };
 
@@ -100,17 +111,22 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
   return (
-    <li className="space-y-2 py-2 pt-4">
-      <JourneyHeader journey={journey} />
-      <JourneyStopIndicator className="w-full" journey={journey} />
-      <div className="flex justify-between">
-        <p>
-          {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
-          {parseDurationString(journey.duration)} min
-        </p>
-        <AddButton journey={journey} />
-      </div>
-    </li>
+    <Disclosure as="li">
+      <Disclosure.Button as={Fragment}>
+        <div className="cursor-pointer space-y-2 py-5 px-4 transition hover:bg-gray-100">
+          <JourneyHeader journey={journey} />
+          <JourneyStopIndicator className="w-full" journey={journey} />
+          <div className="flex justify-between">
+            <p>
+              {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
+              {parseDurationString(journey.duration)} min
+            </p>
+            <AddButton journey={journey} />
+          </div>
+        </div>
+      </Disclosure.Button>
+      <JourneySectionsDetails journey={journey} />
+    </Disclosure>
   );
 };
 

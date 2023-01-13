@@ -45,8 +45,8 @@ model Section {
     destination   String
 
     trainOperator String
-    trainNumber   String
-    trainCategory String
+    trainNumber   String?
+    trainCategory String?
 
     departureStation            String
     departureStationCoordinateX Float

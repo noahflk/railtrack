@@ -21,9 +21,9 @@ export type Section = {
   departure: From;
   arrival: To;
   journey?: {
-    category: string;
     name: string;
-    number: string;
+    category: string | null;
+    number: string | null;
     operator: string;
     to: string;
     passList: Pass[];

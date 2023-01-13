@@ -7,6 +7,7 @@ import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import { useGetJourneys } from '@/hooks/useGetJourneys';
 import type { Journey } from '@/types/opendata';
 import { classNames } from '@/utils/styling';
+import { APP_TIMEZONE } from '@/constants';
 
 const HOUR_AND_HALF_IN_MINUTES = 90;
 const generateJourneyKey = (journey: Journey) => {
@@ -27,18 +28,18 @@ const unionJourneys = (journeys: Journey[], newJourneys: Journey[]) => {
 };
 
 const getEarliestAndLatestDepartureTime = (departureTime: string, journeys?: Journey[]) => {
-  const departureTimeDate = new Date(zonedTimeToUtc(departureTime, 'Europe/Zurich'));
+  const departureTimeDate = new Date(zonedTimeToUtc(departureTime, APP_TIMEZONE));
   const departureTimestamps = (journeys || [])
     .map((journey) => journey.from.departureTimestamp)
     .concat(departureTimeDate.getTime() / 1000);
 
   const minTimestamp = departureTimestamps.length > 0 ? Math.min(...departureTimestamps) : undefined;
   const earliestDepartureTime = minTimestamp
-    ? formatInTimeZone(new Date(minTimestamp * 1000), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm")
+    ? formatInTimeZone(new Date(minTimestamp * 1000), APP_TIMEZONE, "yyyy-MM-dd'T'HH:mm")
     : departureTime;
   const maxTimestamp = departureTimestamps.length > 0 ? Math.max(...departureTimestamps) : undefined;
   const latestDepartureTime = maxTimestamp
-    ? formatInTimeZone(new Date(maxTimestamp * 1000), 'Europe/Zurich', "yyyy-MM-dd'T'HH:mm")
+    ? formatInTimeZone(new Date(maxTimestamp * 1000), APP_TIMEZONE, "yyyy-MM-dd'T'HH:mm")
     : departureTime;
   return { earliestDepartureTime, latestDepartureTime };
 };
@@ -91,13 +92,13 @@ const ResultDisplay: React.FC = () => {
           );
         }}
         className={classNames(
-          'text-sm font-medium',
+          'pl-4 text-sm font-medium md:pl-6',
           isLoading ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
         {t('earlierJourneys')}
       </button>
-      <ul role="list">
+      <ul role="list" className="divide-y">
         {journeys.map((journey) => (
           <JourneySearchResult key={generateJourneyKey(journey)} journey={journey} />
         ))}
@@ -115,7 +116,7 @@ const ResultDisplay: React.FC = () => {
           );
         }}
         className={classNames(
-          'text-sm font-medium',
+          'pl-4 text-sm font-medium md:pl-6',
           isLoading ? 'text-gray-500' : 'text-primary hover:text-primary-light'
         )}
       >
@@ -130,8 +131,8 @@ export const JourneySearchResults: React.FC = () => {
 
   return (
     <li className="divide-gray-200npm col-span-1 divide-y rounded-lg bg-white shadow ">
-      <div className="h-full w-full p-6">
-        <h3 className="text-xl font-semibold text-gray-900">{t('journeys')}</h3>
+      <div className="h-full w-full py-4">
+        <h3 className="pl-4 text-xl font-semibold text-gray-900 md:pl-6">{t('journeys')}</h3>
         <ResultDisplay />
       </div>
     </li>
