@@ -68,6 +68,7 @@ type Props = {
 
 export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
   const { inView, ref } = useInView();
+
   const {
     data: journeys,
     fetchNextPage,
@@ -80,11 +81,12 @@ export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? false,
     }
   );
+
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
   if (!journeys) return <Placeholder />;
 
@@ -114,7 +116,7 @@ export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
       })}
       {hasNextPage && (
         <>
-          <div ref={ref} className="mt-2 flex justify-center">
+          <div ref={ref} className="mt-4 flex justify-center">
             <LoadingSpinner />
           </div>
         </>

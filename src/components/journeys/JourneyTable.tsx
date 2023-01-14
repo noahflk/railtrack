@@ -1,12 +1,13 @@
+import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { format } from 'date-fns';
 import { useInView } from 'react-intersection-observer';
+
 import { trpc } from '@/utils/trpc';
-import { Placeholder } from '../Placeholder';
+import { Placeholder } from '@/components/Placeholder';
 import type { RouterOutputs } from '@/utils/trpc';
-import { useEffect } from 'react';
-import { EmptyJourneyNotice } from '../EmptyJourneyNotice';
-import { LoadingSpinner } from '../LoadingSpinner';
+import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 type RowProps = {
   journey: RouterOutputs['journey']['get'][number];
@@ -50,38 +51,42 @@ type TableProps = {
 
 export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
   const t = useTranslations();
-  const { inView, ref } = useInView()
+  const { inView, ref } = useInView();
 
-  const { data: journeys, fetchNextPage, hasNextPage } = trpc.infiniteJourneys.get.useInfiniteQuery(
+  const {
+    data: journeys,
+    fetchNextPage,
+    hasNextPage,
+  } = trpc.infiniteJourneys.get.useInfiniteQuery(
     {
       limit: 13,
     },
     {
-      getNextPageParam: (lastPage) => lastPage.nextCursor ?? false
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? false,
     }
-  )
+  );
   useEffect(() => {
     if (inView && hasNextPage) {
-      fetchNextPage()
+      fetchNextPage();
     }
-  }, [inView, hasNextPage])
-  if (!journeys) return <Placeholder />
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  if (!journeys) return <Placeholder />;
 
   let empty = false;
 
   journeys.pages.map((page) => {
     if (page.journeyList.length === 0) {
-      return empty = true;
+      return (empty = true);
     }
-  })
+  });
 
   if (empty) {
-    empty = false;
     return (
-      <div className='pt-12'>
+      <div className="pt-12">
         <EmptyJourneyNotice />
       </div>
-    )
+    );
   }
 
   return (
@@ -113,26 +118,21 @@ export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {/* {journeys.map((journey) => (
-                  <JourneyRow journey={journey} key={journey.id} handleDelete={handleDelete} />
-                ))} */}
                 {journeys?.pages.map((page) => {
                   return page.journeyList.flatMap((journey) => {
-                    return <JourneyRow key={journey.id} journey={journey} handleDelete={handleDelete} />
-                  })
+                    return <JourneyRow key={journey.id} journey={journey} handleDelete={handleDelete} />;
+                  });
                 })}
               </tbody>
             </table>
-            {/* TODO: implement pagination, virtual list or something similar */}
-            {/* <TablePagination count={journeys.count} page={journeys.page} /> */}
           </div>
-          {
-            hasNextPage && <>
-              <div ref={ref} className='flex justify-center mt-2'>
+          {hasNextPage && (
+            <>
+              <div ref={ref} className="mt-4 flex justify-center">
                 <LoadingSpinner />
               </div>
             </>
-          }
+          )}
         </div>
       </div>
     </div>

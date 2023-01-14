@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useBreakpoint } from 'react-breakout';
 import toast from 'react-hot-toast';
+
 import { DeleteConfirmModal } from '@/components/journeys/DeleteConfirmModal';
 import { JourneyTable } from '@/components/journeys/JourneyTable';
 import { JourneyCards } from '@/components/journeys/JourneyCards';
@@ -31,7 +32,6 @@ export const JourneyList: React.FC = () => {
     setModalOpen(true);
     setPendingJourneyDeleteId(journeyId);
   };
-
 
   return (
     <>
