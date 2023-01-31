@@ -44,9 +44,19 @@ const findConnection = async ({
   const localBufferedTime = formatInTimeZone(bufferedTime, APP_TIMEZONE, 'HH:mm');
 
   const { data } = await axios.get<{ connections: Journey[] }>(
-    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${localBufferedDate}&time=${localBufferedTime}&limit=10`
+    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${localBufferedDate}&time=05:00&limit=10`
   );
+  console.log('localBufferedDate', localBufferedDate);
+  console.log('localBufferedTime', localBufferedTime);
 
+  const props = { departureStation, arrivalStation, departureTime, platform };
+  console.log('props', props);
+
+  const consoleData = data.connections.map((connection) => ({
+    platform: connection.from.platform,
+    departure: connection.from.departure,
+  }));
+  console.dir(consoleData, { depth: null });
   // ensure we have the desired connection by comparing departure time and platform
   return data.connections.find(
     (connection) => connection.from.platform === platform && connection.from.departure === departureTime
@@ -100,6 +110,7 @@ export const journeyRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      console.log('input', input);
       const journey = await findConnection(input);
 
       if (!journey) {
