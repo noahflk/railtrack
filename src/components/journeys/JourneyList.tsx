@@ -19,9 +19,7 @@ export const JourneyList: React.FC = () => {
     onSettled: () => {
       setModalOpen(false);
 
-      utils.journey.get.invalidate();
-      utils.journey.stats.invalidate();
-      utils.infiniteJourneys.get.invalidate();
+      utils.invalidate();
     },
     onError: () => {
       toast.error('Unable to delete journey');

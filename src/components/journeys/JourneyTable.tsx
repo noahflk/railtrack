@@ -57,7 +57,7 @@ export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
     data: journeys,
     fetchNextPage,
     hasNextPage,
-  } = trpc.infiniteJourneys.get.useInfiniteQuery(
+  } = trpc.journey.getInfinite.useInfiniteQuery(
     {
       limit: 13,
     },
@@ -65,6 +65,7 @@ export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? false,
     }
   );
+
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();

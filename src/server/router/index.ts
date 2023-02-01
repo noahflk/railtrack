@@ -1,9 +1,8 @@
 import { router } from '@/server/trpc';
-import { infiniteJourneys, journeyRouter } from '@/server/router/journey';
+import { journeyRouter } from '@/server/router/journey';
 import { settingsRouter } from '@/server/router/settings';
 
 export const appRouter = router({
-  infiniteJourneys: infiniteJourneys,
   journey: journeyRouter,
   settings: settingsRouter,
 });

@@ -73,7 +73,7 @@ export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
     data: journeys,
     fetchNextPage,
     hasNextPage,
-  } = trpc.infiniteJourneys.get.useInfiniteQuery(
+  } = trpc.journey.getInfinite.useInfiniteQuery(
     {
       limit: 6,
     },
