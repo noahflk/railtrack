@@ -4,13 +4,11 @@ import { AuthWrapper } from '@/components/auth/AuthWrapper';
 import { SetPasswordForm } from '@/components/auth/SetPasswordForm';
 import { getLocaleProps } from '@/utils/locales';
 
-const SetPassword: NextPage = () => {
-  return (
-    <AuthWrapper type="set">
-      <SetPasswordForm />
-    </AuthWrapper>
-  );
-};
+const SetPassword: NextPage = () => (
+  <AuthWrapper type="set">
+    <SetPasswordForm />
+  </AuthWrapper>
+);
 
 export const getServerSideProps = getLocaleProps;
 

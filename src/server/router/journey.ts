@@ -131,15 +131,13 @@ export const journeyRouter = router({
         // ensure we only include sections that have a journey
         if (!section.journey) return [];
 
-        const passes = section.journey.passList.map((pass) => {
-          return {
-            arrivalTime: new Date(pass.arrival),
-            departureTime: new Date(pass.departure),
-            stationName: pass.station.name,
-            stationCoordinateX: pass.station.coordinate.x,
-            stationCoordinateY: pass.station.coordinate.y,
-          };
-        });
+        const passes = section.journey.passList.map((pass) => ({
+          arrivalTime: new Date(pass.arrival),
+          departureTime: new Date(pass.departure),
+          stationName: pass.station.name,
+          stationCoordinateX: pass.station.coordinate.x,
+          stationCoordinateY: pass.station.coordinate.y,
+        }));
 
         return {
           departureTime: new Date(section.departure.departure),

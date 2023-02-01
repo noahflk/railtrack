@@ -1,3 +1,1 @@
-export const roundToOneDecimal = (number: number): number => {
-  return Math.round(number * 10) / 10;
-};
+export const roundToOneDecimal = (number: number): number => Math.round(number * 10) / 10;
