@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { JourneySectionsDetails } from '@/components/add-journey/JourneySectionsDetails';
 import { JourneyStopIndicator } from '@/components/add-journey/JourneyStopIndicator';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { DUPLICATE_JOURNEY } from '@/constants';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Journey } from '@/types/opendata';
 import { parseDurationString } from '@/utils/duration';
@@ -49,7 +50,11 @@ const AddButton: React.FC<Props> = ({ journey }) => {
               utils.journey.get.invalidate();
               utils.journey.stats.invalidate();
             },
-            onError: () => {
+            onError: (error) => {
+              if (error.message === DUPLICATE_JOURNEY) {
+                toast.error(t('journeyAlreadyExists'));
+                return;
+              }
               toast.error(t('journeyAddFailed'));
             },
           }

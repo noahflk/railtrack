@@ -9,6 +9,7 @@
     "journeys": "Verbindungen",
     "journeyAdded": "Verbindung hinzugefügt!",
     "journeyAddFailed": "Verbindung hinzufügen fehlgeschlagen",
+    "journeyAlreadyExists": "Verbindung existiert bereits",
     "searchFor": "Suche nach einer Verbindung",
     "notFound": "Keine Verbindungen gefunden",
     "save": "Speichern",

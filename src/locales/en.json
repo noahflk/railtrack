@@ -9,6 +9,7 @@
     "journeys": "Journeys",
     "journeyAdded": "Journey added!",
     "journeyAddFailed": "Failed to add journey",
+    "journeyAlreadyExists": "Journey already exists",
     "searchFor": "Search for a journey",
     "notFound": "No journeys found",
     "save": "Save",
