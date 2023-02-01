@@ -90,16 +90,9 @@ export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
 
   if (!journeys) return <Placeholder />;
 
-  let empty = false;
+  const hasEmptyJourneyList = journeys.pages.some((page) => page.journeyList.length === 0);
 
-  journeys.pages.map((page) => {
-    if (page.journeyList.length === 0) {
-      return (empty = true);
-    }
-  });
-
-  if (empty) {
-    empty = false;
+  if (hasEmptyJourneyList) {
     return (
       <div className="pt-12">
         <EmptyJourneyNotice />
