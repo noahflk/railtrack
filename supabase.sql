@@ -1,3 +1,6 @@
+-- Executing this file on the Supabase database is optional
+-- Is is only necessary in order to send Logsnag notification in combination with a CRON job hitting /api/cron
+
 create or replace function public.handle_new_user() 
 returns trigger as $$
 begin

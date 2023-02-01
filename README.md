@@ -45,7 +45,7 @@ After cloning the repository, install the dependencies.
 pnpm install
 ```
 
-Set up the local environment variables with your personal Supabase and Mapbox tokens. You must create the database schema in Supabase.
+Set up the local environment variables with your personal Supabase and Mapbox tokens. You must create your own Supabase project and Mapbox account to get these tokens.
 
 ```bash
 cp .env-example .env
