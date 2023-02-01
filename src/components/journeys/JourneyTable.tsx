@@ -118,11 +118,11 @@ export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {journeys?.pages.map((page) => {
-                  return page.journeyList.flatMap((journey) => {
-                    return <JourneyRow key={journey.id} journey={journey} handleDelete={handleDelete} />;
-                  });
-                })}
+                {journeys?.pages.map((page) =>
+                  page.journeyList.flatMap((journey) => (
+                    <JourneyRow key={journey.id} journey={journey} handleDelete={handleDelete} />
+                  ))
+                )}
               </tbody>
             </table>
           </div>

@@ -109,11 +109,11 @@ export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
 
   return (
     <ul role="list" className="space-y-4">
-      {journeys?.pages.map((page) => {
-        return page.journeyList.flatMap((journey) => {
-          return <JourneyCard key={journey.id} journey={journey} handleDelete={handleDelete} />;
-        });
-      })}
+      {journeys?.pages.map((page) =>
+        page.journeyList.flatMap((journey) => (
+          <JourneyCard key={journey.id} journey={journey} handleDelete={handleDelete} />
+        ))
+      )}
       {hasNextPage && (
         <>
           <div ref={ref} className="mt-4 flex justify-center">
