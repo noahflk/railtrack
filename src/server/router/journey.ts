@@ -150,10 +150,10 @@ export const journeyRouter = router({
           arrivalStation: section.arrival.station.name,
           arrivalStationCoordinateX: section.arrival.station.coordinate.x,
           arrivalStationCoordinateY: section.arrival.station.coordinate.y,
-          destination: section.journey.to,
-          trainOperator: section.journey.operator,
-          trainNumber: section.journey.number,
-          trainCategory: section.journey.category,
+          destination: section.journey?.to,
+          trainOperator: section.journey?.operator,
+          trainNumber: section.journey?.number,
+          trainCategory: section.journey?.category,
           passes: {
             create: passes,
           },
@@ -221,6 +221,58 @@ export const journeyRouter = router({
 
     return sortedJourneys;
   }),
+  getInfinite: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.number().nullish(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const limit = input.limit ?? 10;
+      const { cursor } = input;
+      const journeys = await ctx.prisma.journey.findMany({
+        take: limit + 1,
+        where: {
+          userId: ctx.user.id,
+        },
+        cursor: cursor ? { id: cursor } : undefined,
+        orderBy: {
+          id: 'asc',
+        },
+        include: {
+          sections: {
+            include: {
+              passes: true,
+            },
+          },
+        },
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (journeys.length > limit) {
+        const nextItem = journeys.pop();
+        nextCursor = nextItem?.id;
+      }
+
+      const journeyList = journeys.map((journey) => {
+        const departureStation = getDepartureStation(journey.sections);
+        const arrivalStation = getArrivalStation(journey.sections);
+
+        return {
+          ...journey,
+          departureStation: departureStation.name,
+          arrivalStation: arrivalStation.name,
+          departureTime: departureStation.time,
+          arrivalTime: arrivalStation.time,
+          stops: journey.sections.length - 1,
+          distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
+        };
+      });
+      return {
+        journeyList,
+        nextCursor,
+      };
+    }),
   stats: protectedProcedure.query(async ({ ctx }) => {
     const journeys = await ctx.prisma.journey.findMany({
       where: {

@@ -47,8 +47,7 @@ const AddButton: React.FC<Props> = ({ journey }) => {
               router.push('/dashboard');
               clearSearchInfo();
 
-              utils.journey.get.invalidate();
-              utils.journey.stats.invalidate();
+              utils.invalidate();
             },
             onError: (error) => {
               if (error.message === DUPLICATE_JOURNEY) {
