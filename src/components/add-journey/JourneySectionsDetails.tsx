@@ -69,6 +69,7 @@ type JourneySectionsPreviewProps = {
 
 const JourneySectionsPreview: React.FC<JourneySectionsPreviewProps> = ({ passList }) => {
   const [expandPasslist, setExpandPasslist] = useState(false);
+
   const lastItemIndex = passList && passList.length - 1;
 
   return (
@@ -80,7 +81,10 @@ const JourneySectionsPreview: React.FC<JourneySectionsPreviewProps> = ({ passLis
               <JourneyPasslist
                 key={index}
                 pass={pass}
-                extraProps={{ index, firstOrLastItem, lastItemIndex, passListLength: passList.length }}
+                passListLength={passList.length}
+                index={index}
+                lastItemIndex={lastItemIndex}
+                firstOrLastItem={firstOrLastItem}
                 expandPasslist={{ state: expandPasslist, setState: setExpandPasslist }}
               />
             );
@@ -91,7 +95,10 @@ const JourneySectionsPreview: React.FC<JourneySectionsPreviewProps> = ({ passLis
               <JourneyPasslist
                 key={index}
                 pass={pass}
-                extraProps={{ index, firstOrLastItem, lastItemIndex: 1, passListLength: passList?.length }}
+                passListLength={passList?.length ?? 0}
+                index={index}
+                lastItemIndex={1}
+                firstOrLastItem={firstOrLastItem}
                 expandPasslist={{ state: expandPasslist, setState: setExpandPasslist }}
               />
             );
@@ -102,69 +109,72 @@ const JourneySectionsPreview: React.FC<JourneySectionsPreviewProps> = ({ passLis
 
 type JourneyPasslistProps = {
   pass: Pass | undefined;
-  extraProps: {
-    index: number;
-    lastItemIndex: number | undefined;
-    firstOrLastItem: boolean;
-    passListLength: number | undefined;
-  };
+  passListLength: number;
+  index: number;
+  lastItemIndex: number | undefined;
+  firstOrLastItem: boolean;
   expandPasslist: {
     state: boolean;
     setState: Dispatch<SetStateAction<boolean>>;
   };
 };
 
-const JourneyPasslist: React.FC<JourneyPasslistProps> = ({ pass, extraProps, expandPasslist }) => {
-  return (
-    <div className="flex">
-      <ul className="flex min-w-[40px] flex-[0_0_3.5em] [&_li]:mb-1 [&_p]:leading-none">
-        <li className="flex  flex-grow flex-col space-y-2">
-          {pass?.arrivalTimestamp && extraProps.index !== 0 && (
-            <p
-              className={classNames(
-                extraProps.index === extraProps.lastItemIndex ? 'font-semibold' : '',
-                !extraProps.firstOrLastItem ? 'text-gray-500' : ''
-              )}
-            >
-              {formatDateTime(pass.arrivalTimestamp, 'HH:mm')}
-            </p>
-          )}
-          {pass?.departureTimestamp && (
-            <p className={classNames(extraProps.firstOrLastItem ? 'font-semibold' : '')}>
-              {formatDateTime(pass.departureTimestamp, 'HH:mm')}
-            </p>
-          )}
-        </li>
-      </ul>
-      <div
-        className={classNames(
-          'bullet relative z-[1] mx-14 after:absolute after:left-1/2 after:-ml-[.4em] after:h-3  after:w-3 after:rounded-full after:bg-primary',
-          extraProps.index !== extraProps.lastItemIndex
-            ? 'min-h-[90px] before:absolute before:top-1 before:left-1/2 before:-ml-[.1em] before:h-full before:w-[.13em] before:border-l-[.13em] before:border-solid before:border-primary before:bg-primary'
-            : '',
-          extraProps.index !== 0 ? 'after:top-[15%]' : ''
-        )}
-      >
-        {extraProps.passListLength > 2 && extraProps.index === 0 && (
-          <button
-            className="absolute top-[47%] -ml-[.7em] rounded-full border border-primary bg-white  hover:border-primary-light"
-            onClick={() => expandPasslist.setState((state) => !state)}
-          >
-            {expandPasslist.state ? (
-              <MinusSmIcon className="h-5 w-5 text-primary hover:text-primary-light" />
-            ) : (
-              <PlusSmIcon className="h-5 w-5 text-primary hover:text-primary-light" />
+const JourneyPasslist: React.FC<JourneyPasslistProps> = ({
+  pass,
+  index,
+  expandPasslist,
+  passListLength,
+  lastItemIndex,
+  firstOrLastItem,
+}) => (
+  <div className="flex">
+    <ul className="flex min-w-[40px] flex-[0_0_3.5em] [&_li]:mb-1 [&_p]:leading-none">
+      <li className="flex  flex-grow flex-col space-y-2">
+        {pass?.arrivalTimestamp && index !== 0 && (
+          <p
+            className={classNames(
+              index === lastItemIndex ? 'font-semibold' : '',
+              !firstOrLastItem ? 'text-gray-500' : ''
             )}
-          </button>
-        )}
-      </div>
-      <ul>
-        <li className="flex">
-          <p className={classNames('mb-1 leading-none', extraProps.firstOrLastItem ? 'font-semibold' : 'font-normal')}>
-            {pass?.station.name}
+          >
+            {formatDateTime(pass.arrivalTimestamp, 'HH:mm')}
           </p>
-        </li>
-      </ul>
+        )}
+        {pass?.departureTimestamp && (
+          <p className={classNames(firstOrLastItem ? 'font-semibold' : '')}>
+            {formatDateTime(pass.departureTimestamp, 'HH:mm')}
+          </p>
+        )}
+      </li>
+    </ul>
+    <div
+      className={classNames(
+        'bullet relative z-[1] mx-14 after:absolute after:left-1/2 after:-ml-[.4em] after:h-3  after:w-3 after:rounded-full after:bg-primary',
+        index !== lastItemIndex
+          ? 'min-h-[90px] before:absolute before:top-1 before:left-1/2 before:-ml-[.1em] before:h-full before:w-[.13em] before:border-l-[.13em] before:border-solid before:border-primary before:bg-primary'
+          : '',
+        index !== 0 ? 'after:top-[15%]' : ''
+      )}
+    >
+      {passListLength > 2 && index === 0 && (
+        <button
+          className="absolute top-[47%] -ml-[.75em] rounded-full border border-primary bg-white  hover:border-primary-light"
+          onClick={() => expandPasslist.setState((state) => !state)}
+        >
+          {expandPasslist.state ? (
+            <MinusSmIcon className="h-5 w-5 text-primary hover:text-primary-light" />
+          ) : (
+            <PlusSmIcon className="h-5 w-5 text-primary hover:text-primary-light" />
+          )}
+        </button>
+      )}
     </div>
-  );
-};
+    <ul>
+      <li className="flex">
+        <p className={classNames('mb-1 leading-none', firstOrLastItem ? 'font-semibold' : 'font-normal')}>
+          {pass?.station.name}
+        </p>
+      </li>
+    </ul>
+  </div>
+);
