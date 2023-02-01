@@ -114,14 +114,16 @@ export const journeyRouter = router({
         platform: input.platform,
       });
 
+      // check if same user already has this journey
       const existingJourney = await ctx.prisma.journey.findFirst({
         where: {
           identifier,
+          userId: ctx.user.id,
         },
       });
 
       if (existingJourney) {
-        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Journey already exists' });
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'DUPLICATE_JOURNEY' });
       }
 
       const sections = journey.sections.filter((section) => section.journey);
