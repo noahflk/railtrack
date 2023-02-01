@@ -13,6 +13,7 @@ type Props = {
 
 export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
+
   const nonNullJourneys = journey.sections.filter((section) => section.journey);
 
   return (
@@ -144,16 +145,15 @@ const JourneyPasslist: React.FC<JourneyPasslistProps> = ({ pass, extraProps, exp
           extraProps.index !== 0 ? 'after:top-[15%]' : ''
         )}
       >
-        {/*TODO: add expand button for journey with a long pass list*/}
-        {extraProps.passListLength! > 2 && extraProps.index === 0 && (
+        {extraProps.passListLength > 2 && extraProps.index === 0 && (
           <button
-            className="absolute top-[47%] -ml-[.7em] rounded-[50%] border-[1px] border-black bg-white  hover:border-primary"
+            className="absolute top-[47%] -ml-[.7em] rounded-full border border-primary bg-white  hover:border-primary-light"
             onClick={() => expandPasslist.setState((state) => !state)}
           >
             {expandPasslist.state ? (
-              <MinusSmIcon className="h-5 w-5 text-black hover:text-primary" />
+              <MinusSmIcon className="h-5 w-5 text-primary hover:text-primary-light" />
             ) : (
-              <PlusSmIcon className="h-5 w-5 text-black hover:text-primary" />
+              <PlusSmIcon className="h-5 w-5 text-primary hover:text-primary-light" />
             )}
           </button>
         )}
