@@ -5,7 +5,7 @@ import { isBefore, subMinutes } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { z } from 'zod';
 
-import { TRANSPORT_API_URL, APP_TIMEZONE } from '@/constants';
+import { APP_TIMEZONE, DUPLICATE_JOURNEY, TRANSPORT_API_URL } from '@/constants';
 import { protectedProcedure, router } from '@/server/trpc';
 import type { JourneyIdentifier } from '@/types/journey';
 import type { Journey } from '@/types/opendata';
@@ -172,14 +172,16 @@ export const journeyRouter = router({
         platform: input.platform,
       });
 
+      // check if same user already has this journey
       const existingJourney = await ctx.prisma.journey.findFirst({
         where: {
           identifier,
+          userId: ctx.user.id,
         },
       });
 
       if (existingJourney) {
-        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Journey already exists' });
+        throw new TRPCError({ code: 'BAD_REQUEST', message: DUPLICATE_JOURNEY });
       }
 
       const sections = journey.sections.filter((section) => section.journey);
@@ -189,15 +191,13 @@ export const journeyRouter = router({
         // ensure we only include sections that have a journey
         if (!section.journey) return [];
 
-        const passes = section.journey.passList.map((pass) => {
-          return {
-            arrivalTime: new Date(pass.arrival),
-            departureTime: new Date(pass.departure),
-            stationName: pass.station.name,
-            stationCoordinateX: pass.station.coordinate.x,
-            stationCoordinateY: pass.station.coordinate.y,
-          };
-        });
+        const passes = section.journey.passList.map((pass) => ({
+          arrivalTime: new Date(pass.arrival),
+          departureTime: new Date(pass.departure),
+          stationName: pass.station.name,
+          stationCoordinateX: pass.station.coordinate.x,
+          stationCoordinateY: pass.station.coordinate.y,
+        }));
 
         return {
           departureTime: new Date(section.departure.departure),

@@ -26,9 +26,11 @@ model Journey {
     updatedAt  DateTime @updatedAt
     userId     String
     duration   Int
-    identifier String   @unique
+    identifier String
 
     sections Section[]
+
+    @@unique([userId, identifier])
 }
 
 // a journey has multiple sections

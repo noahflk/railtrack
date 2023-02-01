@@ -6,3 +6,6 @@ export const APP_TIMEZONE = 'Europe/Zurich';
 export const LANG_COOKIE_KEY = 'i18n-lang';
 export const SUPPORTED_LANGS = ['en', 'de'];
 export const DEFAULT_LANG = 'en';
+
+// erorr codes
+export const DUPLICATE_JOURNEY = 'DUPLICATE_JOURNEY';

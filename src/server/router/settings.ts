@@ -5,9 +5,9 @@ import { LANG_COOKIE_KEY } from '@/constants';
 import { protectedProcedure, router } from '@/server/trpc';
 
 export const settingsRouter = router({
-  get: protectedProcedure.query(async ({ ctx }) => {
-    return await ctx.prisma.settings.findUnique({ where: { userId: ctx.user.id } });
-  }),
+  get: protectedProcedure.query(
+    async ({ ctx }) => await ctx.prisma.settings.findUnique({ where: { userId: ctx.user.id } })
+  ),
   setLanguage: protectedProcedure.input(z.enum(['en', 'de'])).mutation(async ({ ctx, input }) => {
     const settings = await ctx.prisma.settings.findUnique({ where: { userId: ctx.user.id } });
 

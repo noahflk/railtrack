@@ -10,13 +10,10 @@ import { classNames } from '@/utils/styling';
 import { APP_TIMEZONE } from '@/constants';
 
 const HOUR_AND_HALF_IN_MINUTES = 90;
-const generateJourneyKey = (journey: Journey) => {
-  return `${journey.from.departureTimestamp}${journey.from.departure}${journey.to.arrivalTimestamp}${journey.to.arrival}`;
-};
+const generateJourneyKey = (journey: Journey) =>
+  `${journey.from.departureTimestamp}${journey.from.departure}${journey.to.arrivalTimestamp}${journey.to.arrival}`;
 
-const sortJourneys = (a: Journey, b: Journey) => {
-  return a.from.departureTimestamp - b.from.departureTimestamp;
-};
+const sortJourneys = (a: Journey, b: Journey) => a.from.departureTimestamp - b.from.departureTimestamp;
 
 const unionJourneys = (journeys: Journey[], newJourneys: Journey[]) => {
   const concatJourneys = journeys.concat(newJourneys);

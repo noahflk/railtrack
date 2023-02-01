@@ -1,9 +1,11 @@
+type Pass = {
+  stationCoordinateX: number;
+  stationCoordinateY: number;
+  stationName: string;
+};
+
 type Section = {
-  passes: {
-    stationCoordinateX: number;
-    stationCoordinateY: number;
-    stationName: string;
-  }[];
+  passes: Pass[];
 };
 
 const distance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -52,7 +54,5 @@ export const calculateSectionDistance = (passes: Pass[]) => {
 export const calculateJourneyDistance = (sections: Section[]) => {
   if (sections.length === 0) return 0;
 
-  return sections.reduce((partial, section) => {
-    return partial + calculateSectionDistance(section.passes);
-  }, 0);
+  return sections.reduce((partial, section) => partial + calculateSectionDistance(section.passes), 0);
 };
