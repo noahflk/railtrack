@@ -33,7 +33,7 @@ export type Section = {
   };
 };
 
-type Pass = From & To;
+export type Pass = From & To;
 
 type From = {
   departure: string;
