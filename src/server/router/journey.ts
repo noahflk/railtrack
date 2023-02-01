@@ -5,7 +5,7 @@ import { isBefore, subMinutes } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { z } from 'zod';
 
-import { TRANSPORT_API_URL, APP_TIMEZONE } from '@/constants';
+import { APP_TIMEZONE, DUPLICATE_JOURNEY, TRANSPORT_API_URL } from '@/constants';
 import { protectedProcedure, router } from '@/server/trpc';
 import type { JourneyIdentifier } from '@/types/journey';
 import type { Journey } from '@/types/opendata';
@@ -123,7 +123,7 @@ export const journeyRouter = router({
       });
 
       if (existingJourney) {
-        throw new TRPCError({ code: 'BAD_REQUEST', message: 'DUPLICATE_JOURNEY' });
+        throw new TRPCError({ code: 'BAD_REQUEST', message: DUPLICATE_JOURNEY });
       }
 
       const sections = journey.sections.filter((section) => section.journey);
