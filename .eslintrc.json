@@ -11,6 +11,7 @@
     "@typescript-eslint/no-explicit-any": "error",
     "import/first": "error",
     "import/newline-after-import": "error",
-    "import/no-duplicates": "error"
+    "import/no-duplicates": "error",
+    "arrow-body-style": ["error", "as-needed"]
   }
 }
