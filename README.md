@@ -58,7 +58,7 @@ Push the schema to the database
 npx prisma db push
 ```
 
-Run the app locally
+Run the app locally. If you want to avoid setting up Google Sign Up, log in using email/password.
 
 ```bash
 pnpm run dev
