@@ -8,6 +8,7 @@ import { Placeholder } from '@/components/Placeholder';
 import type { RouterOutputs } from '@/utils/trpc';
 import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { useRouter } from 'next/router';
 
 type RowProps = {
   journey: RouterOutputs['journey']['get'][number];
@@ -15,13 +16,15 @@ type RowProps = {
 };
 
 const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
+  const router = useRouter();
+
   const departureTime = new Date(journey.departureTime);
   const arrivalTime = new Date(journey.arrivalTime);
 
   const t = useTranslations('journeys');
 
   return (
-    <tr>
+    <tr onClick={() => router.push(`/journeys/${journey.id}`)} className="hover:cursor-pointer hover:bg-gray-50">
       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
         {format(departureTime, 'dd.MM.yyyy')}
       </td>

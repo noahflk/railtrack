@@ -1,11 +1,20 @@
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 
-const JourneyView: NextPage = () => {
-  const router = useRouter();
-  const { journey } = router.query;
+import { JourneyDetailView } from '@/components/journeys/JourneyDetailView';
+import { Wrapper } from '@/components/Wrapper';
+import { getLocaleProps } from '@/utils/locales';
 
-  return <p>Journey: {journey}</p>;
+const JourneyDetail: NextPage = () => {
+  const t = useTranslations();
+
+  return (
+    <Wrapper title={t('navigation.journeys')}>
+      <JourneyDetailView />
+    </Wrapper>
+  );
 };
 
-export default JourneyView;
+export const getServerSideProps = getLocaleProps;
+
+export default JourneyDetail;
