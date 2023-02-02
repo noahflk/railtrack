@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import { useTranslations } from 'next-intl';
 
-import { JourneyDetailView } from '@/components/journeys/JourneyDetailView';
 import { Wrapper } from '@/components/Wrapper';
 import { getLocaleProps } from '@/utils/locales';
+import { JourneyDetailView } from '@/components/journey-detail/JourneyDetailView';
 
 const JourneyDetail: NextPage = () => {
   const t = useTranslations();

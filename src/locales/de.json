@@ -51,6 +51,13 @@
     "hour_one": "Stunde",
     "hour_other": "Stunden"
   },
+  "journeyDetail": {
+    "distance": "Gereiste Distanz",
+    "time": "Reisezeit",
+    "total": "Anzahl Segmente",
+    "hour_one": "Stunde",
+    "hour_other": "Stunden"
+  },
   "journeys": {
     "date": "Datum",
     "distance": "Distanz",

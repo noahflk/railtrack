@@ -303,6 +303,44 @@ export const journeyRouter = router({
         nextCursor,
       };
     }),
+  singleJourneyStats: protectedProcedure.input(z.number()).query(async ({ ctx, input }) => {
+    const journey = await ctx.prisma.journey.findUnique({
+      where: {
+        id: input,
+      },
+      select: {
+        userId: true,
+        duration: true,
+        sections: {
+          select: {
+            passes: {
+              select: {
+                stationCoordinateX: true,
+                stationCoordinateY: true,
+                stationName: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    // return not found if journey does not exist
+    if (!journey || journey.userId !== ctx.user.id) {
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Journey not found' });
+    }
+
+    const distance = calculateJourneyDistance(journey.sections);
+
+    const coordinates = [{ sections: journey.sections }];
+
+    return {
+      distance: roundToOneDecimal(distance),
+      count: journey.sections.length + 1,
+      coordinates,
+      duration: roundToOneDecimal(journey.duration / 60),
+    };
+  }),
   stats: protectedProcedure.query(async ({ ctx }) => {
     const journeys = await ctx.prisma.journey.findMany({
       where: {

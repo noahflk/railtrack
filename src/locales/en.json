@@ -51,6 +51,13 @@
     "hour_one": "hour",
     "hour_other": "hours"
   },
+  "journeyDetail": {
+    "distance": "Distance travelled",
+    "time": "Time spent travelling",
+    "total": "Total segments",
+    "hour_one": "hour",
+    "hour_other": "hours"
+  },
   "journeys": {
     "date": "Date",
     "distance": "Distance",

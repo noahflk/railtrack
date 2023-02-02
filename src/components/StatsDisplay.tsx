@@ -1,13 +1,17 @@
 import { ChartBarIcon, ClockIcon, GlobeIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
 
-import { Stat } from '@/components/dashboard/Stat';
-import { trpc } from '@/utils/trpc';
+import { Stat } from '@/components/Stat';
+import { type RouterOutputs } from '@/utils/trpc';
 
-export const StatsDisplay: React.FC = () => {
-  const { data: stats } = trpc.journey.stats.useQuery();
+type Props = {
+  type: 'dashboard' | 'journeyDetail';
+  // doesn't matter if we take singleJourneyStats or stats, they have the same type
+  stats: RouterOutputs['journey']['singleJourneyStats'] | undefined;
+};
 
-  const t = useTranslations('dashboard');
+export const StatsDisplay: React.FC<Props> = ({ type, stats }) => {
+  const t = useTranslations(type);
 
   return (
     <ul role="list" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
