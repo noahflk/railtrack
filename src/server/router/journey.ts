@@ -336,7 +336,7 @@ export const journeyRouter = router({
 
     return {
       distance: roundToOneDecimal(distance),
-      count: journey.sections.length + 1,
+      count: journey.sections.length,
       coordinates,
       duration: roundToOneDecimal(journey.duration / 60),
     };
