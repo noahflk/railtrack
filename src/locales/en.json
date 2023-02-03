@@ -56,7 +56,8 @@
     "time": "Time spent travelling",
     "total": "Total segments",
     "hour_one": "hour",
-    "hour_other": "hours"
+    "hour_other": "hours",
+    "sections": "Sections"
   },
   "journeys": {
     "date": "Date",

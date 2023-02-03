@@ -56,7 +56,8 @@
     "time": "Reisezeit",
     "total": "Anzahl Segmente",
     "hour_one": "Stunde",
-    "hour_other": "Stunden"
+    "hour_other": "Stunden",
+    "sections": "Segmente"
   },
   "journeys": {
     "date": "Datum",
