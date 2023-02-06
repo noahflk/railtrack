@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-import { useTranslations } from 'next-intl';
 import { format } from 'date-fns';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { trpc } from '@/utils/trpc';
-import { Placeholder } from '@/components/Placeholder';
-import type { RouterOutputs } from '@/utils/trpc';
 import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
-import { useRouter } from 'next/router';
+import { Placeholder } from '@/components/Placeholder';
+import type { RouterOutputs } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 type RowProps = {
   journey: RouterOutputs['journey']['get'][number];
@@ -23,10 +23,16 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
 
   const t = useTranslations('journeys');
 
-  console.log(journey);
-
   return (
-    <tr onClick={() => router.push(`/journeys/${journey.uuid}`)} className="hover:cursor-pointer hover:bg-gray-50">
+    <tr
+      onClick={(event) => {
+        // if the delete button was clicked, don't navigate to the journey
+        if ((event.target as HTMLInputElement).id !== 'delete-button') {
+          router.push(`/journeys/${journey.uuid}`);
+        }
+      }}
+      className="hover:cursor-pointer hover:bg-gray-50"
+    >
       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
         {format(departureTime, 'dd.MM.yyyy')}
       </td>
@@ -42,7 +48,11 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
       </td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{journey.stops}</td>
       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-        <button onClick={() => handleDelete(journey.id)} className="text-primary hover:text-primary-light">
+        <button
+          onClick={() => handleDelete(journey.id)}
+          className="text-primary hover:text-primary-light"
+          id="delete-button"
+        >
           {t('delete')}
         </button>
       </td>

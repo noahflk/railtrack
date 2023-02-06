@@ -1,16 +1,15 @@
-import { useEffect } from 'react';
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
-import { useTranslations } from 'next-intl';
-import { useInView } from 'react-intersection-observer';
 import { formatInTimeZone } from 'date-fns-tz';
+import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 
-import { trpc } from '@/utils/trpc';
-import { TextButton } from '@/components/TextButton';
-import type { RouterOutputs } from '@/utils/trpc';
-import { Placeholder } from '@/components/Placeholder';
 import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { Placeholder } from '@/components/Placeholder';
 import { APP_TIMEZONE } from '@/constants';
+import type { RouterOutputs } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 type CardProps = {
   // the [number] ensures we only get the item type without the array
@@ -25,7 +24,15 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
 
   return (
     <li className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
-      <a href={`/journeys/${journey.uuid}`}>
+      <a
+        href={`/journeys/${journey.uuid}`}
+        onClick={(event) => {
+          // if the delete button was clicked, don't navigate to the journey
+          if ((event.target as HTMLInputElement).id === 'delete-button') {
+            event.preventDefault();
+          }
+        }}
+      >
         <div className="w-full p-6">
           <div className="mb-2 grid flex-1 grid-cols-1 gap-2 truncate font-semibold text-gray-900 xs:grid-cols-2">
             <div>
@@ -55,7 +62,13 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
               {journey.stops} {t(journey.stops === 1 ? 'stops_one' : 'stops_other')}
             </p>
             <div className="justify-end xs:flex">
-              <TextButton onClick={() => handleDelete(journey.id)}>{t('delete')}</TextButton>
+              <button
+                onClick={() => handleDelete(journey.id)}
+                className="text-primary hover:text-primary-light"
+                id="delete-button"
+              >
+                {t('delete')}
+              </button>
             </div>
           </div>
         </div>
