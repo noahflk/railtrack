@@ -177,8 +177,6 @@ export const journeyRouter = router({
     }),
   get: protectedProcedure.input(z.optional(z.number())).query(async ({ ctx, input }) => {
     const journeys = await ctx.prisma.journey.findMany({
-      // this limits the number of returned `journeys` if provided
-      // otherwise all will be returned
       where: {
         userId: ctx.user.id,
       },
@@ -220,6 +218,47 @@ export const journeyRouter = router({
     }
 
     return sortedJourneys;
+  }),
+  getOne: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    const journey = await ctx.prisma.journey.findFirst({
+      where: {
+        uuid: input,
+        userId: ctx.user.id,
+      },
+      include: {
+        sections: {
+          include: {
+            passes: true,
+          },
+        },
+      },
+    });
+
+    // return not found if journey does not exist
+    if (!journey || journey.userId !== ctx.user.id) {
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Journey not found' });
+    }
+
+    const departureStation = getDepartureStation(journey.sections);
+    const arrivalStation = getArrivalStation(journey.sections);
+
+    const sortedSections = journey.sections.sort((sectionA, sectionB) => {
+      if (isBefore(sectionA.departureTime, sectionB.departureTime)) return -1;
+      if (isBefore(sectionB.departureTime, sectionA.departureTime)) return 1;
+
+      return 0;
+    });
+
+    return {
+      ...journey,
+      sections: sortedSections,
+      departureStation: departureStation.name,
+      arrivalStation: arrivalStation.name,
+      departureTime: departureStation.time,
+      arrivalTime: arrivalStation.time,
+      stops: journey.sections.length - 1,
+      distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
+    };
   }),
   getInfinite: protectedProcedure
     .input(
@@ -283,6 +322,46 @@ export const journeyRouter = router({
         nextCursor,
       };
     }),
+  singleJourneyStats: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    const journey = await ctx.prisma.journey.findFirst({
+      where: {
+        uuid: input,
+        userId: ctx.user.id,
+      },
+      select: {
+        userId: true,
+        duration: true,
+        sections: {
+          select: {
+            passes: {
+              select: {
+                stationCoordinateX: true,
+                stationCoordinateY: true,
+                stationName: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    // return not found if journey does not exist
+    if (!journey || journey.userId !== ctx.user.id) {
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Journey not found' });
+    }
+
+    const distance = calculateJourneyDistance(journey.sections);
+
+    const coordinates = [{ sections: journey.sections }];
+
+    return {
+      distance: roundToOneDecimal(distance),
+      // number of stops
+      count: journey.sections.length - 1,
+      coordinates,
+      duration: roundToOneDecimal(journey.duration / 60),
+    };
+  }),
   stats: protectedProcedure.query(async ({ ctx }) => {
     const journeys = await ctx.prisma.journey.findMany({
       where: {

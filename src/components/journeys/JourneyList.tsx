@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useBreakpoint } from 'react-breakout';
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 import { DeleteConfirmModal } from '@/components/journeys/DeleteConfirmModal';
 import { JourneyTable } from '@/components/journeys/JourneyTable';
@@ -14,6 +15,12 @@ export const JourneyList: React.FC = () => {
   const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<number>();
 
   const isDesktop = useBreakpoint('md');
+  const t = useTranslations();
+
+  const handleDeleteIntent = (journeyId: number) => {
+    setModalOpen(true);
+    setPendingJourneyDeleteId(journeyId);
+  };
 
   const deleteJourneyMutation = trpc.journey.delete.useMutation({
     onSettled: () => {
@@ -22,14 +29,9 @@ export const JourneyList: React.FC = () => {
       utils.invalidate();
     },
     onError: () => {
-      toast.error('Unable to delete journey');
+      toast.error(t('journeys.deleteJourneyError'));
     },
   });
-
-  const handleDeleteIntent = (journeyId: number) => {
-    setModalOpen(true);
-    setPendingJourneyDeleteId(journeyId);
-  };
 
   return (
     <>

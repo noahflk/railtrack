@@ -10,7 +10,7 @@ const Settings: NextPage = () => {
   const t = useTranslations();
 
   return (
-    <Wrapper title={t('navigation.addJourney')}>
+    <Wrapper title={t('navigation.settings')}>
       <div className="space-y-6">
         <Account />
         <Support />

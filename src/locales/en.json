@@ -1,6 +1,8 @@
 {
   "departure": "From",
-  "arrival": "To",
+  "arrival": "To",  
+  "emptyJourneys": "No journeys yet",
+  "addJourney": "Add a new journey",
   "add": {
     "time": "Departure time",
     "direction": "Direction",
@@ -51,6 +53,15 @@
     "hour_one": "hour",
     "hour_other": "hours"
   },
+  "journeyDetail": {
+    "distance": "Distance travelled",
+    "unableToLoadJourney": "Unable to load journey",
+    "time": "Time spent travelling",
+    "total": "Stops",
+    "hour_one": "hour",
+    "hour_other": "hours",
+    "sections": "Sections"
+  },
   "journeys": {
     "date": "Date",
     "distance": "Distance",
@@ -63,7 +74,8 @@
     "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
     "cancel": "Cancel",
     "minutes_one": "minute",
-    "minutes_other": "minutes"
+    "minutes_other": "minutes",
+    "deleteJourneyError": "Unable to delete journey"
   },
   "navigation": {
     "dashboard": "Dashboard",

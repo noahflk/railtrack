@@ -29,7 +29,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
     { name: t('settings'), href: '/settings', icon: CogIcon },
   ];
 
-  const currentItem = navigation.find((item) => item.href === pathname);
+  const currentItem = navigation.find((item) => pathname.startsWith(item.href));
 
   return (
     <>
@@ -130,7 +130,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
                   href={item.href}
                   passHref
                   className={classNames(
-                    item.href === pathname
+                    pathname.startsWith(item.href)
                       ? 'bg-gray-100 text-gray-900'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                     'group flex items-center rounded-md px-2 py-2 text-sm font-medium'

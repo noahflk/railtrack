@@ -1,16 +1,15 @@
-import { useEffect } from 'react';
 import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
-import { useTranslations } from 'next-intl';
-import { useInView } from 'react-intersection-observer';
 import { formatInTimeZone } from 'date-fns-tz';
+import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 
-import { trpc } from '@/utils/trpc';
-import { TextButton } from '@/components/TextButton';
-import type { RouterOutputs } from '@/utils/trpc';
-import { Placeholder } from '@/components/Placeholder';
 import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { Placeholder } from '@/components/Placeholder';
 import { APP_TIMEZONE } from '@/constants';
+import type { RouterOutputs } from '@/utils/trpc';
+import { trpc } from '@/utils/trpc';
 
 type CardProps = {
   // the [number] ensures we only get the item type without the array
@@ -25,39 +24,51 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
 
   return (
     <li className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
-      <div className="w-full p-6">
-        <div className="mb-2 grid flex-1 grid-cols-1 gap-2 truncate font-semibold text-gray-900 xs:grid-cols-2">
-          <div>
-            <p>
+      <a
+        href={`/journeys/${journey.uuid}`}
+        onClick={(event) => {
+          // if the delete button was clicked, don't navigate to the journey
+          if ((event.target as HTMLInputElement).id === 'delete-button') {
+            event.preventDefault();
+          }
+        }}
+      >
+        <div className="w-full p-6">
+          <div className="mb-2 flex-1 font-semibold text-gray-900">
+            <p className="break-all">
               {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" />{' '}
               {journey.arrivalStation}
             </p>
+            <p>{formatInTimeZone(departureTime, APP_TIMEZONE, 'dd.MM.yyyy')}</p>
           </div>
           <div>
-            <p className="xs:text-right">{formatInTimeZone(departureTime, APP_TIMEZONE, 'dd.MM.yyyy')}</p>
+            <p>
+              {formatInTimeZone(departureTime, APP_TIMEZONE, 'HH:mm')} -{' '}
+              {formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')}
+            </p>
+            <p>
+              {t('duration')}: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
+            </p>
+            <p>
+              {t('distance')}: {journey.distance} km{' '}
+            </p>
+          </div>
+          <div className="grid flex-1 grid-cols-1 gap-2 truncate xs:grid-cols-2">
+            <p>
+              {journey.stops} {t(journey.stops === 1 ? 'stops_one' : 'stops_other')}
+            </p>
+            <div className="justify-end xs:flex">
+              <button
+                onClick={() => handleDelete(journey.id)}
+                className="text-primary hover:text-primary-light"
+                id="delete-button"
+              >
+                {t('delete')}
+              </button>
+            </div>
           </div>
         </div>
-        <div>
-          <p>
-            {formatInTimeZone(departureTime, APP_TIMEZONE, 'HH:mm')} -{' '}
-            {formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')}
-          </p>
-          <p>
-            {t('duration')}: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
-          </p>
-          <p>
-            {t('distance')}: {journey.distance} km{' '}
-          </p>
-        </div>
-        <div className="grid flex-1 grid-cols-1 gap-2 truncate xs:grid-cols-2">
-          <p>
-            {journey.stops} {t(journey.stops === 1 ? 'stops_one' : 'stops_other')}
-          </p>
-          <div className="justify-end xs:flex">
-            <TextButton onClick={() => handleDelete(journey.id)}>{t('delete')}</TextButton>
-          </div>
-        </div>
-      </div>
+      </a>
     </li>
   );
 };

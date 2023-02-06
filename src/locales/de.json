@@ -1,6 +1,8 @@
 {
   "departure": "Von",
   "arrival": "Nach",
+  "emptyJourneys": "Noch keine Verbindungen",
+  "addJourney": "Verbindung hinzufügen",
   "add": {
     "time": "Abfahrtszeit",
     "direction": "Richtung",
@@ -51,6 +53,15 @@
     "hour_one": "Stunde",
     "hour_other": "Stunden"
   },
+  "journeyDetail": {
+    "distance": "Gereiste Distanz",
+    "unableToLoadJourney": "Reise konnte nicht geladen werden",
+    "time": "Reisezeit",
+    "total": "Anzahl Stops",
+    "hour_one": "Stunde",
+    "hour_other": "Stunden",
+    "sections": "Segmente"
+  },
   "journeys": {
     "date": "Datum",
     "distance": "Distanz",
@@ -63,7 +74,8 @@
     "deleteConfirm": "Möchtest du diese Reise löschen? Dies kann nicht rückgängig gemacht werden.",
     "cancel": "Abbrechen",
     "minutes_one": "Minute",
-    "minutes_other": "Minuten"
+    "minutes_other": "Minuten",
+    "deleteJourneyError": "Reise konnte nicht gelöscht werden"
   },
   "navigation": {
     "dashboard": "Dashboard",
