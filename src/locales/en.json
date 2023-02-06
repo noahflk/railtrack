@@ -54,7 +54,7 @@
   "journeyDetail": {
     "distance": "Distance travelled",
     "time": "Time spent travelling",
-    "total": "Total sections",
+    "total": "Stops",
     "hour_one": "hour",
     "hour_other": "hours",
     "sections": "Sections"

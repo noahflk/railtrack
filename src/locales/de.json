@@ -54,7 +54,7 @@
   "journeyDetail": {
     "distance": "Gereiste Distanz",
     "time": "Reisezeit",
-    "total": "Anzahl Segmente",
+    "total": "Anzahl Stops",
     "hour_one": "Stunde",
     "hour_other": "Stunden",
     "sections": "Segmente"

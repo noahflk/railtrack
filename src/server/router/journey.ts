@@ -354,7 +354,8 @@ export const journeyRouter = router({
 
     return {
       distance: roundToOneDecimal(distance),
-      count: journey.sections.length,
+      // number of stops
+      count: journey.sections.length - 1,
       coordinates,
       duration: roundToOneDecimal(journey.duration / 60),
     };
