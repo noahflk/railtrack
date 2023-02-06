@@ -13,3 +13,9 @@ $$ language plpgsql security definer;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+
+
+-- Schema to populate existing journeys with random UUIDs if they don't have one yet
+UPDATE "Journey" SET uuid=gen_random_uuid ();
+-- Make uuid field required afterwards
