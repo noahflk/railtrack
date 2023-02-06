@@ -25,39 +25,41 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
 
   return (
     <li className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
-      <div className="w-full p-6">
-        <div className="mb-2 grid flex-1 grid-cols-1 gap-2 truncate font-semibold text-gray-900 xs:grid-cols-2">
+      <a href={`/journeys/${journey.uuid}`}>
+        <div className="w-full p-6">
+          <div className="mb-2 grid flex-1 grid-cols-1 gap-2 truncate font-semibold text-gray-900 xs:grid-cols-2">
+            <div>
+              <p>
+                {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" />{' '}
+                {journey.arrivalStation}
+              </p>
+            </div>
+            <div>
+              <p className="xs:text-right">{formatInTimeZone(departureTime, APP_TIMEZONE, 'dd.MM.yyyy')}</p>
+            </div>
+          </div>
           <div>
             <p>
-              {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" />{' '}
-              {journey.arrivalStation}
+              {formatInTimeZone(departureTime, APP_TIMEZONE, 'HH:mm')} -{' '}
+              {formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')}
+            </p>
+            <p>
+              {t('duration')}: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
+            </p>
+            <p>
+              {t('distance')}: {journey.distance} km{' '}
             </p>
           </div>
-          <div>
-            <p className="xs:text-right">{formatInTimeZone(departureTime, APP_TIMEZONE, 'dd.MM.yyyy')}</p>
+          <div className="grid flex-1 grid-cols-1 gap-2 truncate xs:grid-cols-2">
+            <p>
+              {journey.stops} {t(journey.stops === 1 ? 'stops_one' : 'stops_other')}
+            </p>
+            <div className="justify-end xs:flex">
+              <TextButton onClick={() => handleDelete(journey.id)}>{t('delete')}</TextButton>
+            </div>
           </div>
         </div>
-        <div>
-          <p>
-            {formatInTimeZone(departureTime, APP_TIMEZONE, 'HH:mm')} -{' '}
-            {formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')}
-          </p>
-          <p>
-            {t('duration')}: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
-          </p>
-          <p>
-            {t('distance')}: {journey.distance} km{' '}
-          </p>
-        </div>
-        <div className="grid flex-1 grid-cols-1 gap-2 truncate xs:grid-cols-2">
-          <p>
-            {journey.stops} {t(journey.stops === 1 ? 'stops_one' : 'stops_other')}
-          </p>
-          <div className="justify-end xs:flex">
-            <TextButton onClick={() => handleDelete(journey.id)}>{t('delete')}</TextButton>
-          </div>
-        </div>
-      </div>
+      </a>
     </li>
   );
 };
