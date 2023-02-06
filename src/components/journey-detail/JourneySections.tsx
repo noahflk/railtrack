@@ -25,7 +25,7 @@ type Props = {
 const Section: React.FC<Props> = ({ section }) => (
   <li className="flex items-center justify-between py-1">
     <p>
-      <span className="font-medium">{formatInTimeZone(section.departureTime, APP_TIMEZONE, 'hh:mm')} - </span>
+      <span className="font-medium">{formatInTimeZone(section.departureTime, APP_TIMEZONE, 'HH:mm')} - </span>
       <span>{section.departureStation}</span> <ArrowNarrowRightIcon className="inline w-6 text-primary" />{' '}
       <span>{section.arrivalStation}</span>
     </p>
