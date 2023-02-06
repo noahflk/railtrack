@@ -34,16 +34,12 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
         }}
       >
         <div className="w-full p-6">
-          <div className="mb-2 grid flex-1 grid-cols-1 gap-2 truncate font-semibold text-gray-900 xs:grid-cols-2">
-            <div>
-              <p>
-                {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" />{' '}
-                {journey.arrivalStation}
-              </p>
-            </div>
-            <div>
-              <p className="xs:text-right">{formatInTimeZone(departureTime, APP_TIMEZONE, 'dd.MM.yyyy')}</p>
-            </div>
+          <div className="mb-2 flex-1 font-semibold text-gray-900">
+            <p className="break-all">
+              {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" />{' '}
+              {journey.arrivalStation}
+            </p>
+            <p>{formatInTimeZone(departureTime, APP_TIMEZONE, 'dd.MM.yyyy')}</p>
           </div>
           <div>
             <p>
