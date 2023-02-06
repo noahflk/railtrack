@@ -53,6 +53,7 @@
   },
   "journeyDetail": {
     "distance": "Gereiste Distanz",
+    "unableToLoadJourney": "Reise konnte nicht geladen werden",
     "time": "Reisezeit",
     "total": "Anzahl Stops",
     "hour_one": "Stunde",

@@ -53,6 +53,7 @@
   },
   "journeyDetail": {
     "distance": "Distance travelled",
+    "unableToLoadJourney": "Unable to load journey",
     "time": "Time spent travelling",
     "total": "Stops",
     "hour_one": "hour",
