@@ -23,8 +23,10 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
 
   const t = useTranslations('journeys');
 
+  console.log(journey);
+
   return (
-    <tr onClick={() => router.push(`/journeys/${journey.id}`)} className="hover:cursor-pointer hover:bg-gray-50">
+    <tr onClick={() => router.push(`/journeys/${journey.uuid}`)} className="hover:cursor-pointer hover:bg-gray-50">
       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
         {format(departureTime, 'dd.MM.yyyy')}
       </td>

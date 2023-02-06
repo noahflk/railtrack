@@ -55,7 +55,7 @@ const getGeoData = (journeys: Coordinates[]) => ({
   features: getDeduplicatedFeatures(journeys),
 });
 
-export const Map: React.FC<{ id: number }> = ({ id }) => {
+export const Map: React.FC<{ id: string }> = ({ id }) => {
   const mapRef = useRef<MapRef>(null);
 
   const { data: stats } = trpc.journey.singleJourneyStats.useQuery(id, {

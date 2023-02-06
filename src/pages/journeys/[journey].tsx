@@ -12,7 +12,7 @@ const JourneyDetail: NextPage = () => {
   const router = useRouter();
   const t = useTranslations();
 
-  const { journey: journeyId } = router.query;
+  const journeyId = typeof router.query.journey === 'string' ? router.query.journey : undefined;
 
   return (
     <Wrapper title={t('navigation.journeys')}>
@@ -20,7 +20,7 @@ const JourneyDetail: NextPage = () => {
       <div className="mt-4 grid grid-cols-1 gap-y-6 xl:grid-cols-3 xl:gap-6">
         <Sections />
         <div className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow lg:col-span-2">
-          <Map id={Number(journeyId)} />
+          <Map id={journeyId ?? ''} />
         </div>
       </div>
     </Wrapper>

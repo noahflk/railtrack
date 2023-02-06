@@ -36,9 +36,9 @@ const Section: React.FC<Props> = ({ section }) => (
 export const Sections: React.FC = () => {
   const router = useRouter();
 
-  const { journey: journeyId } = router.query;
+  const journeyId = typeof router.query.journey === 'string' ? router.query.journey : undefined;
 
-  const { data: journey } = trpc.journey.getOne.useQuery(Number(journeyId) ?? 0);
+  const { data: journey } = trpc.journey.getOne.useQuery(journeyId ?? '');
 
   if (!journey)
     return (

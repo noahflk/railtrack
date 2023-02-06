@@ -219,10 +219,11 @@ export const journeyRouter = router({
 
     return sortedJourneys;
   }),
-  getOne: protectedProcedure.input(z.number()).query(async ({ ctx, input }) => {
-    const journey = await ctx.prisma.journey.findUnique({
+  getOne: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    const journey = await ctx.prisma.journey.findFirst({
       where: {
-        id: input,
+        uuid: input,
+        userId: ctx.user.id,
       },
       include: {
         sections: {
@@ -321,10 +322,11 @@ export const journeyRouter = router({
         nextCursor,
       };
     }),
-  singleJourneyStats: protectedProcedure.input(z.number()).query(async ({ ctx, input }) => {
-    const journey = await ctx.prisma.journey.findUnique({
+  singleJourneyStats: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    const journey = await ctx.prisma.journey.findFirst({
       where: {
-        id: input,
+        uuid: input,
+        userId: ctx.user.id,
       },
       select: {
         userId: true,

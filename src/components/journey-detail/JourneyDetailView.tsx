@@ -15,26 +15,24 @@ export const JourneyDetailView: React.FC = () => {
   const utils = trpc.useContext();
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<number>();
+  const [pendingJourneyDeleteId, setPendingJourneyDeleteId] = useState<string>();
 
   const t = useTranslations();
 
-  const { journey: journeyId } = router.query;
+  const journeyId = typeof router.query.journey === 'string' ? router.query.journey : undefined;
 
-  const journeyIdNumber = Number(journeyId);
-
-  const { data: journey } = trpc.journey.getOne.useQuery(journeyIdNumber);
-  const { data: stats } = trpc.journey.singleJourneyStats.useQuery(journeyIdNumber);
+  const { data: journey } = trpc.journey.getOne.useQuery(journeyId ?? '');
+  const { data: stats } = trpc.journey.singleJourneyStats.useQuery(journeyId ?? '');
 
   const handleDeleteIntent = () => {
     // we only go forward with the delete if we have a valid journeyId
-    if (!journeyIdNumber) {
+    if (!journeyId) {
       toast.error(t('journeys.deleteJourneyError'));
       return;
     }
 
     setModalOpen(true);
-    setPendingJourneyDeleteId(journeyIdNumber);
+    setPendingJourneyDeleteId(journeyId);
   };
 
   const deleteJourneyMutation = trpc.journey.delete.useMutation({
@@ -54,7 +52,7 @@ export const JourneyDetailView: React.FC = () => {
       <DeleteConfirmModal
         isOpen={modalOpen}
         onDismiss={() => setModalOpen(false)}
-        onConfirm={() => pendingJourneyDeleteId && deleteJourneyMutation.mutate(pendingJourneyDeleteId)}
+        onConfirm={() => pendingJourneyDeleteId && journey && deleteJourneyMutation.mutate(journey.id)}
         isLoading={deleteJourneyMutation.isLoading}
       />
       <div className="flex w-full items-center justify-between">

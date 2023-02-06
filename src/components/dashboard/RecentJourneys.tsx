@@ -48,7 +48,7 @@ export const RecentJourneys: React.FC = () => {
       <div className="flex h-full flex-col justify-between pb-5">
         <ul>
           {sortedJourneys.map((journey) => (
-            <a key={journey.id} href={`/journeys/${journey.id}`}>
+            <a key={journey.id} href={`/journeys/${journey.uuid}`}>
               <Journey journey={journey} />
             </a>
           ))}
