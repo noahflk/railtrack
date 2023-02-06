@@ -241,8 +241,16 @@ export const journeyRouter = router({
     const departureStation = getDepartureStation(journey.sections);
     const arrivalStation = getArrivalStation(journey.sections);
 
+    const sortedSections = journey.sections.sort((sectionA, sectionB) => {
+      if (isBefore(sectionA.departureTime, sectionB.departureTime)) return -1;
+      if (isBefore(sectionB.departureTime, sectionA.departureTime)) return 1;
+
+      return 0;
+    });
+
     return {
       ...journey,
+      sections: sortedSections,
       departureStation: departureStation.name,
       arrivalStation: arrivalStation.name,
       departureTime: departureStation.time,
