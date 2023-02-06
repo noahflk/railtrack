@@ -1,16 +1,15 @@
 import { ArrowNarrowLeftIcon } from '@heroicons/react/solid';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
-import toast from 'react-hot-toast';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { Button } from '@/components/Button';
-import { Link } from '@/components/Link';
-import { StatsDisplay } from '@/components/StatsDisplay';
-import { trpc } from '@/utils/trpc';
 import { DeleteConfirmModal } from '@/components/journeys/DeleteConfirmModal';
+import { Link } from '@/components/Link';
+import { trpc } from '@/utils/trpc';
 
-export const JourneyDetailView: React.FC = () => {
+export const JourneyDetailHeader: React.FC = () => {
   const router = useRouter();
   const utils = trpc.useContext();
 
@@ -21,8 +20,7 @@ export const JourneyDetailView: React.FC = () => {
 
   const journeyId = typeof router.query.journey === 'string' ? router.query.journey : undefined;
 
-  const { data: journey } = trpc.journey.getOne.useQuery(journeyId ?? '');
-  const { data: stats } = trpc.journey.singleJourneyStats.useQuery(journeyId ?? '');
+  const { data: journey, error } = trpc.journey.getOne.useQuery(journeyId ?? '');
 
   const handleDeleteIntent = () => {
     // we only go forward with the delete if we have a valid journeyId
@@ -62,6 +60,7 @@ export const JourneyDetailView: React.FC = () => {
             {t('dashboard.seeAll')}
           </Link>
           <h2 className="mb-6 mt-2 text-xl font-medium text-gray-900">
+            {error && t('journeyDetail.unableToLoadJourney')}
             {journey ? `${journey.departureStation} - ${journey.arrivalStation}` : '...'}
           </h2>
         </div>
@@ -69,7 +68,6 @@ export const JourneyDetailView: React.FC = () => {
           {t('journeys.delete')}
         </Button>
       </div>
-      <StatsDisplay type="journeyDetail" stats={stats} />
     </>
   );
 };
