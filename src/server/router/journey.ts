@@ -286,7 +286,9 @@ export const journeyRouter = router({
           },
         },
       });
+
       let nextCursor: typeof cursor | undefined = undefined;
+
       if (journeys.length > limit) {
         const nextItem = journeys.pop();
         nextCursor = nextItem?.id;
@@ -306,8 +308,16 @@ export const journeyRouter = router({
           distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
         };
       });
+
+      const sortedJourneys = journeyList.sort((journeyA, journeyB) => {
+        if (isBefore(journeyA.departureTime, journeyB.departureTime)) return -1;
+        if (isBefore(journeyB.departureTime, journeyA.departureTime)) return 1;
+
+        return 0;
+      });
+
       return {
-        journeyList,
+        journeyList: sortedJourneys,
         nextCursor,
       };
     }),
