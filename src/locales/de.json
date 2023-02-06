@@ -71,7 +71,8 @@
     "deleteConfirm": "Möchtest du diese Reise löschen? Dies kann nicht rückgängig gemacht werden.",
     "cancel": "Abbrechen",
     "minutes_one": "Minute",
-    "minutes_other": "Minuten"
+    "minutes_other": "Minuten",
+    "deleteJourneyError": "Reise konnte nicht gelöscht werden"
   },
   "navigation": {
     "dashboard": "Dashboard",

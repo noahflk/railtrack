@@ -4,6 +4,7 @@ import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Station } from '@/types/opendata';
 import { useGetJourneys } from '@/hooks/useGetJourneys';
+import { Button } from '@/components/Button';
 
 type Props = {
   departureTime: string;
@@ -13,7 +14,7 @@ type Props = {
 
 export const SearchButton: React.FC<Props> = ({ departureTime, departureStation, arrivalStation }) => {
   const { isLoading, mutateAsync } = useGetJourneys();
-  const t = useTranslations();
+  const t = useTranslations('add');
 
   const setDepartureTime = useJourneySearchStore((state) => state.setDepartureTime);
   const setDepartureStation = useJourneySearchStore((state) => state.setDepartureStation);
@@ -22,7 +23,8 @@ export const SearchButton: React.FC<Props> = ({ departureTime, departureStation,
 
   return (
     <div className="mt-1 flex w-full items-end">
-      <button
+      <Button
+        className="w-full justify-center"
         onClick={() => {
           if (departureStation && arrivalStation) {
             setDepartureTime(departureTime);
@@ -38,10 +40,9 @@ export const SearchButton: React.FC<Props> = ({ departureTime, departureStation,
             );
           }
         }}
-        className="flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
       >
-        {isLoading ? <LoadingSpinner /> : t('add.search')}
-      </button>
+        {isLoading ? <LoadingSpinner /> : t('search')}
+      </Button>
     </div>
   );
 };

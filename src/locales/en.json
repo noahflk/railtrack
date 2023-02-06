@@ -71,7 +71,8 @@
     "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
     "cancel": "Cancel",
     "minutes_one": "minute",
-    "minutes_other": "minutes"
+    "minutes_other": "minutes",
+    "deleteJourneyError": "Unable to delete journey"
   },
   "navigation": {
     "dashboard": "Dashboard",
