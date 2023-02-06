@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { trpc } from '@/utils/trpc';
 import { StatsDisplay } from '@/components/StatsDisplay';
 import { Link } from '@/components/Link';
+import { ArrowNarrowLeftIcon } from '@heroicons/react/solid';
 
 export const JourneyDetailView: React.FC = () => {
   const router = useRouter();
@@ -17,7 +18,10 @@ export const JourneyDetailView: React.FC = () => {
 
   return (
     <div>
-      <Link href="/journeys">{t('seeAll')}</Link>
+      <Link href="/journeys" className="flex gap-1">
+        <ArrowNarrowLeftIcon className="w-5" />
+        {t('seeAll')}
+      </Link>
       <h2 className="mb-6 mt-2 text-xl font-medium text-gray-900">
         {journey ? `${journey.departureStation} - ${journey.arrivalStation}` : '...'}
       </h2>
