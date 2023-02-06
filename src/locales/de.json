@@ -1,6 +1,8 @@
 {
   "departure": "Von",
   "arrival": "Nach",
+  "emptyJourneys": "Noch keine Verbindungen",
+  "addJourney": "Verbindung hinzufügen",
   "add": {
     "time": "Abfahrtszeit",
     "direction": "Richtung",

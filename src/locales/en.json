@@ -1,6 +1,8 @@
 {
   "departure": "From",
-  "arrival": "To",
+  "arrival": "To",  
+  "emptyJourneys": "No journeys yet",
+  "addJourney": "Add a new journey",
   "add": {
     "time": "Departure time",
     "direction": "Direction",

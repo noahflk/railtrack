@@ -1,12 +1,11 @@
-import { useTranslations } from 'next-intl';
-
-import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
-import { trpc } from '@/utils/trpc';
-import { useRouter } from 'next/router';
+import { ArrowNarrowRightIcon, ExclamationIcon } from '@heroicons/react/outline';
 import { Section } from '@prisma/client';
-import { APP_TIMEZONE } from '@/constants';
 import { formatInTimeZone } from 'date-fns-tz';
-import { ArrowNarrowRightIcon } from '@heroicons/react/outline';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
+
+import { APP_TIMEZONE } from '@/constants';
+import { trpc } from '@/utils/trpc';
 
 const RecentJourneysWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const t = useTranslations('journeyDetail');
@@ -33,14 +32,25 @@ const Section: React.FC<Props> = ({ section }) => (
   </li>
 );
 
-export const Sections: React.FC = () => {
+export const FailedNotice: React.FC = () => {
+  const t = useTranslations('journeyDetail');
+
+  return (
+    <div className="flex h-full flex-col items-center justify-center space-y-2 pb-8">
+      <ExclamationIcon className="w-20 " />
+      <p className="text-lg font-medium">{t('unableToLoadJourney')}</p>
+    </div>
+  );
+};
+
+export const JourneySections: React.FC = () => {
   const router = useRouter();
 
   const journeyId = typeof router.query.journey === 'string' ? router.query.journey : undefined;
 
-  const { data: journey } = trpc.journey.getOne.useQuery(journeyId ?? '');
+  const { data: journey, isLoading } = trpc.journey.getOne.useQuery(journeyId ?? '');
 
-  if (!journey)
+  if (isLoading) {
     return (
       <RecentJourneysWrapper>
         <div className="w-full animate-pulse space-y-4 pt-4 ">
@@ -50,13 +60,15 @@ export const Sections: React.FC = () => {
         </div>
       </RecentJourneysWrapper>
     );
+  }
 
-  if (journey.sections.length === 0)
+  if (!journey) {
     return (
       <RecentJourneysWrapper>
-        <EmptyJourneyNotice />
+        <FailedNotice />
       </RecentJourneysWrapper>
     );
+  }
 
   return (
     <RecentJourneysWrapper>
