@@ -139,7 +139,7 @@ export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
           {hasNextPage && (
             <>
               <div ref={ref} className="mt-4 flex justify-center">
-                <LoadingSpinner />
+                <LoadingSpinner color="primary" />
               </div>
             </>
           )}

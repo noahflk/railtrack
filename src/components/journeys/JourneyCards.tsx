@@ -121,7 +121,7 @@ export const JourneyCards: React.FC<Props> = ({ handleDelete }) => {
       {hasNextPage && (
         <>
           <div ref={ref} className="mt-4 flex justify-center">
-            <LoadingSpinner />
+            <LoadingSpinner color="primary" />
           </div>
         </>
       )}
