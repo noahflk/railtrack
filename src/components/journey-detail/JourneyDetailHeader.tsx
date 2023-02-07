@@ -20,7 +20,7 @@ export const JourneyDetailHeader: React.FC = () => {
 
   const journeyId = typeof router.query.journey === 'string' ? router.query.journey : undefined;
 
-  const { data: journey, error } = trpc.journey.getOne.useQuery(journeyId ?? '');
+  const { data: journey, error } = trpc.journey.getOne.useQuery(journeyId ?? '', { retry: false });
 
   const handleDeleteIntent = () => {
     // we only go forward with the delete if we have a valid journeyId
@@ -64,9 +64,11 @@ export const JourneyDetailHeader: React.FC = () => {
             {journey ? `${journey.departureStation} - ${journey.arrivalStation}` : '...'}
           </h2>
         </div>
-        <Button onClick={handleDeleteIntent} type="secondary">
-          {t('journeys.delete')}
-        </Button>
+        {journey && (
+          <Button onClick={handleDeleteIntent} type="secondary">
+            {t('journeys.delete')}
+          </Button>
+        )}
       </div>
     </>
   );

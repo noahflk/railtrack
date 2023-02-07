@@ -48,7 +48,7 @@ export const JourneySections: React.FC = () => {
 
   const journeyId = typeof router.query.journey === 'string' ? router.query.journey : undefined;
 
-  const { data: journey, isLoading } = trpc.journey.getOne.useQuery(journeyId ?? '');
+  const { data: journey, isLoading } = trpc.journey.getOne.useQuery(journeyId ?? '', { retry: false });
 
   if (isLoading) {
     return (
