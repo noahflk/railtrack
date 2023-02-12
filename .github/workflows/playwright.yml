@@ -12,7 +12,7 @@ jobs:
       preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
     steps:
       - name: Wait for Vercel Preview
-        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
         id: waitForVercelPreviewDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
