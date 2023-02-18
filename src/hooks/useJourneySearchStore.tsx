@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { format } from 'date-fns';
 
 import type { Journey, Station } from '@/types/opendata';
