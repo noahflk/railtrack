@@ -1,11 +1,12 @@
 import { Disclosure, Transition } from '@headlessui/react';
 import { MinusSmIcon, PlusSmIcon, RefreshIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
+import { Fragment, useState, type Dispatch, type SetStateAction } from 'react';
 
-import { type Pass, type Journey } from '@/types/opendata';
+import { SaveJourneyButton } from '@/components/add-journey/SaveJourneyButton';
+import { type Journey, type Pass } from '@/types/opendata';
 import { formatDateTime } from '@/utils/formatDateTime';
 import { classNames } from '@/utils/styling';
-import { type Dispatch, Fragment, type SetStateAction, useState } from 'react';
 
 type Props = {
   journey: Journey;
@@ -57,6 +58,9 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
               </>
             </Fragment>
           ))}
+          <div className="w-full pt-4">
+            <SaveJourneyButton type="primary" journey={journey} />
+          </div>
         </div>
       </Disclosure.Panel>
     </Transition>

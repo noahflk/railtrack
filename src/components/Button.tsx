@@ -3,7 +3,7 @@ import { classNames } from '@/utils/styling';
 type Props = {
   type?: 'primary' | 'secondary';
   className?: string;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   children: React.ReactNode;
 };
 

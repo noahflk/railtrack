@@ -1,71 +1,16 @@
 import { Disclosure } from '@headlessui/react';
 import { useTranslations } from 'next-intl';
-import router from 'next/router';
 import { Fragment } from 'react';
 import { useBreakpoint } from 'react-breakout';
-import toast from 'react-hot-toast';
 
 import { JourneySectionsDetails } from '@/components/add-journey/JourneySectionsDetails';
 import { JourneyStopIndicator } from '@/components/add-journey/JourneyStopIndicator';
-import { LoadingSpinner } from '@/components/LoadingSpinner';
-import { DUPLICATE_JOURNEY } from '@/constants';
-import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Journey } from '@/types/opendata';
 import { parseDurationString } from '@/utils/duration';
-import { trpc } from '@/utils/trpc';
+import { SaveJourneyButton } from '@/components/add-journey/SaveJourneyButton';
 
 type Props = {
   journey: Journey;
-};
-
-const AddButton: React.FC<Props> = ({ journey }) => {
-  const mutation = trpc.journey.add.useMutation();
-  const utils = trpc.useContext();
-
-  const clearSearchInfo = useJourneySearchStore((state) => state.clearSearchInfo);
-
-  const t = useTranslations('add');
-
-  return (
-    <button
-      onClick={(e) => {
-        // prevents toggle of detail view when saving
-        e.stopPropagation();
-
-        mutation.mutate(
-          {
-            departureStation: journey.from.station.name,
-            arrivalStation: journey.to.station.name,
-            departureTime: journey.from.departure,
-            platform: journey.from.platform,
-          },
-          {
-            onSuccess: () => {
-              toast.success(t('journeyAdded'));
-
-              // Redirect away after creating new journey
-              router.push('/dashboard');
-              clearSearchInfo();
-
-              utils.invalidate();
-            },
-            onError: (error) => {
-              if (error.message === DUPLICATE_JOURNEY) {
-                toast.error(t('journeyAlreadyExists'));
-                return;
-              }
-              toast.error(t('journeyAddFailed'));
-            },
-          }
-        );
-      }}
-      className="text-small inline-flex justify-center font-medium text-primary hover:text-primary-light"
-    >
-      {/* invisible means text remains hidden in the background to preserve the button width */}
-      <span className={mutation.isLoading ? 'invisible' : undefined}>{t('save')}</span>
-      {mutation.isLoading && <LoadingSpinner className="absolute" />}
-    </button>
-  );
 };
 
 const JourneyHeader: React.FC<Props> = ({ journey }) => {
@@ -102,7 +47,7 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
               {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')}
             </p>
             <p>{parseDurationString(journey.duration)} min</p>
-            <AddButton journey={journey} />
+            <SaveJourneyButton journey={journey} />
           </div>
         </div>
       </Disclosure.Button>
@@ -125,7 +70,7 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
               {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
               {parseDurationString(journey.duration)} min
             </p>
-            <AddButton journey={journey} />
+            <SaveJourneyButton journey={journey} />
           </div>
         </div>
       </Disclosure.Button>
