@@ -48,14 +48,12 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
               >
                 <JourneySectionsPreview passList={section.journey?.passList} />
               </div>
-              <>
-                {index !== nonNullJourneys.length - 1 && (
-                  <div className="my-8 flex space-x-8 rounded bg-gray-100 py-3 px-6">
-                    <RefreshIcon className="h-6 w-6 text-gray-600" />
-                    <p className="text-sm text-gray-600">{t('trainChange')}</p>
-                  </div>
-                )}
-              </>
+              {index !== nonNullJourneys.length - 1 && (
+                <div className="my-8 flex space-x-4 rounded-md bg-gray-100 py-3 px-6">
+                  <RefreshIcon className="h-5 w-5 text-gray-600" />
+                  <p className="text-sm text-gray-600">{t('trainChange')}</p>
+                </div>
+              )}
             </Fragment>
           ))}
           <div className="w-full pt-8">
