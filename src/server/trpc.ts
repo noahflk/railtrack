@@ -20,6 +20,7 @@ const isAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.user || ctx.user.role !== 'authenticated') {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
+
   return next({
     ctx: {
       ...ctx,

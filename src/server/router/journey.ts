@@ -166,6 +166,7 @@ export const journeyRouter = router({
           sections: {
             create: sectionsData,
           },
+          departureTime: new Date(journey.from.departure),
           identifier,
         },
       });
@@ -178,6 +179,9 @@ export const journeyRouter = router({
     const journeys = await ctx.prisma.journey.findMany({
       where: {
         userId: ctx.user.id,
+      },
+      orderBy: {
+        departureTime: 'desc',
       },
       include: {
         sections: {
@@ -204,19 +208,11 @@ export const journeyRouter = router({
       };
     });
 
-    // sort journeys by departure time
-    const sortedJourneys = enrichedJourneys.sort((journeyA, journeyB) => {
-      if (isBefore(journeyA.departureTime, journeyB.departureTime)) return -1;
-      if (isBefore(journeyB.departureTime, journeyA.departureTime)) return 1;
-
-      return 0;
-    });
-
     if (input) {
-      return sortedJourneys.slice(-input);
+      return enrichedJourneys.slice(-input);
     }
 
-    return sortedJourneys;
+    return enrichedJourneys;
   }),
   getOne: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
     const journey = await ctx.prisma.journey.findFirst({
@@ -269,6 +265,7 @@ export const journeyRouter = router({
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 10;
       const { cursor } = input;
+
       const journeys = await ctx.prisma.journey.findMany({
         take: limit + 1,
         where: {
@@ -276,7 +273,7 @@ export const journeyRouter = router({
         },
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: {
-          id: 'asc',
+          departureTime: 'desc',
         },
         include: {
           sections: {
@@ -309,15 +306,8 @@ export const journeyRouter = router({
         };
       });
 
-      const sortedJourneys = journeyList.sort((journeyA, journeyB) => {
-        if (isBefore(journeyA.departureTime, journeyB.departureTime)) return -1;
-        if (isBefore(journeyB.departureTime, journeyA.departureTime)) return 1;
-
-        return 0;
-      });
-
       return {
-        journeyList: sortedJourneys,
+        journeyList,
         nextCursor,
       };
     }),

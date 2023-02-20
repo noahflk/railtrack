@@ -19,3 +19,11 @@ create trigger on_auth_user_created
 -- Schema to populate existing journeys with random UUIDs if they don't have one yet
 UPDATE "Journey" SET uuid=gen_random_uuid ();
 -- Make uuid field required afterwards
+
+-- Add a departureTime field to each journey for sorting
+UPDATE "Journey"
+SET "departureTime" = (
+  SELECT MIN("departureTime")
+  FROM "Section"
+  WHERE "journeyId" = "Journey"."id"
+)

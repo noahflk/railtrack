@@ -21,13 +21,14 @@ model Profiles {
 }
 
 model Journey {
-    id         Int      @id @default(autoincrement())
-    uuid       String   @unique @default(uuid())
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
-    userId     String
-    duration   Int
-    identifier String
+    id            Int      @id @default(autoincrement())
+    uuid          String   @unique @default(uuid())
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    userId        String
+    duration      Int
+    identifier    String
+    departureTime DateTime
 
     sections Section[]
 
