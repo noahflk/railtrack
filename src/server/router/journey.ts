@@ -1,7 +1,7 @@
 import type { Section } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import axios from 'axios';
-import { isBefore, subMinutes } from 'date-fns';
+import { isBefore } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { z } from 'zod';
 
@@ -39,12 +39,11 @@ const findConnection = async ({
   departureTime,
   platform,
 }: JourneyIdentifier): Promise<Journey | undefined> => {
-  const bufferedTime = subMinutes(new Date(departureTime), 10);
-  const localBufferedDate = formatInTimeZone(bufferedTime, APP_TIMEZONE, 'yyyy-MM-dd');
-  const localBufferedTime = formatInTimeZone(bufferedTime, APP_TIMEZONE, 'HH:mm');
+  const localDate = formatInTimeZone(new Date(departureTime), APP_TIMEZONE, 'yyyy-MM-dd');
+  const localTime = formatInTimeZone(new Date(departureTime), APP_TIMEZONE, 'HH:mm');
 
   const { data } = await axios.get<{ connections: Journey[] }>(
-    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${localBufferedDate}&time=${localBufferedTime}&limit=10`
+    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${localDate}&time=${localTime}&limit=10`
   );
 
   // ensure we have the desired connection by comparing departure time and platform
