@@ -58,7 +58,7 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
               </>
             </Fragment>
           ))}
-          <div className="w-full pt-4">
+          <div className="w-full pt-8">
             <SaveJourneyButton type="primary" journey={journey} />
           </div>
         </div>
