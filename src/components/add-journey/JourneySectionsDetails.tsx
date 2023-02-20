@@ -1,5 +1,5 @@
 import { Disclosure, Transition } from '@headlessui/react';
-import { MinusSmIcon, PlusSmIcon, RefreshIcon } from '@heroicons/react/outline';
+import { MinusSmIcon, PlusSmIcon, RefreshIcon, LightningBoltIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
 import { Fragment, useState, type Dispatch, type SetStateAction } from 'react';
 
@@ -17,6 +17,8 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
 
   const nonNullJourneys = journey.sections.filter((section) => section.journey);
 
+  const firstSectionIsWalk = journey.sections[0]?.walk;
+
   return (
     <Transition
       enter="transition-[grid-template-rows] duration-200"
@@ -32,6 +34,12 @@ export const JourneySectionsDetails: React.FC<Props> = ({ journey }) => {
           <hr className="mb-6 h-px w-full border-0 bg-gray-200" />
         </div>
         <div className="flex flex-col px-8 pb-6 md:px-10">
+          {firstSectionIsWalk && (
+            <div className="mb-8 mt-4 flex space-x-4 rounded-md bg-gray-100 py-3 px-6">
+              <LightningBoltIcon className="h-5 w-5 text-gray-600" />
+              <p className="text-sm text-gray-600">{t('walkRequired')}</p>
+            </div>
+          )}
           {nonNullJourneys.map((section, index) => (
             <Fragment key={index}>
               <div className="mb-8">

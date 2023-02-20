@@ -20,7 +20,8 @@
     "stop_other": "Stops",
     "earlierJourneys": "Früehere Verbindungen",
     "laterJourneys": "Spätere Verbindungen",
-    "trainChange": "Umsteigen"
+    "trainChange": "Umsteigen",
+    "walkRequired": "Fussweg zur nächsten Station"
   },
   "auth": {
     "save": "Speichern",

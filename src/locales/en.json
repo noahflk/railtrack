@@ -20,7 +20,8 @@
     "stop_other": "changes",
     "earlierJourneys": "Earlier journeys",
     "laterJourneys": "Later journeys",
-    "trainChange": "Change"
+    "trainChange": "Change",
+    "walkRequired": "Walk to next station"
   },
   "auth": {
     "save": "Save",
