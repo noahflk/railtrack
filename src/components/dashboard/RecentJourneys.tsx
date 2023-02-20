@@ -34,9 +34,7 @@ export const RecentJourneys: React.FC = () => {
       </RecentJourneysWrapper>
     );
 
-  const sortedJourneys = journeys.sort((a, b) => b.departureTime.getTime() - a.departureTime.getTime());
-
-  if (sortedJourneys.length === 0)
+  if (journeys.length === 0)
     return (
       <RecentJourneysWrapper>
         <EmptyJourneyNotice />
@@ -47,7 +45,7 @@ export const RecentJourneys: React.FC = () => {
     <RecentJourneysWrapper>
       <div className="flex h-full flex-col justify-between pb-5">
         <ul>
-          {sortedJourneys.map((journey) => (
+          {journeys.map((journey) => (
             <a key={journey.id} href={`/journeys/${journey.uuid}`}>
               <Journey journey={journey} />
             </a>

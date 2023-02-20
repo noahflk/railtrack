@@ -175,11 +175,13 @@ export const journeyRouter = router({
 
       return { success: true };
     }),
-  get: protectedProcedure.input(z.optional(z.number())).query(async ({ ctx, input }) => {
+  get: protectedProcedure.input(z.optional(z.number())).query(async ({ ctx, input: limit }) => {
     const journeys = await ctx.prisma.journey.findMany({
       where: {
         userId: ctx.user.id,
       },
+      // if limit is present, only take n recent journeys
+      take: limit,
       orderBy: {
         departureTime: 'desc',
       },
@@ -193,7 +195,7 @@ export const journeyRouter = router({
     });
 
     // enhance journey with more info
-    const enrichedJourneys = journeys.map((journey) => {
+    return journeys.map((journey) => {
       const departureStation = getDepartureStation(journey.sections);
       const arrivalStation = getArrivalStation(journey.sections);
 
@@ -207,12 +209,6 @@ export const journeyRouter = router({
         distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
       };
     });
-
-    if (input) {
-      return enrichedJourneys.slice(-input);
-    }
-
-    return enrichedJourneys;
   }),
   getOne: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
     const journey = await ctx.prisma.journey.findFirst({
