@@ -1,7 +1,5 @@
-import type { Section } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import axios from 'axios';
-import { isBefore } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { z } from 'zod';
 
@@ -9,16 +7,10 @@ import { APP_TIMEZONE, DUPLICATE_JOURNEY, TRANSPORT_API_URL } from '@/constants'
 import { protectedProcedure, router } from '@/server/trpc';
 import type { JourneyIdentifier } from '@/types/journey';
 import type { Journey } from '@/types/opendata';
-import { calculateJourneyDistance } from '@/utils/calculateDistance';
 import { parseDurationString } from '@/utils/duration';
+import { populateJourney } from '@/utils/journey';
 import { hashJourneyIdentifier } from '@/utils/journeyIdentifier';
 import { log } from '@/utils/logger';
-import { roundToOneDecimal } from '@/utils/rounding';
-
-type StationInformation = {
-  name: string;
-  time: Date;
-};
 
 const logAddJourney = (email: string | undefined, from: string, to: string) => {
   log({
@@ -50,42 +42,6 @@ const findConnection = async ({
   return data.connections.find(
     (connection) => connection.from.platform === platform && connection.from.departure === departureTime
   );
-};
-
-const getDepartureStation = (sections: Section[]): StationInformation => {
-  // sort sections array by departureTime property that's on each element
-  // the departure of a journey is the departure_station_name of the earliest section
-  sections.sort((sectionA, sectionB) => {
-    const dateA = sectionA.departureTime;
-    const dateB = sectionB.departureTime;
-
-    if (isBefore(dateA, dateB)) return -1;
-    if (isBefore(dateB, dateA)) return 1;
-
-    return 0;
-  });
-
-  return {
-    name: sections[0]?.departureStation || '',
-    time: sections[0]?.departureTime || new Date(),
-  };
-};
-
-const getArrivalStation = (sections: Section[]): StationInformation => {
-  sections.sort((sectionA, sectionB) => {
-    const dateA = new Date(sectionA.departureTime);
-    const dateB = new Date(sectionB.departureTime);
-
-    if (isBefore(dateA, dateB)) return 1;
-    if (isBefore(dateB, dateA)) return -1;
-
-    return 0;
-  });
-
-  return {
-    name: sections[0]?.arrivalStation || '',
-    time: sections[0]?.arrivalTime || new Date(),
-  };
 };
 
 export const journeyRouter = router({
@@ -195,20 +151,7 @@ export const journeyRouter = router({
     });
 
     // enhance journey with more info
-    return journeys.map((journey) => {
-      const departureStation = getDepartureStation(journey.sections);
-      const arrivalStation = getArrivalStation(journey.sections);
-
-      return {
-        ...journey,
-        departureStation: departureStation.name,
-        arrivalStation: arrivalStation.name,
-        departureTime: departureStation.time,
-        arrivalTime: arrivalStation.time,
-        stops: journey.sections.length - 1,
-        distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
-      };
-    });
+    return journeys.map(populateJourney);
   }),
   getOne: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
     const journey = await ctx.prisma.journey.findFirst({
@@ -218,6 +161,9 @@ export const journeyRouter = router({
       },
       include: {
         sections: {
+          orderBy: {
+            departureTime: 'desc',
+          },
           include: {
             passes: true,
           },
@@ -230,26 +176,7 @@ export const journeyRouter = router({
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Journey not found' });
     }
 
-    const departureStation = getDepartureStation(journey.sections);
-    const arrivalStation = getArrivalStation(journey.sections);
-
-    const sortedSections = journey.sections.sort((sectionA, sectionB) => {
-      if (isBefore(sectionA.departureTime, sectionB.departureTime)) return -1;
-      if (isBefore(sectionB.departureTime, sectionA.departureTime)) return 1;
-
-      return 0;
-    });
-
-    return {
-      ...journey,
-      sections: sortedSections,
-      departureStation: departureStation.name,
-      arrivalStation: arrivalStation.name,
-      departureTime: departureStation.time,
-      arrivalTime: arrivalStation.time,
-      stops: journey.sections.length - 1,
-      distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
-    };
+    return populateJourney(journey);
   }),
   getInfinite: protectedProcedure
     .input(
@@ -287,20 +214,7 @@ export const journeyRouter = router({
         nextCursor = nextItem?.id;
       }
 
-      const journeyList = journeys.map((journey) => {
-        const departureStation = getDepartureStation(journey.sections);
-        const arrivalStation = getArrivalStation(journey.sections);
-
-        return {
-          ...journey,
-          departureStation: departureStation.name,
-          arrivalStation: arrivalStation.name,
-          departureTime: departureStation.time,
-          arrivalTime: arrivalStation.time,
-          stops: journey.sections.length - 1,
-          distance: roundToOneDecimal(calculateJourneyDistance(journey.sections)),
-        };
-      });
+      const journeyList = journeys.map(populateJourney);
 
       return {
         journeyList,
