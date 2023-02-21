@@ -76,7 +76,8 @@
     "cancel": "Cancel",
     "minutes_one": "minute",
     "minutes_other": "minutes",
-    "deleteJourneyError": "Unable to delete journey"
+    "deleteJourneyError": "Unable to delete journey",
+    "loadJourneysError": "Unable to load journeys"
   },
   "navigation": {
     "dashboard": "Dashboard",

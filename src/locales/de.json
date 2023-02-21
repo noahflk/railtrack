@@ -76,7 +76,8 @@
     "cancel": "Abbrechen",
     "minutes_one": "Minute",
     "minutes_other": "Minuten",
-    "deleteJourneyError": "Reise konnte nicht gelöscht werden"
+    "deleteJourneyError": "Reise konnte nicht gelöscht werden",
+    "loadJourneysError": "Reisen konnten nicht geladen werden"
   },
   "navigation": {
     "dashboard": "Dashboard",

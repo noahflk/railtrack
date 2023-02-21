@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { useInView } from 'react-intersection-observer';
 
 import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
@@ -77,7 +78,9 @@ export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
       limit: 13,
     },
     {
+      retry: 2,
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? false,
+      onError: () => toast.error(t('journeys.loadJourneysError')),
     }
   );
 
