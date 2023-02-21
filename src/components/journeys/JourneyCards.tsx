@@ -20,6 +20,7 @@ type CardProps = {
 const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
   const departureTime = new Date(journey.departureTime);
   const arrivalTime = new Date(journey.arrivalTime);
+  const tGlobal = useTranslations();
   const t = useTranslations('journeys');
 
   return (
@@ -47,7 +48,7 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
               {formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')}
             </p>
             <p>
-              {t('duration')}: {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
+              {t('duration')}: {tGlobal('minutes', { count: journey.duration })}
             </p>
             <p>
               {t('distance')}: {journey.distance} km{' '}

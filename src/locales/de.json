@@ -69,8 +69,8 @@
     "deleteJourney": "Reise löschen",
     "deleteConfirm": "Möchtest du diese Reise löschen? Dies kann nicht rückgängig gemacht werden.",
     "cancel": "Abbrechen",
-    "minutes_one": "Minute",
-    "minutes_other": "Minuten",
+    "minutes": "{count, plural, one {# Minute} other {# Minuten}}",
+    "stop_title": "Stops",
     "deleteJourneyError": "Reise konnte nicht gelöscht werden",
     "loadJourneysError": "Reisen konnten nicht geladen werden"
   },

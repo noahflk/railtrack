@@ -44,9 +44,7 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
         {journey.arrivalStation} ({format(arrivalTime, 'HH:mm')})
       </td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{journey.distance} km</td>
-      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-        {journey.duration} {t(journey.duration === 1 ? 'minutes_one' : 'minutes_other')}
-      </td>
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{t('minutes', { count: journey.duration })}</td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{journey.stops}</td>
       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
         <button
@@ -126,7 +124,7 @@ export const JourneyTable: React.FC<TableProps> = ({ handleDelete }) => {
                     {t('journeys.duration')}
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    {t('journeys.stops')}
+                    {t('journeys.stop_title')}
                   </th>
                 </tr>
               </thead>

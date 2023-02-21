@@ -69,8 +69,8 @@
     "deleteJourney": "Delete journey",
     "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
     "cancel": "Cancel",
-    "minutes_one": "minute",
-    "minutes_other": "minutes",
+    "minutes": "{count, plural, one {# minute} other {# minuten}}",
+    "stop_title": "Stops",
     "deleteJourneyError": "Unable to delete journey",
     "loadJourneysError": "Unable to load journeys"
   },
