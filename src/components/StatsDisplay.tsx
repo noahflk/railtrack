@@ -10,6 +10,31 @@ type Props = {
   stats: RouterOutputs['stats']['getOne'] | undefined;
 };
 
+type DurationDisplayProps = {
+  duration?: number;
+  type: 'minutes' | 'hours';
+};
+
+const DurationDisplay: React.FC<DurationDisplayProps> = ({ duration, type = 'hours' }) => {
+  const t = useTranslations();
+
+  const getText = () => {
+    if (type === 'hours') {
+      return t(duration === 1 ? 'hour_one' : 'hour_other');
+    }
+
+    return t(duration === 1 ? 'minute_one' : 'minute_other');
+  };
+
+  return (
+    <Stat title={t('time')} icon={<ClockIcon className="h-14 w-14 flex-shrink-0 sm:hidden xl:inline" />}>
+      <p className="mt-2 truncate text-3xl font-medium">
+        {duration ?? '...'} <span className="text-xl text-gray-500">{getText()}</span>
+      </p>
+    </Stat>
+  );
+};
+
 export const StatsDisplay: React.FC<Props> = ({ type, stats }) => {
   const t = useTranslations(type);
 
@@ -20,12 +45,7 @@ export const StatsDisplay: React.FC<Props> = ({ type, stats }) => {
           {stats ? stats.distance : '...'} <span className="text-xl text-gray-500">km</span>
         </p>
       </Stat>
-      <Stat title={t('time')} icon={<ClockIcon className="h-14 w-14 flex-shrink-0 sm:hidden xl:inline" />}>
-        <p className="mt-2 truncate text-3xl font-medium">
-          {stats ? stats.duration : '...'}{' '}
-          <span className="text-xl text-gray-500">{t(stats?.duration === 1 ? 'hour_one' : 'hour_other')}</span>
-        </p>
-      </Stat>
+      <DurationDisplay duration={stats?.duration} type={type === 'dashboard' ? 'hours' : 'minutes'} />
       <Stat title={t('total')} icon={<ChartBarIcon className="h-14 w-14 flex-shrink-0 sm:hidden xl:inline" />}>
         <p className="mt-2 truncate text-3xl font-medium">{stats ? stats.count : '...'}</p>
       </Stat>

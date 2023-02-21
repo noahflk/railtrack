@@ -3,6 +3,11 @@
   "arrival": "To",  
   "emptyJourneys": "No journeys yet",
   "addJourney": "Add a new journey",
+  "time": "Time spent travelling",
+  "hour_one": "hour",
+  "hour_other": "hours",
+  "minute_one": "minute",
+  "minute_other": "minutes",
   "add": {
     "time": "Departure time",
     "direction": "Direction",
@@ -48,20 +53,14 @@
   },
   "dashboard": {
     "distance": "Distance travelled",
-    "time": "Time spent travelling",
     "total": "Total trips",
     "recent": "Recent trips",
-    "seeAll": "See all trips",
-    "hour_one": "hour",
-    "hour_other": "hours"
+    "seeAll": "See all trips"
   },
   "journeyDetail": {
     "distance": "Distance travelled",
     "unableToLoadJourney": "Unable to load journey",
-    "time": "Time spent travelling",
     "total": "Stops",
-    "hour_one": "hour",
-    "hour_other": "hours",
     "sections": "Sections"
   },
   "journeys": {

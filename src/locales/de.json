@@ -3,6 +3,11 @@
   "arrival": "Nach",
   "emptyJourneys": "Noch keine Verbindungen",
   "addJourney": "Verbindung hinzufügen",
+  "time": "Totale Reisezeit",
+  "hour_one": "Stunde",
+  "hour_other": "Stunden",
+  "minute_one": "Minute",
+  "minute_other": "Minuten",
   "add": {
     "time": "Abfahrtszeit",
     "direction": "Richtung",
@@ -48,20 +53,14 @@
   },
   "dashboard": {
     "distance": "Gereiste Distanz",
-    "time": "Totale Reisezeit",
     "total": "Anzahl Reisen",
     "recent": "Kürzliche Reisen",
-    "seeAll": "Alle Reisen anzeigen",
-    "hour_one": "Stunde",
-    "hour_other": "Stunden"
+    "seeAll": "Alle Reisen anzeigen"
   },
   "journeyDetail": {
     "distance": "Gereiste Distanz",
     "unableToLoadJourney": "Reise konnte nicht geladen werden",
-    "time": "Reisezeit",
     "total": "Anzahl Stops",
-    "hour_one": "Stunde",
-    "hour_other": "Stunden",
     "sections": "Segmente"
   },
   "journeys": {

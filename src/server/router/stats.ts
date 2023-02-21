@@ -43,7 +43,7 @@ export const statsRouter = router({
       // number of stops
       count: journey.sections.length - 1,
       coordinates,
-      duration: roundToOneDecimal(journey.duration / 60),
+      duration: journey.duration,
     };
   }),
   getAll: protectedProcedure.query(async ({ ctx }) => {
