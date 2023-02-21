@@ -43,9 +43,7 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
           <JourneyHeader journey={journey} />
           <div className="flex justify-between space-x-2">
             <JourneyStopIndicator className="w-96" journey={journey} />
-            <p>
-              {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')}
-            </p>
+            <p>{t('stops', { count: journey.transfers })}</p>
             <p>{parseDurationString(journey.duration)} min</p>
             <SaveJourneyButton journey={journey} />
           </div>
@@ -67,7 +65,7 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
           <JourneyStopIndicator className="w-full" journey={journey} />
           <div className="flex justify-between">
             <p>
-              {journey.transfers} {journey.transfers === 1 ? t('stop_one') : t('stop_other')},{' '}
+              <p>{t('stops', { count: journey.transfers })}</p>
               {parseDurationString(journey.duration)} min
             </p>
             <SaveJourneyButton journey={journey} />

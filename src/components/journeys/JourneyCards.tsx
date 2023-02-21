@@ -55,7 +55,7 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
           </div>
           <div className="grid flex-1 grid-cols-1 gap-2 truncate xs:grid-cols-2">
             <p>
-              {journey.stops} {t(journey.stops === 1 ? 'stops_one' : 'stops_other')}
+              {journey.stops} {t('stops', { count: journey.stops })}
             </p>
             <div className="justify-end xs:flex">
               <button
