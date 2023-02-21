@@ -58,7 +58,7 @@ const getGeoData = (journeys: Coordinates[]) => ({
 export const Map: React.FC<{ id: string }> = ({ id }) => {
   const mapRef = useRef<MapRef>(null);
 
-  const { data: stats } = trpc.journey.singleJourneyStats.useQuery(id, {
+  const { data: stats } = trpc.stats.getOne.useQuery(id, {
     onSuccess: (stats) => {
       const journeys = stats?.coordinates ?? [];
 

@@ -6,8 +6,8 @@ import { type RouterOutputs } from '@/utils/trpc';
 
 type Props = {
   type: 'dashboard' | 'journeyDetail';
-  // doesn't matter if we take singleJourneyStats or stats, they have the same type
-  stats: RouterOutputs['journey']['singleJourneyStats'] | undefined;
+  // doesn't matter if we take a single stat or all stats, they have the same type
+  stats: RouterOutputs['stats']['getOne'] | undefined;
 };
 
 export const StatsDisplay: React.FC<Props> = ({ type, stats }) => {
