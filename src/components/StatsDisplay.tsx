@@ -18,18 +18,10 @@ type DurationDisplayProps = {
 const DurationDisplay: React.FC<DurationDisplayProps> = ({ duration, type = 'hours' }) => {
   const t = useTranslations();
 
-  const getText = () => {
-    if (type === 'hours') {
-      return t(duration === 1 ? 'hour_one' : 'hour_other');
-    }
-
-    return t(duration === 1 ? 'minute_one' : 'minute_other');
-  };
-
   return (
     <Stat title={t('time')} icon={<ClockIcon className="h-14 w-14 flex-shrink-0 sm:hidden xl:inline" />}>
       <p className="mt-2 truncate text-3xl font-medium">
-        {duration ?? '...'} <span className="text-xl text-gray-500">{getText()}</span>
+        {duration ?? '...'} <span className="text-xl text-gray-500">{t(type, { count: duration })}</span>
       </p>
     </Stat>
   );

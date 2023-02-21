@@ -4,10 +4,8 @@
   "emptyJourneys": "No journeys yet",
   "addJourney": "Add a new journey",
   "time": "Time spent travelling",
-  "hour_one": "hour",
-  "hour_other": "hours",
-  "minute_one": "minute",
-  "minute_other": "minutes",
+  "hours": "{count, plural, one {hour} other {hours}}",
+  "minutes": "{count, plural, one {minute} other {minutes}}",
   "add": {
     "time": "Departure time",
     "direction": "Direction",

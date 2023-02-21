@@ -4,10 +4,8 @@
   "emptyJourneys": "Noch keine Verbindungen",
   "addJourney": "Verbindung hinzufügen",
   "time": "Totale Reisezeit",
-  "hour_one": "Stunde",
-  "hour_other": "Stunden",
-  "minute_one": "Minute",
-  "minute_other": "Minuten",
+  "hours": "{count, plural, one {Stunde} other {Stunden}}",
+  "minutes": "{count, plural, one {Minute} other {Minuten}}",
   "add": {
     "time": "Abfahrtszeit",
     "direction": "Richtung",
