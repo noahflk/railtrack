@@ -17,7 +17,7 @@ const JourneyDetail: NextPage = () => {
 
   const journeyId = typeof router.query.journey === 'string' ? router.query.journey : undefined;
 
-  const { data: stats } = trpc.journey.singleJourneyStats.useQuery(journeyId ?? '', { retry: false });
+  const { data: stats } = trpc.stats.getOne.useQuery(journeyId ?? '', { retry: false });
 
   trpc.journey.getOne.useQuery(journeyId ?? '', {
     retry: false,

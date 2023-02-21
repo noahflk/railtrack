@@ -11,7 +11,7 @@ import { trpc } from '@/utils/trpc';
 const Dashboard: NextPage = () => {
   const t = useTranslations();
 
-  const { data: stats } = trpc.journey.stats.useQuery();
+  const { data: stats } = trpc.stats.getAll.useQuery();
 
   return (
     <Wrapper title={t('navigation.dashboard')}>
