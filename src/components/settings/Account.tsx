@@ -71,7 +71,6 @@ export const Account: React.FC = () => {
                 name="locale"
                 value={selectedLang ?? locale}
                 onChange={(e) => setSelectedLang(e.target.value)}
-                defaultValue="default"
                 autoComplete="country-name"
                 className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
               >
