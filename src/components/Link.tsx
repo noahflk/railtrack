@@ -14,7 +14,7 @@ export const Link: React.FC<Props> = ({ href, target, children, className }) => 
     href={href}
     passHref
     target={target}
-    className={classNames('"font-medium hover:text-primary-light" text-primary', className ?? '')}
+    className={classNames('font-medium text-primary hover:text-primary-light', className ?? '')}
   >
     {children}
   </NextLink>
