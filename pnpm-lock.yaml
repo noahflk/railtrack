@@ -35,7 +35,7 @@ specifiers:
   eslint-config-next: ^13.0.0
   eslint-config-prettier: 8.6.0
   eslint-plugin-jsx-a11y: 6.7.1
-  eslint-plugin-unicorn: 45.0.2
+  eslint-plugin-unicorn: 46.0.0
   mapbox-gl: ^2.11.0
   md5: 2.3.0
   next: ^13.0.0
@@ -110,7 +110,7 @@ devDependencies:
   eslint-config-next: 13.0.0_ycpbpc6yetojsgtrx3mwntkhsu
   eslint-config-prettier: 8.6.0_eslint@8.35.0
   eslint-plugin-jsx-a11y: 6.7.1_eslint@8.35.0
-  eslint-plugin-unicorn: 45.0.2_eslint@8.35.0
+  eslint-plugin-unicorn: 46.0.0_eslint@8.35.0
   postcss: 8.4.21
   prettier: 2.8.4
   prettier-plugin-tailwindcss: 0.2.0_prettier@2.8.4
@@ -1723,8 +1723,8 @@ packages:
       string.prototype.matchall: 4.0.7
     dev: true
 
-  /eslint-plugin-unicorn/45.0.2_eslint@8.35.0:
-    resolution: {integrity: sha512-Y0WUDXRyGDMcKLiwgL3zSMpHrXI00xmdyixEGIg90gHnj0PcHY4moNv3Ppje/kDivdAy5vUeUr7z211ImPv2gw==}
+  /eslint-plugin-unicorn/46.0.0_eslint@8.35.0:
+    resolution: {integrity: sha512-j07WkC+PFZwk8J33LYp6JMoHa1lXc1u6R45pbSAipjpfpb7KIGr17VE2D685zCxR5VL4cjrl65kTJflziQWMDA==}
     engines: {node: '>=14.18'}
     peerDependencies:
       eslint: '>=8.28.0'
@@ -1734,7 +1734,7 @@ packages:
       ci-info: 3.7.0
       clean-regexp: 1.0.0
       eslint: 8.35.0
-      esquery: 1.4.0
+      esquery: 1.5.0
       indent-string: 4.0.0
       is-builtin-module: 3.2.0
       jsesc: 3.0.2
@@ -1849,13 +1849,6 @@ packages:
       acorn: 8.8.0
       acorn-jsx: 5.3.2_acorn@8.8.0
       eslint-visitor-keys: 3.3.0
-    dev: true
-
-  /esquery/1.4.0:
-    resolution: {integrity: sha512-cCDispWt5vHHtwMY2YrAQ4ibFkAL8RbH5YGBnZBc90MolvvfkkQcJro/aZiAQUlQ3qgrYS6D6v8Gc5G5CQsc9w==}
-    engines: {node: '>=0.10'}
-    dependencies:
-      estraverse: 5.3.0
     dev: true
 
   /esquery/1.5.0:
