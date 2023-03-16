@@ -7,7 +7,7 @@ import { type RouterOutputs } from '@/utils/trpc';
 type Props = {
   type: 'dashboard' | 'journeyDetail';
   // doesn't matter if we take a single stat or all stats, they have the same type
-  stats: RouterOutputs['stats']['getOne'] | undefined;
+  stats: RouterOutputs['stats']['getPeriod'] | undefined;
 };
 
 type DurationDisplayProps = {

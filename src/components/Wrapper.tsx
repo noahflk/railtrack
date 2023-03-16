@@ -1,6 +1,14 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { CogIcon, HomeIcon, MenuIcon, ViewGridAddIcon, ViewGridIcon, XIcon } from '@heroicons/react/outline';
+import {
+  ChartBarIcon,
+  CogIcon,
+  HomeIcon,
+  MenuIcon,
+  ViewGridAddIcon,
+  ViewGridIcon,
+  XIcon,
+} from '@heroicons/react/outline';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
@@ -26,6 +34,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
     { name: t('dashboard'), href: '/dashboard', icon: HomeIcon },
     { name: t('journeys'), href: '/journeys', icon: ViewGridIcon },
     { name: t('addJourney'), href: '/add', icon: ViewGridAddIcon },
+    { name: t('stats'), href: '/stats', icon: ChartBarIcon },
     { name: t('settings'), href: '/settings', icon: CogIcon },
   ];
 
