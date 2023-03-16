@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { JourneyCountChart } from '@/components/stats/JourneyCountChart';
+import { DistanceChart } from '@/components/stats/DistanceChart';
 import { PeriodSelect } from '@/components/stats/PeriodSelect';
 import { StatsDisplay } from '@/components/StatsDisplay';
 import { Wrapper } from '@/components/Wrapper';
@@ -23,7 +24,12 @@ const Stats: NextPage = () => {
       <div className="space-y-6">
         <PeriodSelect period={period} setPeriod={setPeriod} />
         <StatsDisplay stats={stats} type="dashboard" />
-        {charts && <JourneyCountChart data={charts.journeyCount} period={period} />}
+        {charts && (
+          <>
+            <JourneyCountChart data={charts.journeyCount} period={period} />
+            <DistanceChart data={charts.distanceCount} period={period} />
+          </>
+        )}
       </div>
     </Wrapper>
   );

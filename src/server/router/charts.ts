@@ -1,10 +1,10 @@
-import { formatInTimeZone } from 'date-fns-tz';
+import { calculateJourneyDistance } from '@/utils/calculateDistance';
 import { PrismaClient } from '@prisma/client';
+import { format, isEqual, startOfMonth, sub } from 'date-fns';
 
 import { protectedProcedure, router } from '@/server/trpc';
 import { CountInPeriod, ZodPeriod, type Period } from '@/types/period';
 import { getStartDate } from '@/utils/period';
-import { format, isEqual, startOfMonth, sub } from 'date-fns';
 
 const getJourneyCountForPeriod = async (prisma: PrismaClient, period: Period, userId: string) => {
   const notBeforeDate = getStartDate(period);
@@ -29,6 +29,50 @@ const getJourneyCountForPeriod = async (prisma: PrismaClient, period: Period, us
     GROUP BY DATE_TRUNC('day', "departureTime")
     ORDER BY DATE_TRUNC('day', "departureTime");
   ` as Promise<CountInPeriod[]>);
+};
+
+const getDistanceForPeriod = async (prisma: PrismaClient, period: Period, days: string[], userId: string) => {
+  const notBeforeDate = getStartDate(period);
+
+  const journeys = await prisma.journey.findMany({
+    where: {
+      userId,
+      departureTime: {
+        gte: notBeforeDate,
+      },
+    },
+    select: {
+      userId: true,
+      duration: true,
+      departureTime: true,
+      sections: {
+        select: {
+          passes: {
+            select: {
+              stationCoordinateX: true,
+              stationCoordinateY: true,
+              stationName: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!journeys) return [];
+
+  return days.map((day) => {
+    // find journeys that are in this day
+    const journeysInDay = journeys.filter((journey) => format(journey.departureTime, 'yyyy-MM-dd') === day);
+
+    // sum up the distance
+    const distancePerDay = journeysInDay.reduce((acc, journey) => acc + calculateJourneyDistance(journey.sections), 0);
+
+    return {
+      label: day,
+      value: distancePerDay,
+    };
+  });
 };
 
 const getLast7DaysTimestamps = (): string[] => {
@@ -83,7 +127,7 @@ const getJourneysForDay = (day: string, days: CountInPeriod[]): number => {
   return 0;
 };
 
-const getJourneysInPeriod = async (prisma: PrismaClient, period: Period, userId: string): Promise<CountInPeriod[]> => {
+const getJourneysInPeriod = async (prisma: PrismaClient, period: Period, userId: string) => {
   const journeyCount = await getJourneyCountForPeriod(prisma, period, userId);
 
   if (period === 'week') {
@@ -111,16 +155,28 @@ const getJourneysInPeriod = async (prisma: PrismaClient, period: Period, userId:
   // Last case is implicitly year
   const months = getLastYearTimestamps();
 
-  return months.map((date) => {
-    console.log(date);
-    return { label: date, value: getJourneysForDay(date, journeyCount) };
-  });
+  return months.map((date) => ({ label: date, value: getJourneysForDay(date, journeyCount) }));
+};
+
+const getDistanceInPeriod = async (prisma: PrismaClient, period: Period, userId: string) => {
+  let days: string[];
+
+  if (period === 'week') {
+    days = getLast7DaysTimestamps();
+  } else if (period === 'month') {
+    days = getLast30DaysTimestamps();
+  } else {
+    days = getLastYearTimestamps();
+  }
+
+  return getDistanceForPeriod(prisma, period, days, userId);
 };
 
 export const chartsRouter = router({
   getPeriodCharts: protectedProcedure.input(ZodPeriod).query(async ({ ctx, input }) => {
     const journeyCount = await getJourneysInPeriod(ctx.prisma, input, ctx.user.id);
+    const distanceCount = await getDistanceInPeriod(ctx.prisma, input, ctx.user.id);
 
-    return { journeyCount };
+    return { journeyCount, distanceCount };
   }),
 });

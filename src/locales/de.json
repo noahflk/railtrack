@@ -101,6 +101,7 @@
     "month": "Monat",
     "year": "Jahr",
     "all": "Insgesamt",
-    "journeysPer": "Fahrten pro"
+    "journeysPer": "Fahrten pro",
+    "distancePer": "Kilometer Distanz pro"
   }
 }

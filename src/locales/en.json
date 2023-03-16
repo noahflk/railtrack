@@ -101,6 +101,7 @@
     "month": "Month",
     "year": "Year",
     "all": "All Time",
-    "journeysPer": "Journeys per"
+    "journeysPer": "Journeys per",
+    "distancePer": "Kilometer distance per"
   }
 }
