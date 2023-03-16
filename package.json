@@ -43,6 +43,7 @@
     "react-intersection-observer": "^9.4.1",
     "react-map-gl": "7.0.21",
     "react-relaxed": "1.1.5",
+    "recharts": "^2.5.0",
     "superjson": "1.12.2",
     "zod": "3.21.0",
     "zustand": "4.3.5"

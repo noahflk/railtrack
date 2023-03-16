@@ -77,6 +77,7 @@
   "navigation": {
     "dashboard": "Dashboard",
     "settings": "Einstellungen",
+    "stats": "Statistiken",
     "journeys": "Reisen",
     "addJourney": "Reise hinzufügen",
     "signedInAs": "Eingeloggt als",
@@ -92,5 +93,16 @@
     "updateFail": "Einstellungen konnten nicht gespeichert werden",
     "supportProject": "Untersütze dieses Projekt, indem du mir",
     "buyMeACoffee": "einen Kaffee kaufst"
+  },
+  "stats": {
+    "day_lower": "Tag",
+    "month_lower": "Monat",
+    "week": "Woche",
+    "month": "Monat",
+    "year": "Jahr",
+    "all": "Insgesamt",
+    "journeysPer": "Fahrten pro",
+    "distancePer": "Kilometer Distanz pro",
+    "period": "Zeitraum"
   }
 }

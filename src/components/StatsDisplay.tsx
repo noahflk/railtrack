@@ -2,12 +2,12 @@ import { ChartBarIcon, ClockIcon, GlobeIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
 
 import { Stat } from '@/components/Stat';
-import { type RouterOutputs } from '@/utils/trpc';
+import type { RouterOutputs } from '@/utils/trpc';
 
 type Props = {
   type: 'dashboard' | 'journeyDetail';
   // doesn't matter if we take a single stat or all stats, they have the same type
-  stats: RouterOutputs['stats']['getOne'] | undefined;
+  stats: RouterOutputs['stats']['getPeriod'] | undefined;
 };
 
 type DurationDisplayProps = {
