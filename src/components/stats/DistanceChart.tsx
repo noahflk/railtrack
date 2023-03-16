@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 
-import { Period } from '@/types/period';
+import type { Period } from '@/types/period';
 import type { RouterOutputs } from '@/utils/trpc';
 import { roundToOneDecimal } from '@/utils/rounding';
 

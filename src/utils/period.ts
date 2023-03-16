@@ -1,6 +1,6 @@
 import { startOfToday, subDays, subMonths, subYears } from 'date-fns';
 
-import { Period } from '@/types/period';
+import type { Period } from '@/types/period';
 
 export const getStartDate = (period: Period) => {
   if (period === 'all') {

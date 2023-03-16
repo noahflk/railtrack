@@ -1,9 +1,9 @@
 import { calculateJourneyDistance } from '@/utils/calculateDistance';
-import { PrismaClient } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
 import { format, isEqual, startOfMonth, sub } from 'date-fns';
 
 import { protectedProcedure, router } from '@/server/trpc';
-import { CountInPeriod, ZodPeriod, type Period } from '@/types/period';
+import { type CountInPeriod, ZodPeriod, type Period } from '@/types/period';
 import { getStartDate } from '@/utils/period';
 
 const getJourneyCountForPeriod = async (prisma: PrismaClient, period: Period, userId: string) => {
@@ -77,10 +77,9 @@ const getDistanceForPeriod = async (prisma: PrismaClient, period: Period, days: 
 
 const getLast7DaysTimestamps = (): string[] => {
   const result: string[] = [];
-  let date = new Date();
 
   for (let day = 6; day >= 0; day--) {
-    const newDate = sub(date, { days: day });
+    const newDate = sub(new Date(), { days: day });
     result.push(format(newDate, 'yyyy-MM-dd'));
   }
 
@@ -90,10 +89,8 @@ const getLast7DaysTimestamps = (): string[] => {
 const getLast30DaysTimestamps = (): string[] => {
   const result: string[] = [];
 
-  let date = new Date();
-
   for (let day = 29; day >= 0; day--) {
-    const newDate = sub(date, { days: day });
+    const newDate = sub(new Date(), { days: day });
     result.push(format(newDate, 'yyyy-MM-dd'));
   }
 
@@ -103,10 +100,8 @@ const getLast30DaysTimestamps = (): string[] => {
 const getLastYearTimestamps = (): string[] => {
   const result: string[] = [];
 
-  let date = startOfMonth(new Date());
-
   for (let month = 11; month >= 0; month--) {
-    const newDate = sub(date, { months: month });
+    const newDate = sub(startOfMonth(new Date()), { months: month });
     result.push(format(newDate, 'yyyy-MM-dd'));
   }
 
@@ -133,23 +128,19 @@ const getJourneysInPeriod = async (prisma: PrismaClient, period: Period, userId:
   if (period === 'week') {
     const days = getLast7DaysTimestamps();
 
-    return days.map((date) => {
-      return {
-        label: date,
-        value: getJourneysForDay(date, journeyCount),
-      };
-    });
+    return days.map((date) => ({
+      label: date,
+      value: getJourneysForDay(date, journeyCount),
+    }));
   }
 
   if (period === 'month') {
     const days = getLast30DaysTimestamps();
 
-    return days.map((date) => {
-      return {
-        label: date,
-        value: getJourneysForDay(date, journeyCount),
-      };
-    });
+    return days.map((date) => ({
+      label: date,
+      value: getJourneysForDay(date, journeyCount),
+    }));
   }
 
   // Last case is implicitly year
