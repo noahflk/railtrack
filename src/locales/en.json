@@ -95,9 +95,12 @@
     "buyMeACoffee": "buying me a coffee"
   },
   "stats": {
+    "day_lower": "day",
+    "month_lower": "month",
     "week": "Week",
     "month": "Month",
     "year": "Year",
-    "all": "All Time"
+    "all": "All Time",
+    "journeysPer": "Journeys per"
   }
 }

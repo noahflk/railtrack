@@ -95,9 +95,12 @@
     "buyMeACoffee": "einen Kaffee kaufst"
   },
   "stats": {
+    "day_lower": "Tag",
+    "month_lower": "Monat",
     "week": "Woche",
     "month": "Monat",
     "year": "Jahr",
-    "all": "Insgesamt"
+    "all": "Insgesamt",
+    "journeysPer": "Fahrten pro"
   }
 }

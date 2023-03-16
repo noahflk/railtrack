@@ -2,29 +2,18 @@ import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import { protectedProcedure, router } from '@/server/trpc';
-import { ZodPeriod, type Period } from '@/types/period';
+import { ZodPeriod } from '@/types/period';
 import { calculateJourneyDistance } from '@/utils/calculateDistance';
+import { getStartDate } from '@/utils/period';
 import { roundToOneDecimal } from '@/utils/rounding';
-import { startOfToday, subDays, subMonths, subYears } from 'date-fns';
+import { Prisma } from '@prisma/client';
 
-const getStartDate = (period: Period) => {
-  if (period === 'all') {
-    return undefined;
+const startDateCondition = (startDate: Date | undefined) => {
+  if (startDate) {
+    return Prisma.sql`AND "departureTime" >= ${startDate}`;
   }
 
-  if (period === 'week') {
-    return subDays(startOfToday(), 7);
-  }
-
-  if (period === 'month') {
-    return subMonths(startOfToday(), 1);
-  }
-
-  if (period === 'year') {
-    return subYears(startOfToday(), 1);
-  }
-
-  throw new Error(`Invalid period: ${period}`);
+  return Prisma.empty;
 };
 
 export const statsRouter = router({
@@ -96,9 +85,10 @@ export const statsRouter = router({
       },
     });
 
-    const durationResult = await ctx.prisma.$queryRaw<
-      { sum: bigint }[]
-    >`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${ctx.user.id}`;
+    const durationResult = (await ctx.prisma
+      .$queryRaw`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${ctx.user.id}`) as Array<{
+      sum: bigint;
+    }>;
 
     const durationInMinutes = Number(durationResult[0]?.sum);
 
@@ -115,7 +105,7 @@ export const statsRouter = router({
     const journeys = await ctx.prisma.journey.findMany({
       where: {
         userId: ctx.user.id,
-        createdAt: {
+        departureTime: {
           gte: startDate,
         },
       },
@@ -139,15 +129,17 @@ export const statsRouter = router({
     const numberOfJourneys = await ctx.prisma.journey.count({
       where: {
         userId: ctx.user.id,
-        createdAt: {
+        departureTime: {
           gte: startDate,
         },
       },
     });
 
-    const durationResult = await ctx.prisma.$queryRaw<
-      { sum: bigint }[]
-    >`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${ctx.user.id} AND "createdAt" >= ${startDate}`;
+    const durationResult = (await ctx.prisma.$queryRaw`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${
+      ctx.user.id
+    } ${startDateCondition(startDate)}`) as Array<{
+      sum: bigint;
+    }>;
 
     const durationInMinutes = Number(durationResult[0]?.sum);
 

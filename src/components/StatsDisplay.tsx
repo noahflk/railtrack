@@ -2,7 +2,7 @@ import { ChartBarIcon, ClockIcon, GlobeIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
 
 import { Stat } from '@/components/Stat';
-import { type RouterOutputs } from '@/utils/trpc';
+import type { RouterOutputs } from '@/utils/trpc';
 
 type Props = {
   type: 'dashboard' | 'journeyDetail';
