@@ -139,12 +139,15 @@ export const statsRouter = router({
     const numberOfJourneys = await ctx.prisma.journey.count({
       where: {
         userId: ctx.user.id,
+        createdAt: {
+          gte: startDate,
+        },
       },
     });
 
     const durationResult = await ctx.prisma.$queryRaw<
       { sum: bigint }[]
-    >`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${ctx.user.id}`;
+    >`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${ctx.user.id} AND "createdAt" >= ${startDate}`;
 
     const durationInMinutes = Number(durationResult[0]?.sum);
 
