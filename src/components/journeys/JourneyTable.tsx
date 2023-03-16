@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -8,6 +9,7 @@ import { useInView } from 'react-intersection-observer';
 import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { Placeholder } from '@/components/Placeholder';
+import { APP_TIMEZONE } from '@/constants';
 import type { RouterOutputs } from '@/utils/trpc';
 import { trpc } from '@/utils/trpc';
 
@@ -38,10 +40,10 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
         {format(departureTime, 'dd.MM.yyyy')}
       </td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-        {journey.departureStation} ({format(departureTime, 'HH:mm')})
+        {journey.departureStation} ({formatInTimeZone(departureTime, APP_TIMEZONE, 'HH:mm')})
       </td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-        {journey.arrivalStation} ({format(arrivalTime, 'HH:mm')})
+        {journey.arrivalStation} ({formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')})
       </td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{journey.distance} km</td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{t('minutes', { count: journey.duration })}</td>
