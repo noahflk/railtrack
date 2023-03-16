@@ -25,10 +25,10 @@ const Stats: NextPage = () => {
         <PeriodSelect period={period} setPeriod={setPeriod} />
         <StatsDisplay stats={stats} type="dashboard" />
         {charts && (
-          <>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <JourneyCountChart data={charts.journeyCount} period={period} />
             <DistanceChart data={charts.distanceCount} period={period} />
-          </>
+          </div>
         )}
       </div>
     </Wrapper>

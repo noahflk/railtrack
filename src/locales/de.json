@@ -102,6 +102,7 @@
     "year": "Jahr",
     "all": "Insgesamt",
     "journeysPer": "Fahrten pro",
-    "distancePer": "Kilometer Distanz pro"
+    "distancePer": "Kilometer Distanz pro",
+    "period": "Zeitraum"
   }
 }
