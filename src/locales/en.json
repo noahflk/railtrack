@@ -50,9 +50,9 @@
   },
   "dashboard": {
     "distance": "Distance travelled",
-    "total": "Total trips",
-    "recent": "Recent trips",
-    "seeAll": "See all trips"
+    "total": "Total journeys",
+    "recent": "Recent journeys",
+    "seeAll": "See all journeys"
   },
   "journeyDetail": {
     "distance": "Distance travelled",
