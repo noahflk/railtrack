@@ -62,6 +62,23 @@ const getDistanceForPeriod = async (prisma: PrismaClient, period: Period, days: 
   if (!journeys) return [];
 
   return days.map((day) => {
+    if (period === 'year') {
+      // find journeys that are in this month
+      const journeysInMonth = journeys.filter(
+        (journey) => format(journey.departureTime, 'yyyy-MM') === day.slice(0, day.length - 3)
+      );
+
+      const distancePerMonth = journeysInMonth.reduce(
+        (acc, journey) => acc + calculateJourneyDistance(journey.sections),
+        0
+      );
+
+      return {
+        label: day,
+        value: distancePerMonth,
+      };
+    }
+
     // find journeys that are in this day
     const journeysInDay = journeys.filter((journey) => format(journey.departureTime, 'yyyy-MM-dd') === day);
 
