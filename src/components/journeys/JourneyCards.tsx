@@ -36,7 +36,7 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
       >
         <div className="w-full p-6">
           <div className="mb-2 flex-1 font-semibold text-gray-900">
-            <p className="break-all">
+            <p>
               {journey.departureStation} <ArrowNarrowRightIcon className="inline w-6 text-primary" />{' '}
               {journey.arrivalStation}
             </p>
