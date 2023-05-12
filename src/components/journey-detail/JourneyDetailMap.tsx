@@ -55,7 +55,7 @@ const getGeoData = (journeys: Coordinates[]) => ({
   features: getDeduplicatedFeatures(journeys),
 });
 
-export const Map: React.FC<{ id: string }> = ({ id }) => {
+export const JourneyDetailMap: React.FC<{ id: string }> = ({ id }) => {
   const mapRef = useRef<MapRef>(null);
 
   const { data: stats } = trpc.stats.getOne.useQuery(id, {
@@ -82,34 +82,43 @@ export const Map: React.FC<{ id: string }> = ({ id }) => {
   const geoData = getGeoData(journeys);
 
   return (
-    <MapboxMap
-      ref={mapRef}
-      cooperativeGestures
-      style={{ width: '100%', height: '100%', minHeight: 450, overflow: 'hidden' }}
-      initialViewState={{
-        latitude: 50.3769,
-        longitude: 8.5417,
-        zoom: 3,
-      }}
-      mapStyle="mapbox://styles/mapbox/light-v10"
-      mapboxAccessToken={MAPBOX_TOKEN}
-    >
-      {/* @ts-expect-error TODO: fix the type error with the data  property */}
-      <Source id="polylineLayer" type="geojson" data={geoData}>
-        <Layer
-          id="lineLayer"
-          type="line"
-          source="my-data"
-          layout={{
-            'line-join': 'round',
-            'line-cap': 'round',
-          }}
-          paint={{
-            'line-color': '#902D41',
-            'line-width': 3,
-          }}
-        />
-      </Source>
-    </MapboxMap>
+    <div className="col-span-1 lg:col-span-2">
+      <MapboxMap
+        ref={mapRef}
+        cooperativeGestures
+        style={{
+          width: '100%',
+          height: '100%',
+          minHeight: 450,
+          overflow: 'hidden',
+          borderRadius: 8,
+          boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+        }}
+        initialViewState={{
+          latitude: 50.3769,
+          longitude: 8.5417,
+          zoom: 3,
+        }}
+        mapStyle="mapbox://styles/mapbox/light-v10"
+        mapboxAccessToken={MAPBOX_TOKEN}
+      >
+        {/* @ts-expect-error TODO: fix the type error with the data  property */}
+        <Source id="polylineLayer" type="geojson" data={geoData}>
+          <Layer
+            id="lineLayer"
+            type="line"
+            source="my-data"
+            layout={{
+              'line-join': 'round',
+              'line-cap': 'round',
+            }}
+            paint={{
+              'line-color': '#902D41',
+              'line-width': 3,
+            }}
+          />
+        </Source>
+      </MapboxMap>
+    </div>
   );
 };

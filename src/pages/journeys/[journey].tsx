@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 
-import { Map } from '@/components/journey-detail/Map';
+import { JourneyDetailMap } from '@/components/journey-detail/JourneyDetailMap';
 import { JourneySections } from '@/components/journey-detail/JourneySections';
 import { Wrapper } from '@/components/Wrapper';
 import { getLocaleProps } from '@/utils/locales';
@@ -32,9 +32,7 @@ const JourneyDetail: NextPage = () => {
       <StatsDisplay type="journeyDetail" stats={stats} />
       <div className="mt-4 grid grid-cols-1 gap-y-6 xl:grid-cols-3 xl:gap-6">
         <JourneySections />
-        <div className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow lg:col-span-2">
-          <Map id={journeyId ?? ''} />
-        </div>
+        <JourneyDetailMap id={journeyId ?? ''} />
       </div>
     </Wrapper>
   );
