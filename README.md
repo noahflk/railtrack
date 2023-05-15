@@ -18,7 +18,7 @@
   <p align="center">
     Track your train journeys in Europe 
     <br />
-    <a href="https://railtrack.flk.li"><strong>Try it out »</strong></a>
+    <a href="https://railtrack.ch"><strong>Try it out »</strong></a>
   </p>
 </p>
 

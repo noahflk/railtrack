@@ -46,7 +46,7 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <ErrorBoundary>
-        <PlausibleProvider domain="railtrack.flk.li">
+        <PlausibleProvider domain="railtrack.ch">
           <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
             <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
               <Component {...pageProps} />
