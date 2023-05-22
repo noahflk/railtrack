@@ -154,8 +154,8 @@ devDependencies:
     specifier: 6.7.1
     version: 6.7.1(eslint@8.40.0)
   eslint-plugin-unicorn:
-    specifier: 46.0.1
-    version: 46.0.1(eslint@8.40.0)
+    specifier: 47.0.0
+    version: 47.0.0(eslint@8.40.0)
   postcss:
     specifier: 8.4.23
     version: 8.4.23
@@ -1307,8 +1307,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /ci-info@3.7.0:
-    resolution: {integrity: sha512-2CpRNYmImPx+RXKLq6jko/L07phmS9I02TyqkcNU20GCF/GgaWvc58hPtjxDX8lPpkdwc9sNh72V9k00S7ezog==}
+  /ci-info@3.8.0:
+    resolution: {integrity: sha512-eXTggHWSooYhq49F2opQhuHWgzucfF2YgODK4e1566GQs5BIfP30B0oenwBJHfWxAs2fyPB1s7Mg949zLf61Yw==}
     engines: {node: '>=8'}
     dev: true
 
@@ -1946,26 +1946,26 @@ packages:
       string.prototype.matchall: 4.0.7
     dev: true
 
-  /eslint-plugin-unicorn@46.0.1(eslint@8.40.0):
-    resolution: {integrity: sha512-setGhMTiLAddg1asdwjZ3hekIN5zLznNa5zll7pBPwFOka6greCKDQydfqy4fqyUhndi74wpDzClSQMEcmOaew==}
-    engines: {node: '>=14.18'}
+  /eslint-plugin-unicorn@47.0.0(eslint@8.40.0):
+    resolution: {integrity: sha512-ivB3bKk7fDIeWOUmmMm9o3Ax9zbMz1Bsza/R2qm46ufw4T6VBFBaJIR1uN3pCKSmSXm8/9Nri8V+iUut1NhQGA==}
+    engines: {node: '>=16'}
     peerDependencies:
-      eslint: '>=8.28.0'
+      eslint: '>=8.38.0'
     dependencies:
       '@babel/helper-validator-identifier': 7.19.1
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.40.0)
-      ci-info: 3.7.0
+      ci-info: 3.8.0
       clean-regexp: 1.0.0
       eslint: 8.40.0
       esquery: 1.5.0
       indent-string: 4.0.0
-      is-builtin-module: 3.2.0
+      is-builtin-module: 3.2.1
       jsesc: 3.0.2
       lodash: 4.17.21
       pluralize: 8.0.0
       read-pkg-up: 7.0.1
       regexp-tree: 0.1.24
-      regjsparser: 0.9.1
+      regjsparser: 0.10.0
       safe-regex: 2.1.1
       semver: 7.3.8
       strip-indent: 3.0.0
@@ -2508,8 +2508,8 @@ packages:
     resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
     dev: false
 
-  /is-builtin-module@3.2.0:
-    resolution: {integrity: sha512-phDA4oSGt7vl1n5tJvTWooWWAsXLY+2xCnxNqvKhGEzujg+A43wPlPOyDg3C8XQHN+6k/JTQWJ/j0dQh/qr+Hw==}
+  /is-builtin-module@3.2.1:
+    resolution: {integrity: sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==}
     engines: {node: '>=6'}
     dependencies:
       builtin-modules: 3.3.0
@@ -3628,8 +3628,8 @@ packages:
       functions-have-names: 1.2.3
     dev: true
 
-  /regjsparser@0.9.1:
-    resolution: {integrity: sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==}
+  /regjsparser@0.10.0:
+    resolution: {integrity: sha512-qx+xQGZVsy55CH0a1hiVwHmqjLryfh7wQyF5HO07XJ9f7dQMY/gPQHhlyDkIzJKC+x2fUCpCcUODUUUFrm7SHA==}
     hasBin: true
     dependencies:
       jsesc: 0.5.0
