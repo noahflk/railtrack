@@ -12,7 +12,7 @@
     "prettier:write": "prettier --write ./src"
   },
   "dependencies": {
-    "@headlessui/react": "1.7.14",
+    "@headlessui/react": "^1.7.14",
     "@heroicons/react": "1.0.6",
     "@prisma/client": "4.14.1",
     "@supabase/auth-helpers-nextjs": "^0.6.0",

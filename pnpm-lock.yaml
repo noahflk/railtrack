@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   '@headlessui/react':
-    specifier: 1.7.14
+    specifier: ^1.7.14
     version: 1.7.14(react-dom@18.2.0)(react@18.2.0)
   '@heroicons/react':
     specifier: 1.0.6
