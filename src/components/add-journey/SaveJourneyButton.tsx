@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const SaveJourneyButton: React.FC<Props> = ({ journey, type = 'secondary' }) => {
-  const mutation = trpc.journey.add.useMutation();
+  const mutation = trpc.journey.add.useMutation({ retry: 1 });
   const utils = trpc.useContext();
 
   const clearSearchInfo = useJourneySearchStore((state) => state.clearSearchInfo);
