@@ -70,11 +70,13 @@ export const JourneySections: React.FC = () => {
     );
   }
 
+  const sortedSections = journey.sections.sort((a, b) => a.departureTime.getTime() - b.departureTime.getTime());
+
   return (
     <RecentJourneysWrapper>
       <div className="flex h-full flex-col justify-between pb-5">
         <ul>
-          {journey.sections.map((section) => (
+          {sortedSections.map((section) => (
             <Section key={section.id} section={section} />
           ))}
         </ul>
