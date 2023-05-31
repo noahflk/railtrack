@@ -23,15 +23,19 @@ const DurationDisplay: React.FC<DurationDisplayProps> = ({ duration, type = 'hou
     if (!duration) return '...';
 
     if (type === 'minutes') {
-      return formatMinuteDuration(duration);
+      return <p className="mt-2 truncate text-3xl font-medium">{formatMinuteDuration(duration)}</p>;
     }
 
-    return t(type, { count: duration });
+    return (
+      <p className="mt-2 truncate text-3xl font-medium">
+        {duration} <span className="text-xl text-gray-500">{t(type, { count: duration })}</span>
+      </p>
+    );
   };
 
   return (
     <Stat title={t('time')} icon={<ClockIcon className="h-14 w-14 flex-shrink-0 sm:hidden xl:inline" />}>
-      <p className="mt-2 truncate text-3xl font-medium">{getDuration()}</p>
+      {getDuration()}
     </Stat>
   );
 };
