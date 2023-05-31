@@ -6,7 +6,7 @@ import { useBreakpoint } from 'react-breakout';
 import { JourneySectionsDetails } from '@/components/add-journey/JourneySectionsDetails';
 import { JourneyStopIndicator } from '@/components/add-journey/JourneyStopIndicator';
 import type { Journey } from '@/types/opendata';
-import { parseDurationString } from '@/utils/duration';
+import { formatMinuteDuration, parseDurationString } from '@/utils/duration';
 import { SaveJourneyButton } from '@/components/add-journey/SaveJourneyButton';
 
 type Props = {
@@ -36,6 +36,8 @@ const JourneyHeader: React.FC<Props> = ({ journey }) => {
 const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
+  const durationInMinutes = parseDurationString(journey.duration);
+
   return (
     <Disclosure as="li">
       <Disclosure.Button as={Fragment}>
@@ -44,7 +46,7 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
           <div className="flex justify-between space-x-2">
             <JourneyStopIndicator className="w-96" journey={journey} />
             <p>{t('stops', { count: journey.transfers })}</p>
-            <p>{parseDurationString(journey.duration)} min</p>
+            <p>{formatMinuteDuration(durationInMinutes)}</p>
             <SaveJourneyButton journey={journey} />
           </div>
         </div>
@@ -60,7 +62,7 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
   return (
     <Disclosure as="li">
       <Disclosure.Button as={Fragment}>
-        <div className="cursor-pointer space-y-2 py-5 px-4 transition hover:bg-gray-100">
+        <div className="cursor-pointer space-y-2 px-4 py-5 transition hover:bg-gray-100">
           <JourneyHeader journey={journey} />
           <JourneyStopIndicator className="w-full" journey={journey} />
           <div className="flex justify-between">

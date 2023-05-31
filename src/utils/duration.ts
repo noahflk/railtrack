@@ -1,3 +1,5 @@
+import { formatDuration, intervalToDuration } from 'date-fns';
+
 export const parseDurationString = (duration: string): number => {
   let days = 0;
   let hours = 0;
@@ -22,4 +24,14 @@ export const parseDurationString = (duration: string): number => {
   }
 
   return days * 24 * 60 + hours * 60 + minutes;
+};
+
+export const formatMinuteDuration = (minutes: number) => {
+  const duration = intervalToDuration({ start: 0, end: minutes * 1000 * 60 });
+
+  return formatDuration(duration)
+    .replace('minutes', 'min')
+    .replace('minute', 'min')
+    .replace('hours', 'h')
+    .replace('hour', 'h');
 };

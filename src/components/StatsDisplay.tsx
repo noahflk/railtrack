@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 
 import { Stat } from '@/components/Stat';
 import type { RouterOutputs } from '@/utils/trpc';
+import { formatMinuteDuration } from '@/utils/duration';
 
 type Props = {
   type: 'dashboard' | 'journeyDetail';
@@ -18,11 +19,19 @@ type DurationDisplayProps = {
 const DurationDisplay: React.FC<DurationDisplayProps> = ({ duration, type = 'hours' }) => {
   const t = useTranslations();
 
+  const getDuration = () => {
+    if (!duration) return '...';
+
+    if (type === 'minutes') {
+      return formatMinuteDuration(duration);
+    }
+
+    return t(type, { count: duration });
+  };
+
   return (
     <Stat title={t('time')} icon={<ClockIcon className="h-14 w-14 flex-shrink-0 sm:hidden xl:inline" />}>
-      <p className="mt-2 truncate text-3xl font-medium">
-        {duration ?? '...'} <span className="text-xl text-gray-500">{t(type, { count: duration })}</span>
-      </p>
+      <p className="mt-2 truncate text-3xl font-medium">{getDuration()}</p>
     </Stat>
   );
 };
