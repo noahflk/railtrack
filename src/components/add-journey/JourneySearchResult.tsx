@@ -5,9 +5,9 @@ import { useBreakpoint } from 'react-breakout';
 
 import { JourneySectionsDetails } from '@/components/add-journey/JourneySectionsDetails';
 import { JourneyStopIndicator } from '@/components/add-journey/JourneyStopIndicator';
+import { SaveJourneyButton } from '@/components/add-journey/SaveJourneyButton';
 import type { Journey } from '@/types/opendata';
 import { formatMinuteDuration, parseDurationString } from '@/utils/duration';
-import { SaveJourneyButton } from '@/components/add-journey/SaveJourneyButton';
 
 type Props = {
   journey: Journey;
@@ -59,6 +59,8 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
 const MobileSearchResult: React.FC<Props> = ({ journey }) => {
   const t = useTranslations('add');
 
+  const durationInMinutes = parseDurationString(journey.duration);
+
   return (
     <Disclosure as="li">
       <Disclosure.Button as={Fragment}>
@@ -68,7 +70,7 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
           <div className="flex justify-between">
             <p>
               <p>{t('stops', { count: journey.transfers })}</p>
-              {parseDurationString(journey.duration)} min
+              {formatMinuteDuration(durationInMinutes)}
             </p>
             <SaveJourneyButton journey={journey} />
           </div>
