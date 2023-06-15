@@ -2,6 +2,7 @@ export type JourneyIdentifier = {
   departureStation: string;
   arrivalStation: string;
   departureTime: string;
+  viaStation?: string;
   platform: string | null;
 };
 

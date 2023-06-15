@@ -7,15 +7,16 @@ import { classNames } from '@/utils/styling';
 type Props = {
   departureTime?: string;
   setDepartureTime: (station: string) => void;
+  className?: string;
 };
 
-export const DepartureTimeField: React.FC<Props> = ({ departureTime, setDepartureTime }) => {
+export const DepartureTimeField: React.FC<Props> = ({ departureTime, setDepartureTime, className }) => {
   const t = useTranslations('add');
 
   const showNowButton = departureTime !== formatInTimeZone(new Date(), APP_TIMEZONE, "yyyy-MM-dd'T'HH:mm");
 
   return (
-    <div className="w-full">
+    <div className={classNames('w-full', className)}>
       <div className="flex justify-between">
         <label htmlFor="time" className="block text-sm font-medium text-gray-700">
           {t('time')}
