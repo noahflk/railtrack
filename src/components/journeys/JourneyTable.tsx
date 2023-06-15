@@ -10,6 +10,7 @@ import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { Placeholder } from '@/components/Placeholder';
 import { APP_TIMEZONE } from '@/constants';
+import { formatMinuteDuration } from '@/utils/duration';
 import type { RouterOutputs } from '@/utils/trpc';
 import { trpc } from '@/utils/trpc';
 
@@ -46,7 +47,7 @@ const JourneyRow: React.FC<RowProps> = ({ journey, handleDelete }) => {
         {journey.arrivalStation} ({formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')})
       </td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{journey.distance} km</td>
-      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{t('minutes', { count: journey.duration })}</td>
+      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{formatMinuteDuration(journey.duration)}</td>
       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{journey.stops}</td>
       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
         <button

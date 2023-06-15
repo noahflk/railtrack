@@ -1,6 +1,6 @@
 {
   "departure": "From",
-  "arrival": "To",  
+  "arrival": "To",
   "emptyJourneys": "No journeys yet",
   "addJourney": "Add a new journey",
   "time": "Time spent travelling",
@@ -69,7 +69,7 @@
     "deleteJourney": "Delete journey",
     "deleteConfirm": "Are you sure you want to delete this journey? This action cannot be undone.",
     "cancel": "Cancel",
-    "minutes": "{count, plural, one {# minute} other {# minuten}}",
+    "minutes": "{count, plural, one {# minute} other {# minutes}}",
     "stop_title": "Stops",
     "deleteJourneyError": "Unable to delete journey",
     "loadJourneysError": "Unable to load journeys"

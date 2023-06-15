@@ -8,6 +8,7 @@ import { EmptyJourneyNotice } from '@/components/EmptyJourneyNotice';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { Placeholder } from '@/components/Placeholder';
 import { APP_TIMEZONE } from '@/constants';
+import { formatMinuteDuration } from '@/utils/duration';
 import type { RouterOutputs } from '@/utils/trpc';
 import { trpc } from '@/utils/trpc';
 
@@ -48,7 +49,7 @@ const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
               {formatInTimeZone(arrivalTime, APP_TIMEZONE, 'HH:mm')}
             </p>
             <p>
-              {t('duration')}: {tGlobal('minutes', { count: journey.duration })}
+              {t('duration')}: {formatMinuteDuration(journey.duration)}
             </p>
             <p>
               {t('distance')}: {journey.distance} km{' '}
