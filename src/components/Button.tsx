@@ -1,13 +1,15 @@
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { classNames } from '@/utils/styling';
 
 type Props = {
-  type?: 'primary' | 'secondary';
+  type?: 'primary' | 'secondary' | 'text';
   className?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  isLoading?: boolean;
   children: React.ReactNode;
 };
 
-export const Button: React.FC<Props> = ({ type, children, className, onClick }) => {
+export const Button: React.FC<Props> = ({ type, children, className, onClick, isLoading }) => {
   if (type === 'secondary') {
     return (
       <button
@@ -18,7 +20,26 @@ export const Button: React.FC<Props> = ({ type, children, className, onClick }) 
           className ?? ''
         )}
       >
-        {children}
+        {/* invisible means text remains hidden in the background to preserve the button width */}
+        <span className={isLoading ? 'invisible' : undefined}>{children}</span>
+        {isLoading && <LoadingSpinner className="absolute" />}
+      </button>
+    );
+  }
+
+  if (type === 'text') {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={classNames(
+          'text-small inline-flex items-center justify-center font-medium text-primary hover:text-primary-light',
+          className ?? ''
+        )}
+      >
+        {/* invisible means text remains hidden in the background to preserve the button width */}
+        <span className={isLoading ? 'invisible' : undefined}>{children}</span>
+        {isLoading && <LoadingSpinner className="absolute" />}
       </button>
     );
   }
@@ -33,7 +54,9 @@ export const Button: React.FC<Props> = ({ type, children, className, onClick }) 
         className ?? ''
       )}
     >
-      {children}
+      {/* invisible means text remains hidden in the background to preserve the button width */}
+      <span className={isLoading ? 'invisible' : undefined}>{children}</span>
+      {isLoading && <LoadingSpinner className="absolute" />}
     </button>
   );
 };
