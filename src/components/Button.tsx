@@ -7,14 +7,17 @@ type Props = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   isLoading?: boolean;
   children: React.ReactNode;
+  ref?: React.Ref<HTMLButtonElement>;
 };
 
-export const Button: React.FC<Props> = ({ type, children, className, onClick, isLoading }) => {
+export const Button: React.FC<Props> = ({ type, children, className, onClick, isLoading, ref }) => {
   if (type === 'secondary') {
     return (
       <button
         type="button"
         onClick={onClick}
+        ref={ref}
+        disabled={isLoading}
         className={classNames(
           '"inline-flex focus:ring-offset-2" items-center rounded-md border border-transparent bg-rose-100 px-3 py-2 text-sm font-medium leading-4 text-primary hover:bg-rose-200 focus:outline-none focus:ring-2 focus:ring-primary',
           className ?? ''
@@ -31,7 +34,9 @@ export const Button: React.FC<Props> = ({ type, children, className, onClick, is
     return (
       <button
         type="button"
+        ref={ref}
         onClick={onClick}
+        disabled={isLoading}
         className={classNames(
           'text-small inline-flex items-center justify-center font-medium text-primary hover:text-primary-light',
           className ?? ''
@@ -48,7 +53,9 @@ export const Button: React.FC<Props> = ({ type, children, className, onClick, is
   return (
     <button
       type="button"
+      ref={ref}
       onClick={onClick}
+      disabled={isLoading}
       className={classNames(
         'inline-flex items-center rounded-md border border-transparent bg-primary px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
         className ?? ''
