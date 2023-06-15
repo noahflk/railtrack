@@ -5,14 +5,16 @@ import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import type { Station } from '@/types/opendata';
 import { useGetJourneys } from '@/hooks/useGetJourneys';
 import { Button } from '@/components/Button';
+import { classNames } from '@/utils/styling';
 
 type Props = {
   departureTime: string;
   departureStation?: Station;
   arrivalStation?: Station;
+  className?: string;
 };
 
-export const SearchButton: React.FC<Props> = ({ departureTime, departureStation, arrivalStation }) => {
+export const SearchButton: React.FC<Props> = ({ departureTime, departureStation, arrivalStation, className }) => {
   const { isLoading, mutateAsync } = useGetJourneys();
   const t = useTranslations('add');
 
@@ -22,7 +24,7 @@ export const SearchButton: React.FC<Props> = ({ departureTime, departureStation,
   const setJourneys = useJourneySearchStore((state) => state.setJourneys);
 
   return (
-    <div className="mt-1 flex w-full items-end">
+    <div className={classNames('mt-1 flex w-full items-end', className)}>
       <Button
         className="w-full justify-center"
         onClick={() => {

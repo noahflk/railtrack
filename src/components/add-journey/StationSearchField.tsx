@@ -10,15 +10,26 @@ type Props = {
   label: string;
   selectedStation?: Station;
   setSelectedStation: (station: Station) => void;
+  secondaryElement?: React.ReactNode;
+  className?: string;
 };
 
-export const StationSearchField: React.FC<Props> = ({ label, selectedStation, setSelectedStation }) => {
+export const StationSearchField: React.FC<Props> = ({
+  label,
+  selectedStation,
+  setSelectedStation,
+  secondaryElement,
+  className,
+}) => {
   const [query, setQuery] = useState('');
   const stations = useStationSearch(query);
 
   return (
-    <Combobox as="div" value={selectedStation} onChange={setSelectedStation}>
-      <Combobox.Label className="block text-sm font-medium text-gray-700">{label}</Combobox.Label>
+    <Combobox className={className} as="div" value={selectedStation} onChange={setSelectedStation}>
+      <div className="flex justify-between">
+        <Combobox.Label className="block text-sm font-medium text-gray-700">{label}</Combobox.Label>
+        {secondaryElement}
+      </div>
       <div className="relative mt-1">
         <Combobox.Input
           className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
