@@ -1,5 +1,5 @@
-import { useTranslations } from 'next-intl';
 import { useSessionContext } from '@supabase/auth-helpers-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { LoadingSpinner } from '@/components/LoadingSpinner';

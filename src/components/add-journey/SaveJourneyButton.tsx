@@ -2,12 +2,12 @@ import { useTranslations } from 'next-intl';
 import router from 'next/router';
 import toast from 'react-hot-toast';
 
-import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { Button } from '@/components/Button';
 import { DUPLICATE_JOURNEY } from '@/constants';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
-import { trpc } from '@/utils/trpc';
 import type { Journey } from '@/types/opendata';
-import { Button } from '@/components/Button';
+import { trpc } from '@/utils/trpc';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 type Props = {
   journey: Journey;
@@ -56,14 +56,9 @@ export const SaveJourneyButton: React.FC<Props> = ({ journey, type = 'secondary'
 
   if (type === 'secondary') {
     return (
-      <button
-        onClick={handleClick}
-        className="text-small justify-left inline-flex font-medium text-primary hover:text-primary-light"
-      >
-        {/* invisible means text remains hidden in the background to preserve the button width */}
-        <span className={mutation.isLoading ? 'invisible' : undefined}>{t('save')}</span>
-        {mutation.isLoading && <LoadingSpinner className="absolute" />}
-      </button>
+      <Button type="text" onClick={handleClick} isLoading={mutation.isLoading}>
+        {t('save')}
+      </Button>
     );
   }
 

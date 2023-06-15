@@ -21,7 +21,6 @@ type CardProps = {
 const JourneyCard: React.FC<CardProps> = ({ journey, handleDelete }) => {
   const departureTime = new Date(journey.departureTime);
   const arrivalTime = new Date(journey.arrivalTime);
-  const tGlobal = useTranslations();
   const t = useTranslations('journeys');
 
   return (

@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
 import { setCookie } from 'cookies-next';
+import { useLocale, useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { Button } from '@/components/Button';
 import { LANG_COOKIE_KEY } from '@/constants';
 import { trpc } from '@/utils/trpc';
 
@@ -81,16 +81,14 @@ export const Account: React.FC = () => {
           </div>
         </div>
         <div className="bg-white px-4 py-3 text-right sm:px-6">
-          <button
-            type="submit"
+          <Button
+            type="primary"
             className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             onClick={saveLocale}
-            disabled={mutation.isLoading}
+            isLoading={mutation.isLoading}
           >
-            {/* invisible means text remains hidden in the background to preserve the button width */}
-            <span className={mutation.isLoading ? 'invisible' : undefined}>{t('save')}</span>
-            {mutation.isLoading && <LoadingSpinner className="absolute" />}
-          </button>
+            {t('save')}
+          </Button>
         </div>
       </div>
     </section>
