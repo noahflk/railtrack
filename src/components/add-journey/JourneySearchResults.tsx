@@ -1,13 +1,15 @@
-import { useTranslations } from 'next-intl';
-import { format, formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 import { subMinutes } from 'date-fns';
+import { format, formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { JourneySearchResult } from '@/components/add-journey/JourneySearchResult';
-import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
-import { useGetJourneys } from '@/hooks/useGetJourneys';
-import type { Journey } from '@/types/opendata';
-import { classNames } from '@/utils/styling';
 import { APP_TIMEZONE } from '@/constants';
+import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
+import type { Journey } from '@/types/opendata';
+import { getJourneys, type GetJourneyParams } from '@/utils/getJourneys';
+import { classNames } from '@/utils/styling';
 
 const HOUR_AND_HALF_IN_MINUTES = 90;
 const generateJourneyKey = (journey: Journey) =>
@@ -48,7 +50,8 @@ const ResultDisplay: React.FC = () => {
   const departureStation = useJourneySearchStore((state) => state.departureStation);
   const arrivalStation = useJourneySearchStore((state) => state.arrivalStation);
 
-  const { isLoading, mutateAsync } = useGetJourneys();
+  const [isLoading, setIsLoading] = useState(false);
+
   const { earliestDepartureTime, latestDepartureTime } = getEarliestAndLatestDepartureTime(departureTime, journeys);
 
   const t = useTranslations('add');
@@ -69,6 +72,21 @@ const ResultDisplay: React.FC = () => {
     );
   }
 
+  const fetchMoreJourneys = async (params: GetJourneyParams) => {
+    try {
+      setIsLoading(true);
+
+      const newJourneys = await getJourneys(params);
+
+      setJourneys(unionJourneys(journeys, newJourneys));
+    } catch (error) {
+      console.log(error);
+      toast.error('Unable to load journeys');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <button
@@ -79,14 +97,8 @@ const ResultDisplay: React.FC = () => {
             subMinutes(new Date(earliestDepartureTime), HOUR_AND_HALF_IN_MINUTES),
             "yyyy-MM-dd'T'HH:mm"
           );
-          mutateAsync(
-            { departureStation, arrivalStation, departureTime: newDepartureTime },
-            {
-              onSuccess: (res) => {
-                setJourneys(unionJourneys(journeys, res));
-              },
-            }
-          );
+
+          fetchMoreJourneys({ departureStation, arrivalStation, departureTime: newDepartureTime });
         }}
         className={classNames(
           'pl-4 text-sm font-medium md:pl-6',
@@ -103,14 +115,11 @@ const ResultDisplay: React.FC = () => {
       <button
         disabled={isLoading}
         onClick={() => {
-          mutateAsync(
-            { departureStation, arrivalStation, departureTime: latestDepartureTime },
-            {
-              onSuccess: (res) => {
-                setJourneys(unionJourneys(journeys, res));
-              },
-            }
-          );
+          fetchMoreJourneys({
+            departureStation,
+            arrivalStation,
+            departureTime: latestDepartureTime,
+          });
         }}
         className={classNames(
           'pl-4 text-sm font-medium md:pl-6',
