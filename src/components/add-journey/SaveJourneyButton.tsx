@@ -19,6 +19,7 @@ export const SaveJourneyButton: React.FC<Props> = ({ journey, type = 'secondary'
   const utils = trpc.useContext();
 
   const clearSearchInfo = useJourneySearchStore((state) => state.clearSearchInfo);
+  const viaStation = useJourneySearchStore((state) => state.viaStation);
 
   const t = useTranslations('add');
 
@@ -30,6 +31,7 @@ export const SaveJourneyButton: React.FC<Props> = ({ journey, type = 'secondary'
       {
         departureStation: journey.from.station.name,
         arrivalStation: journey.to.station.name,
+        viaStation: viaStation?.name,
         departureTime: journey.from.departure,
         platform: journey.from.platform,
       },

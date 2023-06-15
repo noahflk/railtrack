@@ -28,15 +28,23 @@ const logAddJourney = (email: string | undefined, from: string, to: string) => {
 const findConnection = async ({
   departureStation,
   arrivalStation,
+  viaStation,
   departureTime,
   platform,
 }: JourneyIdentifier): Promise<Journey | undefined> => {
   const localDate = formatInTimeZone(new Date(departureTime), APP_TIMEZONE, 'yyyy-MM-dd');
   const localTime = formatInTimeZone(new Date(departureTime), APP_TIMEZONE, 'HH:mm');
 
-  const { data } = await axios.get<{ connections: Journey[] }>(
-    `${TRANSPORT_API_URL}/connections?from=${departureStation}&to=${arrivalStation}&date=${localDate}&time=${localTime}&limit=10`
-  );
+  const { data } = await axios.get<{ connections: Journey[] }>(`${TRANSPORT_API_URL}/connections`, {
+    params: {
+      from: departureStation,
+      to: arrivalStation,
+      via: viaStation,
+      date: localDate,
+      time: localTime,
+      limit: 10,
+    },
+  });
 
   // ensure we have the desired connection by comparing departure time and platform
   return data.connections.find(
@@ -50,6 +58,7 @@ export const journeyRouter = router({
       z.object({
         departureStation: z.string(),
         arrivalStation: z.string(),
+        viaStation: z.string().optional(),
         departureTime: z.string(),
         platform: z.nullable(z.string()),
       })
