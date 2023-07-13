@@ -20,7 +20,7 @@ const DurationDisplay: React.FC<DurationDisplayProps> = ({ duration, type = 'hou
   const t = useTranslations();
 
   const getDuration = () => {
-    if (!duration) return '...';
+    if (!duration) return <p className="mt-2 truncate text-3xl font-medium">...</p>;
 
     if (type === 'minutes') {
       return <p className="mt-2 truncate text-3xl font-medium">{formatMinuteDuration(duration)}</p>;
