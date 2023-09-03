@@ -45,8 +45,8 @@ dependencies:
     specifier: ^0.3.0
     version: 0.3.0
   '@vercel/edge':
-    specifier: ^0.3.0
-    version: 0.3.1
+    specifier: ^1.0.0
+    version: 1.0.1
   accept-language-parser:
     specifier: 1.5.0
     version: 1.5.0
@@ -1067,8 +1067,8 @@ packages:
       '@deno/shim-crypto': 0.3.1
     dev: false
 
-  /@vercel/edge@0.3.1:
-    resolution: {integrity: sha512-NdJxoaUI/AMvSu9dBM5MA1mxzk+Xo1sMrjyNRtNGsH5iKYyMdMWNUEvHdkyn1kN6opM03rQHYOYgXhBwNyIfdQ==}
+  /@vercel/edge@1.0.1:
+    resolution: {integrity: sha512-0lE1J1QsKmet3NUlNjS1+4tw7VpOsd3wxG91A5ZAAcxxDl3RQh/ThnYVV5VYT6FoSK5ZZ3jYh5YZCd0pWPK3yQ==}
     dev: false
 
   /accept-language-parser@1.5.0:
