@@ -57,8 +57,8 @@ dependencies:
     specifier: ^1.2.1
     version: 1.2.1
   cookies-next:
-    specifier: 2.1.2
-    version: 2.1.2
+    specifier: 3.0.0
+    version: 3.0.0
   date-fns:
     specifier: 2.30.0
     version: 2.30.0
@@ -1427,8 +1427,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /cookies-next@2.1.2:
-    resolution: {integrity: sha512-czxcfqVaQlo0Q/3xMgp/2jpspsuLJrIm6D37wlmibP3DAcYT315c8UxQmDMohhAT/GRWpaHzpDEFANBjzTFQGg==}
+  /cookies-next@3.0.0:
+    resolution: {integrity: sha512-VaSrsjQJ8yHnGAGulV9zJxBr7hrKJ/O2mo87evsGIMF7XvJI3AJNguevotx0Gek1MMMBkZvZNWu2JueSNoSKEQ==}
     dependencies:
       '@types/cookie': 0.4.1
       '@types/node': 16.11.53
