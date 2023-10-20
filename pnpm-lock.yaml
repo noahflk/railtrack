@@ -42,8 +42,8 @@ dependencies:
     specifier: ^6.5.0
     version: 6.5.0
   '@upstash/qstash':
-    specifier: ^0.3.0
-    version: 0.3.0
+    specifier: ^2.0.0
+    version: 2.1.8
   '@vercel/edge':
     specifier: ^1.0.0
     version: 1.0.1
@@ -229,10 +229,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
-    dev: false
-
-  /@deno/shim-crypto@0.3.1:
-    resolution: {integrity: sha512-ed4pNnfur6UbASEgF34gVxR9p7Mc3qF+Ygbmjiil8ws5IhNFhPDFy5vE5hQAUA9JmVsSxXPcVLM5Rf8LOZqQ5Q==}
     dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.49.0):
@@ -1119,10 +1115,11 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@upstash/qstash@0.3.0:
-    resolution: {integrity: sha512-++Fv5mQezh2LN8BpZ0bsKRdbeW5DWhQROWOMNbNxKHt7q3BuwnVBxbndgWFcQZpCf4N496i5GjKHBSliJvJuRA==}
+  /@upstash/qstash@2.1.8:
+    resolution: {integrity: sha512-p8PQ6fE1ljhnrHmP5iQiqZAVf3ljFoC4/i8f2usLQ75Emq1cCiDHvW8u/J/U/N0zCLewxxA1g1W5bGJ7+5iKyQ==}
     dependencies:
-      '@deno/shim-crypto': 0.3.1
+      crypto-js: 4.1.1
+      jose: 4.14.4
     dev: false
 
   /@vercel/edge@1.0.1:
@@ -1519,6 +1516,10 @@ packages:
 
   /crypt@0.0.2:
     resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
+    dev: false
+
+  /crypto-js@4.1.1:
+    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
     dev: false
 
   /css-unit-converter@1.1.2:
