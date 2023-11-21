@@ -45,7 +45,7 @@
     "react-map-gl": "7.1.6",
     "react-relaxed": "1.1.5",
     "recharts": "^2.5.0",
-    "superjson": "1.13.3",
+    "superjson": "2.2.1",
     "tailwind-merge": "^2.0.0",
     "zod": "3.22.4",
     "zustand": "4.4.4"
