@@ -14,6 +14,7 @@ type Props = {
   departureStation?: Station;
   arrivalStation?: Station;
   viaStation?: Station;
+  isArrival: boolean;
   className?: string;
 };
 
@@ -22,6 +23,7 @@ export const SearchButton: React.FC<Props> = ({
   departureStation,
   arrivalStation,
   viaStation,
+  isArrival,
   className,
 }) => {
   const t = useTranslations('add');
@@ -31,6 +33,7 @@ export const SearchButton: React.FC<Props> = ({
   const setArrivalStation = useJourneySearchStore((state) => state.setArrivalStation);
   const setViaStation = useJourneySearchStore((state) => state.setViaStation);
   const setJourneys = useJourneySearchStore((state) => state.setJourneys);
+  const setIsArrival = useJourneySearchStore((state) => state.setIsArrival);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,6 +46,7 @@ export const SearchButton: React.FC<Props> = ({
             setDepartureTime(departureTime);
             setDepartureStation(departureStation);
             setArrivalStation(arrivalStation);
+            setIsArrival(isArrival);
 
             if (viaStation) {
               setViaStation(viaStation);
@@ -50,7 +54,13 @@ export const SearchButton: React.FC<Props> = ({
 
             try {
               setIsLoading(true);
-              const journeys = await getJourneys({ departureStation, arrivalStation, viaStation, departureTime });
+              const journeys = await getJourneys({
+                departureStation,
+                arrivalStation,
+                viaStation,
+                departureTime,
+                isArrival,
+              });
               setJourneys(journeys);
             } catch (error) {
               console.error(error);
