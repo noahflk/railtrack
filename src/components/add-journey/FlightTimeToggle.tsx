@@ -17,7 +17,7 @@ export const FlightTimeToggle: React.FC<Props> = ({ className, isArrival, setIsA
       <label className="block text-sm font-medium text-gray-700">{t('dep')}</label>
       <Switch
         onChange={() => setIsArrival(!isArrival)}
-        checked={isArrival}
+        checked={!isArrival}
         checkedIcon={false}
         uncheckedIcon={false}
         onColor="#902D41"
