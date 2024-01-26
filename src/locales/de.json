@@ -8,8 +8,8 @@
   "minutes": "{count, plural, one {Minute} other {Minuten}}",
   "add": {
     "abbreviation": {
-      "dep": "Von",
-      "arr": "Nach"
+      "dep": "Ab",
+      "arr": "An"
     },
     "time": "Abfahrtszeit",
     "direction": "Richtung",
