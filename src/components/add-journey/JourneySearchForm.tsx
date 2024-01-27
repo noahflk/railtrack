@@ -1,12 +1,14 @@
+import { PlusIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
+import { DepartureOrArrivalTimeToggle } from '@/components/add-journey/DepartureOrArrivalTimeToggle';
 import { DepartureTimeField } from '@/components/add-journey/DepartureTimeField';
 import { SearchButton } from '@/components/add-journey/SearchButton';
 import { StationSearchField } from '@/components/add-journey/StationSearchField';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
+import { DEFAULT_IS_ARRIVAL } from '@/utils/getJourneys';
 import { classNames } from '@/utils/styling';
-import { PlusIcon } from '@heroicons/react/outline';
 
 export const JourneySearchForm: React.FC = () => {
   const storeDepartureStation = useJourneySearchStore((state) => state.departureStation);
@@ -18,6 +20,7 @@ export const JourneySearchForm: React.FC = () => {
   const [departureStation, setDepartureStation] = useState(storeDepartureStation);
   const [arrivalStation, setArrivalStation] = useState(storeArrivalStation);
   const [viaStation, setViaStation] = useState(storeViaStation);
+  const [isArrival, setIsArrival] = useState(DEFAULT_IS_ARRIVAL);
   const [showVia, setShowVia] = useState(false);
 
   useEffect(() => {
@@ -56,13 +59,17 @@ export const JourneySearchForm: React.FC = () => {
             setSelectedStation={setViaStation}
           />
         )}
-        <DepartureTimeField className="col-span-3" departureTime={departureTime} setDepartureTime={setDepartureTime} />
+        <div className="col-span-3 flex items-center gap-2">
+          <DepartureTimeField departureTime={departureTime} setDepartureTime={setDepartureTime} />
+          <DepartureOrArrivalTimeToggle className="mt-4" setIsArrival={setIsArrival} isArrival={isArrival} />
+        </div>
         <SearchButton
           className="col-span-3"
           departureTime={departureTime}
           departureStation={departureStation}
           arrivalStation={arrivalStation}
           viaStation={viaStation}
+          isArrival={isArrival}
         />
       </div>
     </li>
