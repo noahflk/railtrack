@@ -52,7 +52,8 @@
     "distance": "Distance travelled",
     "total": "Total journeys",
     "recent": "Recent journeys",
-    "seeAll": "See all journeys"
+    "seeAll": "See all journeys",
+    "co2emissions": "CO2 Saved"
   },
   "journeyDetail": {
     "distance": "Distance travelled",
@@ -103,6 +104,7 @@
     "all": "All Time",
     "journeysPer": "Journeys per",
     "distancePer": "Kilometers per",
-    "period": "Period"
+    "period": "Period",
+    "co2emissions": "CO2 Saved"
   }
 }
