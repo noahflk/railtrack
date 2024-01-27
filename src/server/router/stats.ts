@@ -8,7 +8,6 @@ import { calculateCO2Savings } from '@/utils/calculateC02saved';
 import { getStartDate } from '@/utils/period';
 import { roundToOneDecimal } from '@/utils/rounding';
 import { Prisma } from '@prisma/client';
-import { ca } from 'date-fns/locale';
 
 const startDateCondition = (startDate: Date | undefined) => {
   if (startDate) {
