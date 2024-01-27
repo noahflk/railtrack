@@ -9,7 +9,7 @@ type Props = {
   className?: string;
 };
 
-export const FlightTimeToggle: React.FC<Props> = ({ className, isArrival, setIsArrival }) => {
+export const DepartureOrArrivalTimeToggle: React.FC<Props> = ({ className, isArrival, setIsArrival }) => {
   const t = useTranslations('add.abbreviation');
 
   return (
@@ -21,7 +21,7 @@ export const FlightTimeToggle: React.FC<Props> = ({ className, isArrival, setIsA
         checkedIcon={false}
         uncheckedIcon={false}
         onColor="#902D41"
-        offColor="#10B981"
+        offColor="#902D41"
       />
       <label className="block text-sm font-medium text-gray-700">{t('arr')}</label>
     </div>

@@ -7,8 +7,8 @@ import { StationSearchField } from '@/components/add-journey/StationSearchField'
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
 import { classNames } from '@/utils/styling';
 import { PlusIcon } from '@heroicons/react/outline';
-import { FlightTimeToggle } from './FlightTimeToggle';
 import { DEFAULT_IS_ARRIVAL } from '@/utils/getJourneys';
+import { DepartureOrArrivalTimeToggle } from '@/components/add-journey/DepartureOrArrivalTimeToggle';
 
 export const JourneySearchForm: React.FC = () => {
   const storeDepartureStation = useJourneySearchStore((state) => state.departureStation);
@@ -61,7 +61,7 @@ export const JourneySearchForm: React.FC = () => {
         )}
         <div className="col-span-3 flex items-center gap-2">
           <DepartureTimeField departureTime={departureTime} setDepartureTime={setDepartureTime} />
-          <FlightTimeToggle className="mt-4" setIsArrival={setIsArrival} isArrival={isArrival} />
+          <DepartureOrArrivalTimeToggle className="mt-4" setIsArrival={setIsArrival} isArrival={isArrival} />
         </div>
         <SearchButton
           className="col-span-3"
