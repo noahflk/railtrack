@@ -30,7 +30,7 @@
     "axios": "1.6.5",
     "clsx": "^2.0.0",
     "cookies-next": "4.1.0",
-    "date-fns": "2.30.0",
+    "date-fns": "3.3.0",
     "date-fns-tz": "^2.0.0",
     "mapbox-gl": "^2.11.0",
     "md5": "2.3.0",
