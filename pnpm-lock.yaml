@@ -75,8 +75,8 @@ dependencies:
     specifier: ^13.0.0
     version: 13.0.0(react-dom@18.2.0)(react@18.2.0)
   next-intl:
-    specifier: ^2.9.0
-    version: 2.9.0(next@13.0.0)(react@18.2.0)
+    specifier: ^3.5.2
+    version: 3.5.2(next@13.0.0)(react@18.2.0)
   next-plausible:
     specifier: ^3.6.4
     version: 3.6.4(next@13.0.0)(react-dom@18.2.0)(react@18.2.0)
@@ -314,6 +314,12 @@ packages:
 
   /@formatjs/intl-localematcher@0.2.31:
     resolution: {integrity: sha512-9QTjdSBpQ7wHShZgsNzNig5qT3rCPvmZogS/wXZzKotns5skbXgs0I7J8cuN0PPqXyynvNVuN+iOKhNS2eb+ZA==}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
+
+  /@formatjs/intl-localematcher@0.2.32:
+    resolution: {integrity: sha512-k/MEBstff4sttohyEpXxCmC3MqbUn9VvHGlZ8fauLzkbwXmVrEeyzS+4uhrvAk9DWU9/7otYWxyDox4nT/KVLQ==}
     dependencies:
       tslib: 2.4.0
     dev: false
@@ -3308,16 +3314,22 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-intl@2.9.0(next@13.0.0)(react@18.2.0):
-    resolution: {integrity: sha512-wr72XWyOQH9ZgEHXL3WBDlqvaY6VFYor25MqLp7Kq1D8+Htmaj8thWQ+Rp3bNb3GaDcnQqRazvmH1wzZdELuXg==}
-    engines: {node: '>=10'}
+  /negotiator@0.6.3:
+    resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /next-intl@3.5.2(next@13.0.0)(react@18.2.0):
+    resolution: {integrity: sha512-HL0iAjUcsvn/5t3JbEKqkTFOHWGALznAx/RTn6Yx2WwB2l+fg5ZnKOzFjh+7JTeX7uWND5djF2oiL+sWV+sl2Q==}
     peerDependencies:
-      next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0
+      next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
+      '@formatjs/intl-localematcher': 0.2.32
+      negotiator: 0.6.3
       next: 13.0.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      use-intl: 2.9.0(react@18.2.0)
+      use-intl: 3.5.2(react@18.2.0)
     dev: false
 
   /next-plausible@3.6.4(next@13.0.0)(react-dom@18.2.0)(react@18.2.0):
@@ -4716,9 +4728,8 @@ packages:
       punycode: 2.1.1
     dev: true
 
-  /use-intl@2.9.0(react@18.2.0):
-    resolution: {integrity: sha512-gbkuLLVI4QMOPLIFcuKZpNVuYxl+2/hLHLE/bVaCK/MqoC4Ih3ahM+iCib5gmAM0+7iX6hbnaLPqe6vNmrKQYQ==}
-    engines: {node: '>=10'}
+  /use-intl@3.5.2(react@18.2.0):
+    resolution: {integrity: sha512-iKtfwkSwVgCLNA+Xx7W9ckseT8WgLeZH9Q/QUboH84oiDkm/7TgqubI7ROqA+zklpubsRHGQynZmXA7spmHZeA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
