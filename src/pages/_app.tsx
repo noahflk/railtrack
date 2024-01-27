@@ -1,4 +1,4 @@
-import { createBrowserSupabaseClient, type Session } from '@supabase/auth-helpers-nextjs';
+import { createPagesBrowserClient, type Session } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { NextIntlProvider, type AbstractIntlMessages } from 'next-intl';
@@ -23,11 +23,12 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
   const { toasts } = useToasterStore();
   const { mutate: invalidateLanguage } = trpc.settings.invalidateLanguage.useMutation();
 
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+  // Here we create a new instance of the Supabase client for browser-side operations
+  const [supabaseClient] = useState(() => createPagesBrowserClient());
 
   const TOAST_LIMIT = 3;
 
-  // limit number of react-hot-toast toasts to 3
+  // Limit the number of react-hot-toast toasts to 3
   useEffect(() => {
     toasts
       .filter((t) => t.visible)
@@ -35,7 +36,7 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
       .forEach((t) => toast.dismiss(t.id));
   }, [toasts]);
 
-  // invalidate language cookie and fetch new one on every page laod
+  // Invalidate language cookie and fetch new one on every page load
   useEffect(() => {
     invalidateLanguage();
   }, [invalidateLanguage]);
