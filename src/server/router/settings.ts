@@ -8,7 +8,7 @@ export const settingsRouter = router({
   get: protectedProcedure.query(
     async ({ ctx }) => await ctx.prisma.settings.findUnique({ where: { userId: ctx.user.id } })
   ),
-  setLanguage: protectedProcedure.input(z.enum(['en', 'de'])).mutation(async ({ ctx, input }) => {
+  setLanguage: protectedProcedure.input(z.enum(['en', 'de', 'fr'])).mutation(async ({ ctx, input }) => {
     const settings = await ctx.prisma.settings.findUnique({ where: { userId: ctx.user.id } });
 
     if (!settings) {

@@ -4,7 +4,7 @@ export const APP_TIMEZONE = 'Europe/Zurich';
 
 // internationalization
 export const LANG_COOKIE_KEY = 'i18n-lang';
-export const SUPPORTED_LANGS = ['en', 'de'];
+export const SUPPORTED_LANGS = ['en', 'de', 'fr'];
 export const DEFAULT_LANG = 'en';
 
 // erorr codes
