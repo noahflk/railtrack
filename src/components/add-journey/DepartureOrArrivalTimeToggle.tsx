@@ -1,7 +1,7 @@
-import { classNames } from '@/utils/styling';
 import { useTranslations } from 'next-intl';
-
 import Switch from 'react-switch';
+
+import { classNames } from '@/utils/styling';
 
 type Props = {
   isArrival: boolean;

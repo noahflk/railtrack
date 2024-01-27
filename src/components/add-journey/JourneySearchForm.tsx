@@ -1,14 +1,14 @@
+import { PlusIcon } from '@heroicons/react/outline';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
+import { DepartureOrArrivalTimeToggle } from '@/components/add-journey/DepartureOrArrivalTimeToggle';
 import { DepartureTimeField } from '@/components/add-journey/DepartureTimeField';
 import { SearchButton } from '@/components/add-journey/SearchButton';
 import { StationSearchField } from '@/components/add-journey/StationSearchField';
 import { useJourneySearchStore } from '@/hooks/useJourneySearchStore';
-import { classNames } from '@/utils/styling';
-import { PlusIcon } from '@heroicons/react/outline';
 import { DEFAULT_IS_ARRIVAL } from '@/utils/getJourneys';
-import { DepartureOrArrivalTimeToggle } from '@/components/add-journey/DepartureOrArrivalTimeToggle';
+import { classNames } from '@/utils/styling';
 
 export const JourneySearchForm: React.FC = () => {
   const storeDepartureStation = useJourneySearchStore((state) => state.departureStation);
