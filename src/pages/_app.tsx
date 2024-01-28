@@ -1,7 +1,7 @@
 import { createPagesBrowserClient, type Session } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { NextIntlProvider, type AbstractIntlMessages } from 'next-intl';
+import { NextIntlClientProvider, type AbstractIntlMessages } from 'next-intl';
 import PlausibleProvider from 'next-plausible';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import Head from 'next/head';
@@ -48,12 +48,12 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
       </Head>
       <ErrorBoundary>
         <PlausibleProvider domain="railtrack.ch">
-          <NextIntlProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
+          <NextIntlClientProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
             <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
               <Component {...pageProps} />
               <Toaster />
             </SessionContextProvider>
-          </NextIntlProvider>
+          </NextIntlClientProvider>
         </PlausibleProvider>
       </ErrorBoundary>
     </>

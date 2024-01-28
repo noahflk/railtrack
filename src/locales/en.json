@@ -7,6 +7,10 @@
   "hours": "{count, plural, one {hour} other {hours}}",
   "minutes": "{count, plural, one {minute} other {minutes}}",
   "add": {
+    "abbreviation": {
+      "dep": "Dep",
+      "arr": "Arr"
+    },
     "time": "Departure time",
     "direction": "Direction",
     "currentTime": "Now",
