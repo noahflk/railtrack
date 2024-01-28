@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { protectedProcedure, router } from '@/server/trpc';
 import { ZodPeriod } from '@/types/period';
 import { calculateJourneyDistance } from '@/utils/calculateDistance';
+import { calculateCO2Savings } from '@/utils/calculateC02saved';
 import { getStartDate } from '@/utils/period';
 import { roundToOneDecimal } from '@/utils/rounding';
 import { Prisma } from '@prisma/client';
@@ -92,11 +93,14 @@ export const statsRouter = router({
 
     const durationInMinutes = Number(durationResult[0]?.sum);
 
+    const co2saved = calculateCO2Savings(distance);
+
     return {
       distance: roundToOneDecimal(distance),
       count: numberOfJourneys,
       coordinates: journeys,
       duration: roundToOneDecimal(durationInMinutes / 60),
+      co2saved: roundToOneDecimal(co2saved),
     };
   }),
   getPeriod: protectedProcedure.input(ZodPeriod).query(async ({ ctx, input }) => {
@@ -143,10 +147,13 @@ export const statsRouter = router({
 
     const durationInMinutes = Number(durationResult[0]?.sum);
 
+    const co2saved = calculateCO2Savings(distance);
+
     return {
       distance: roundToOneDecimal(distance),
       count: numberOfJourneys,
       duration: durationInMinutes,
+      co2saved: roundToOneDecimal(co2saved),
     };
   }),
 });

@@ -56,7 +56,8 @@
     "distance": "Gereiste Distanz",
     "total": "Anzahl Reisen",
     "recent": "Kürzliche Reisen",
-    "seeAll": "Alle Reisen anzeigen"
+    "seeAll": "Alle Reisen anzeigen",
+    "co2emissions": "CO2 gespart"
   },
   "journeyDetail": {
     "distance": "Gereiste Distanz",
@@ -107,6 +108,7 @@
     "all": "Insgesamt",
     "journeysPer": "Fahrten pro",
     "distancePer": "Zurückgelegte Kilometer pro",
-    "period": "Zeitraum"
+    "period": "Zeitraum",
+    "co2emissions": "CO2 gespart"
   }
 }

@@ -36,9 +36,9 @@ export const Account: React.FC = () => {
 
   const saveLocale = () => {
     if (!selectedLang) return;
-    if (selectedLang !== 'en' && selectedLang !== 'de') return;
+    if (selectedLang !== 'en' && selectedLang !== 'de' && selectedLang !== 'fr') return;
 
-    mutation.mutate(selectedLang, {
+    mutation.mutate(selectedLang as 'en' | 'de' | 'fr', {
       onSuccess: () => {
         setCookie(LANG_COOKIE_KEY, selectedLang, { sameSite: 'lax' });
 
@@ -76,6 +76,7 @@ export const Account: React.FC = () => {
               >
                 <option value="en">English</option>
                 <option value="de">Deutsch</option>
+                <option value="fr">Français</option>
               </select>
             </div>
           </div>
