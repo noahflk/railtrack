@@ -44,7 +44,6 @@
     "react-intersection-observer": "^9.4.1",
     "react-map-gl": "7.1.7",
     "react-relaxed": "1.1.5",
-    "react-switch": "^7.0.0",
     "recharts": "^2.5.0",
     "sharp": "^0.33.2",
     "superjson": "2.2.1",
