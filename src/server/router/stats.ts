@@ -149,7 +149,7 @@ export const statsRouter = router({
     return {
       distance: roundToOneDecimal(distance),
       count: numberOfJourneys,
-      duration: durationInMinutes,
+      duration: roundToOneDecimal(durationInMinutes / 60),
       co2saved: roundToOneDecimal(co2saved),
     };
   }),
