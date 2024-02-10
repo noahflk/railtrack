@@ -103,6 +103,16 @@ export const statsRouter = router({
       co2saved: roundToOneDecimal(co2saved),
     };
   }),
+  getYearsWithData: protectedProcedure.query(async ({ ctx }) => {
+    const uniqueYears = await (ctx.prisma
+      .$queryRaw`SELECT DISTINCT EXTRACT(YEAR FROM "departureTime") AS year FROM "Journey" WHERE "userId" = ${ctx.user.id} ORDER BY year;` as Promise<
+      Array<{
+        year: string;
+      }>
+    >);
+
+    return uniqueYears.map((obj) => Number(obj.year));
+  }),
   getPeriod: protectedProcedure.input(ZodPeriod).query(async ({ ctx, input }) => {
     const startDate = getStartDate(input);
 
