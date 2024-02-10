@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 import type { Period } from '@/types/period';
+import { trpc } from '@/utils/trpc';
 
 type Props = {
   period: Period;
@@ -9,6 +10,8 @@ type Props = {
 
 export const PeriodSelect: React.FC<Props> = ({ period, setPeriod }) => {
   const t = useTranslations('stats');
+
+  const { data: avilableYears } = trpc.stats.getYearsWithData.useQuery();
 
   return (
     <div>
@@ -26,6 +29,11 @@ export const PeriodSelect: React.FC<Props> = ({ period, setPeriod }) => {
         <option value="month">{t('month')}</option>
         <option value="year">{t('year')}</option>
         <option value="all">{t('all')}</option>
+        {avilableYears?.map((year) => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        ))}
       </select>
     </div>
   );

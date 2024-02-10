@@ -41,6 +41,8 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
     invalidateLanguage();
   }, [invalidateLanguage]);
 
+  const timeZone = 'Europe/Zurich';
+
   return (
     <>
       <Head>
@@ -48,7 +50,11 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
       </Head>
       <ErrorBoundary>
         <PlausibleProvider domain="railtrack.ch">
-          <NextIntlClientProvider messages={pageProps.messages} locale={pageProps.locale ?? DEFAULT_LANG}>
+          <NextIntlClientProvider
+            messages={pageProps.messages}
+            locale={pageProps.locale ?? DEFAULT_LANG}
+            timeZone={timeZone}
+          >
             <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
               <Component {...pageProps} />
               <Toaster />

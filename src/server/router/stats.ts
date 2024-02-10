@@ -3,19 +3,10 @@ import { z } from 'zod';
 
 import { protectedProcedure, router } from '@/server/trpc';
 import { ZodPeriod } from '@/types/period';
-import { calculateJourneyDistance } from '@/utils/calculateDistance';
 import { calculateCO2Savings } from '@/utils/calculateC02saved';
-import { getStartDate } from '@/utils/period';
+import { calculateJourneyDistance } from '@/utils/calculateDistance';
+import { dateRangeCondition, getStartAndEndDate } from '@/utils/period';
 import { roundToOneDecimal } from '@/utils/rounding';
-import { Prisma } from '@prisma/client';
-
-const startDateCondition = (startDate: Date | undefined) => {
-  if (startDate) {
-    return Prisma.sql`AND "departureTime" >= ${startDate}`;
-  }
-
-  return Prisma.empty;
-};
 
 export const statsRouter = router({
   getOne: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
@@ -103,15 +94,23 @@ export const statsRouter = router({
       co2saved: roundToOneDecimal(co2saved),
     };
   }),
+  getYearsWithData: protectedProcedure.query(async ({ ctx }) => {
+    const uniqueYears = await (ctx.prisma
+      .$queryRaw`SELECT DISTINCT EXTRACT(YEAR FROM "departureTime") AS year FROM "Journey" WHERE "userId" = ${ctx.user.id} ORDER BY year;` as Promise<
+      Array<{
+        year: string;
+      }>
+    >);
+
+    return uniqueYears.map((obj) => Number(obj.year));
+  }),
   getPeriod: protectedProcedure.input(ZodPeriod).query(async ({ ctx, input }) => {
-    const startDate = getStartDate(input);
+    const period = getStartAndEndDate(input);
 
     const journeys = await ctx.prisma.journey.findMany({
       where: {
         userId: ctx.user.id,
-        departureTime: {
-          gte: startDate,
-        },
+        departureTime: period,
       },
       select: {
         sections: {
@@ -133,15 +132,13 @@ export const statsRouter = router({
     const numberOfJourneys = await ctx.prisma.journey.count({
       where: {
         userId: ctx.user.id,
-        departureTime: {
-          gte: startDate,
-        },
+        departureTime: period,
       },
     });
 
     const durationResult = (await ctx.prisma.$queryRaw`SELECT sum(duration) FROM "Journey" WHERE "userId" = ${
       ctx.user.id
-    } ${startDateCondition(startDate)}`) as Array<{
+    } ${dateRangeCondition(period)}`) as Array<{
       sum: bigint;
     }>;
 
@@ -152,7 +149,7 @@ export const statsRouter = router({
     return {
       distance: roundToOneDecimal(distance),
       count: numberOfJourneys,
-      duration: durationInMinutes,
+      duration: roundToOneDecimal(durationInMinutes / 60),
       co2saved: roundToOneDecimal(co2saved),
     };
   }),
