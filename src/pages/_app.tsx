@@ -2,7 +2,6 @@ import { createPagesBrowserClient, type Session } from '@supabase/auth-helpers-n
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { NextIntlClientProvider, type AbstractIntlMessages } from 'next-intl';
-import PlausibleProvider from 'next-plausible';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
@@ -12,6 +11,7 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import { DEFAULT_LANG } from '@/constants';
 import '@/styles/globals.css';
 import { trpc } from '@/utils/trpc';
+import Script from 'next/script';
 
 type Props = {
   messages: AbstractIntlMessages;
@@ -49,18 +49,17 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <ErrorBoundary>
-        <PlausibleProvider domain="railtrack.ch">
-          <NextIntlClientProvider
-            messages={pageProps.messages}
-            locale={pageProps.locale ?? DEFAULT_LANG}
-            timeZone={timeZone}
-          >
-            <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-              <Component {...pageProps} />
-              <Toaster />
-            </SessionContextProvider>
-          </NextIntlClientProvider>
-        </PlausibleProvider>
+        <NextIntlClientProvider
+          messages={pageProps.messages}
+          locale={pageProps.locale ?? DEFAULT_LANG}
+          timeZone={timeZone}
+        >
+          <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
+            <Component {...pageProps} />
+            <Script src="/pirsch/script.js" id="pirschjs" data-code="QH4DjEWSkxjFzvzpgoWxrNDuXfu5Pdy3" />
+            <Toaster />
+          </SessionContextProvider>
+        </NextIntlClientProvider>
       </ErrorBoundary>
     </>
   );

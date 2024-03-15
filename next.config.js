@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { withPlausibleProxy } = require('next-plausible');
-
-module.exports = withPlausibleProxy()({
+module.exports = {
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -22,4 +19,16 @@ module.exports = withPlausibleProxy()({
       },
     ];
   },
-});
+  async rewrites() {
+    return [
+      {
+        source: '/pirsch/script.js',
+        destination: 'https://api.pirsch.io/pirsch.js',
+      },
+      {
+        source: '/pirsch/hit',
+        destination: 'https://api.pirsch.io/hit',
+      },
+    ];
+  },
+};
