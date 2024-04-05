@@ -19,16 +19,4 @@ module.exports = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      {
-        source: '/pirsch/script.js',
-        destination: 'https://api.pirsch.io/pirsch.js',
-      },
-      {
-        source: '/pirsch/hit',
-        destination: 'https://api.pirsch.io/hit',
-      },
-    ];
-  },
 };

@@ -56,7 +56,11 @@ const MyApp: AppType<Props> = ({ Component, pageProps }) => {
         >
           <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
             <Component {...pageProps} />
-            <Script src="/pirsch/script.js" id="pirschjs" data-code="QH4DjEWSkxjFzvzpgoWxrNDuXfu5Pdy3" />
+            <Script
+              src="https://p-proxy.flk.li/static/files/p.js"
+              id="pirschjs"
+              data-endpoint="https://p-proxy.flk.li/p/pv"
+            />
             <Toaster />
           </SessionContextProvider>
         </NextIntlClientProvider>
