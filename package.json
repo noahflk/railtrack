@@ -47,7 +47,7 @@
     "sharp": "^0.33.2",
     "superjson": "2.2.1",
     "tailwind-merge": "^2.0.0",
-    "zod": "3.23.4",
+    "zod": "3.23.6",
     "zustand": "4.5.2"
   },
   "devDependencies": {
@@ -55,11 +55,11 @@
     "@tailwindcss/forms": "0.5.7",
     "@types/accept-language-parser": "1.5.6",
     "@types/md5": "2.3.5",
-    "@types/node": "20.12.7",
+    "@types/node": "20.12.8",
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
-    "@typescript-eslint/eslint-plugin": "7.7.1",
-    "@typescript-eslint/parser": "7.7.1",
+    "@typescript-eslint/eslint-plugin": "7.8.0",
+    "@typescript-eslint/parser": "7.8.0",
     "autoprefixer": "10.4.19",
     "dotenv": "16.4.5",
     "eslint": "8.57.0",
