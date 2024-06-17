@@ -41,12 +41,15 @@ export const statsRouter = router({
 
     const coordinates = [{ sections: journey.sections }];
 
+    const co2saved = calculateCO2Savings(distance);
+
     return {
       distance: roundToOneDecimal(distance),
       // number of stops
       count: journey.sections.length - 1,
       coordinates,
       duration: journey.duration,
+      co2saved: roundToOneDecimal(co2saved),
     };
   }),
   getAll: protectedProcedure.query(async ({ ctx }) => {

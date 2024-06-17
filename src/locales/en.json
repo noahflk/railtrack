@@ -63,7 +63,8 @@
     "distance": "Distance travelled",
     "unableToLoadJourney": "Unable to load journey",
     "total": "Stops",
-    "sections": "Sections"
+    "sections": "Sections",
+    "co2emissions": "CO2 Saved"
   },
   "journeys": {
     "date": "Date",

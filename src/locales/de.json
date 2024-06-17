@@ -63,7 +63,8 @@
     "distance": "Gereiste Distanz",
     "unableToLoadJourney": "Reise konnte nicht geladen werden",
     "total": "Anzahl Stops",
-    "sections": "Segmente"
+    "sections": "Segmente",
+    "co2emissions": "CO2 gespart"
   },
   "journeys": {
     "date": "Datum",

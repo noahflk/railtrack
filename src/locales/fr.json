@@ -59,7 +59,8 @@
     "distance": "Distance parcourue",
     "unableToLoadJourney": "Impossible de charger le voyage",
     "total": "Arrêts",
-    "sections": "Sections"
+    "sections": "Sections",
+    "co2emissions": "CO2 Economisé"
   },
   "journeys": {
     "date": "Date",
