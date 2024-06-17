@@ -4,10 +4,10 @@ import { format, isEqual, startOfMonth, sub } from 'date-fns';
 
 import { protectedProcedure, router } from '@/server/trpc';
 import { type CountInPeriod, ZodPeriod, type Period } from '@/types/period';
-import { getStartDate } from '@/utils/period';
+import { getStartAndEndDate, getStartDate } from '@/utils/period';
 
 const getJourneyCountForPeriod = async (prisma: PrismaClient, period: Period, userId: string) => {
-  const notBeforeDate = getStartDate(period);
+  const notBeforeDate = getStartAndEndDate(period);
 
   if (period === 'year') {
     return await (prisma.$queryRaw`

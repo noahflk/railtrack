@@ -70,3 +70,5 @@ export const getStartAndEndDate = (period: Period): MetricPeriod | undefined => 
   // If the period does not match any case, throw an error
   throw new Error(`Invalid period: ${period}`);
 };
+
+export const getStartDate = (period: Period): Date => getStartAndEndDate(period)?.gte || startOfToday();

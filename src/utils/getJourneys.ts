@@ -10,7 +10,7 @@ export type GetJourneyParams = {
   arrivalStation?: Station;
   viaStation?: Station;
   departureTime: string;
-  isArrival: boolean;
+  isArrival?: boolean;
 };
 
 export const getJourneys = async ({

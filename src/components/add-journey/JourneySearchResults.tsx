@@ -1,5 +1,5 @@
 import { subMinutes } from 'date-fns';
-import { format, formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
+import { format, formatInTimeZone, fromZonedTime } from 'date-fns-tz';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -27,7 +27,7 @@ const unionJourneys = (journeys: Journey[], newJourneys: Journey[]) => {
 };
 
 const getEarliestAndLatestDepartureTime = (departureTime: string, journeys?: Journey[]) => {
-  const departureTimeDate = new Date(zonedTimeToUtc(departureTime, APP_TIMEZONE));
+  const departureTimeDate = new Date(fromZonedTime(departureTime, APP_TIMEZONE));
   const departureTimestamps = (journeys || [])
     .map((journey) => journey.from.departureTimestamp)
     .concat(departureTimeDate.getTime() / 1000);
@@ -136,7 +136,7 @@ export const JourneySearchResults: React.FC = () => {
   const t = useTranslations('add');
 
   return (
-    <li className="divide-gray-200npm col-span-1 divide-y rounded-lg bg-white shadow ">
+    <li className="divide-gray-200npm col-span-1 divide-y rounded-lg bg-white shadow">
       <div className="h-full w-full py-4">
         <h3 className="pl-4 text-xl font-semibold text-gray-900 md:pl-6">{t('journeys')}</h3>
         <ResultDisplay />
