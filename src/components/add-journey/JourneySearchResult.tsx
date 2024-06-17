@@ -1,4 +1,4 @@
-import { Disclosure } from '@headlessui/react';
+import { Disclosure, DisclosureButton } from '@headlessui/react';
 import { useTranslations } from 'next-intl';
 import { Fragment } from 'react';
 import { useBreakpoint } from 'react-breakout';
@@ -40,7 +40,7 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
 
   return (
     <Disclosure as="li">
-      <Disclosure.Button as={Fragment}>
+      <DisclosureButton as={Fragment}>
         <div className="cursor-pointer space-y-3 px-5 py-6 transition hover:bg-gray-100">
           <JourneyHeader journey={journey} />
           <div className="flex justify-between space-x-2">
@@ -50,7 +50,7 @@ const DesktopSearchResult: React.FC<Props> = ({ journey }) => {
             <SaveJourneyButton journey={journey} />
           </div>
         </div>
-      </Disclosure.Button>
+      </DisclosureButton>
       <JourneySectionsDetails journey={journey} />
     </Disclosure>
   );
@@ -63,7 +63,7 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
 
   return (
     <Disclosure as="li">
-      <Disclosure.Button as={Fragment}>
+      <DisclosureButton as={Fragment}>
         <div className="cursor-pointer space-y-2 px-4 py-5 transition hover:bg-gray-100">
           <JourneyHeader journey={journey} />
           <JourneyStopIndicator className="w-full" journey={journey} />
@@ -75,7 +75,7 @@ const MobileSearchResult: React.FC<Props> = ({ journey }) => {
             <SaveJourneyButton journey={journey} />
           </div>
         </div>
-      </Disclosure.Button>
+      </DisclosureButton>
       <JourneySectionsDetails journey={journey} />
     </Disclosure>
   );
