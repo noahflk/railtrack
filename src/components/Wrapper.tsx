@@ -1,4 +1,3 @@
-import { Fragment, useState } from 'react';
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
 import {
   ChartBarIcon,
@@ -9,9 +8,10 @@ import {
   ViewGridIcon,
   XIcon,
 } from '@heroicons/react/outline';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useTranslations } from 'next-intl';
+import { Fragment, useState } from 'react';
 
 import { Head } from '@/components/Head';
 import { LogoText } from '@/components/LogoText';
@@ -54,7 +54,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <DialogPanel className="fixed inset-0 bg-gray-600 bg-opacity-75" />
+            <div className="fixed inset-0 bg-gray-900/80" />
           </TransitionChild>
           <TransitionChild
             as={Fragment}
@@ -65,7 +65,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <div className="relative flex w-full max-w-xs flex-1 flex-col bg-white">
+            <DialogPanel className="relative flex w-full max-w-xs flex-1 flex-col bg-white">
               <TransitionChild
                 as={Fragment}
                 enter="ease-in-out duration-300"
@@ -118,7 +118,7 @@ export const Wrapper: React.FC<Props> = ({ children, title }) => {
               <div className="flex flex-shrink-0 border-t border-gray-200 p-4">
                 <SignoutButton />
               </div>
-            </div>
+            </DialogPanel>
           </TransitionChild>
           <div className="w-14 flex-shrink-0">{/* Force sidebar to shrink to fit close icon */}</div>
         </Dialog>
