@@ -23,7 +23,7 @@
     "@trpc/next": "10.45.2",
     "@trpc/react-query": "10.45.2",
     "@trpc/server": "10.45.2",
-    "@turf/bbox": "^6.5.0",
+    "@turf/bbox": "^7.0.0",
     "@upstash/qstash": "^2.0.0",
     "@vercel/edge": "^1.0.0",
     "accept-language-parser": "1.5.0",
