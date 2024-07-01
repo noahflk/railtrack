@@ -127,6 +127,9 @@ devDependencies:
   '@types/accept-language-parser':
     specifier: 1.5.6
     version: 1.5.6
+  '@types/geojson':
+    specifier: ^7946.0.14
+    version: 7946.0.14
   '@types/md5':
     specifier: 2.3.5
     version: 2.3.5
@@ -1203,9 +1206,8 @@ packages:
     resolution: {integrity: sha512-Ps3T8E8dZDam6fUyNiMkekK3XUsaUEik+idO9/YjPtfj2qruF8tFBXS7XhtE4iIXBLxhmLjP3SXpLhVf21I9Lw==}
     dev: false
 
-  /@types/geojson@7946.0.10:
-    resolution: {integrity: sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==}
-    dev: false
+  /@types/geojson@7946.0.14:
+    resolution: {integrity: sha512-WCfD5Ht3ZesJUsONdhvm84dmzWOiOzOAqOncN0++w0lBw1o8OuDNJF2McvvCef/yBqb/HYRahp1BYtODFQ8bRg==}
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
@@ -1214,7 +1216,7 @@ packages:
   /@types/mapbox-gl@2.7.4:
     resolution: {integrity: sha512-usTVCWYhmLt+teQ5U3HhSBZIIHFLp6fQXH/1QOnd4xnDtvNTUWo8n6UyRA4kUj84CGpHSBFeF/MNcBdGB1pwog==}
     dependencies:
-      '@types/geojson': 7946.0.10
+      '@types/geojson': 7946.0.14
     dev: false
 
   /@types/md5@2.3.5:

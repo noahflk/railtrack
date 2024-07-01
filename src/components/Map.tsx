@@ -4,18 +4,9 @@ import MapboxMap, { Layer, Source, type MapRef } from 'react-map-gl';
 
 import type { Coordinates } from '@/types/journey';
 import { trpc } from '@/utils/trpc';
+import type { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-
-type Coordinate = number[];
-
-type Feature = {
-  type: string;
-  geometry: {
-    type: string;
-    coordinates: Coordinate[];
-  };
-};
 
 const getDeduplicatedFeatures = (journeys: Coordinates[]): Feature[] => {
   const features: Feature[] = [];
@@ -43,6 +34,7 @@ const getDeduplicatedFeatures = (journeys: Coordinates[]): Feature[] => {
           type: 'LineString',
           coordinates: [...uniqueCoordinates].map((coordinatesStr) => JSON.parse(coordinatesStr)),
         },
+        properties: null,
       });
     });
   });
@@ -50,7 +42,7 @@ const getDeduplicatedFeatures = (journeys: Coordinates[]): Feature[] => {
   return features;
 };
 
-const getGeoData = (journeys: Coordinates[]) => ({
+const getGeoData = (journeys: Coordinates[]): FeatureCollection<Geometry, GeoJsonProperties> => ({
   type: 'FeatureCollection',
   features: getDeduplicatedFeatures(journeys),
 });
@@ -102,7 +94,6 @@ export const Map: React.FC = () => {
         mapStyle="mapbox://styles/mapbox/light-v10"
         mapboxAccessToken={MAPBOX_TOKEN}
       >
-        {/* @ts-expect-error TODO: fix the type error with the data  property */}
         <Source id="polylineLayer" type="geojson" data={geoData}>
           <Layer
             id="lineLayer"
