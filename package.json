@@ -12,9 +12,9 @@
     "prettier:write": "prettier --write ./src"
   },
   "dependencies": {
-    "@headlessui/react": "2.0.4",
+    "@headlessui/react": "2.1.2",
     "@heroicons/react": "1.0.6",
-    "@prisma/client": "5.15.0",
+    "@prisma/client": "5.16.1",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/auth-helpers-react": "^0.5.0",
     "@supabase/supabase-js": "^2.0.4",
@@ -48,31 +48,31 @@
     "superjson": "2.2.1",
     "tailwind-merge": "^2.0.0",
     "zod": "3.23.8",
-    "zustand": "4.5.2"
+    "zustand": "4.5.4"
   },
   "devDependencies": {
-    "@playwright/test": "1.44.1",
+    "@playwright/test": "1.45.1",
     "@tailwindcss/forms": "0.5.7",
     "@types/accept-language-parser": "1.5.6",
     "@types/geojson": "^7946.0.14",
     "@types/md5": "2.3.5",
-    "@types/node": "20.14.2",
+    "@types/node": "20.14.10",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
-    "@typescript-eslint/eslint-plugin": "7.13.0",
-    "@typescript-eslint/parser": "7.13.0",
+    "@typescript-eslint/eslint-plugin": "7.15.0",
+    "@typescript-eslint/parser": "7.15.0",
     "autoprefixer": "10.4.19",
     "dotenv": "16.4.5",
     "eslint": "8.57.0",
     "eslint-config-next": "^14.1.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-jsx-a11y": "6.8.0",
+    "eslint-plugin-jsx-a11y": "6.9.0",
     "eslint-plugin-unicorn": "54.0.0",
-    "postcss": "8.4.38",
+    "postcss": "8.4.39",
     "prettier": "3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.0",
-    "prisma": "5.15.0",
+    "prisma": "5.16.1",
     "tailwindcss": "3.4.4",
-    "typescript": "5.4.5"
+    "typescript": "5.5.3"
   }
 }
