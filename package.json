@@ -67,7 +67,7 @@
     "eslint-config-next": "^14.1.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-jsx-a11y": "6.10.0",
-    "eslint-plugin-unicorn": "55.0.0",
+    "eslint-plugin-unicorn": "56.0.0",
     "postcss": "8.4.47",
     "prettier": "3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.0",
